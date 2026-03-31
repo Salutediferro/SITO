@@ -1,0 +1,408 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-03-10T12:00:00.000Z",
+  "containerVersion": {
+    "path": "accounts/6343424624/containers/245855870/versions/0",
+    "accountId": "6343424624",
+    "containerId": "245855870",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6343424624/containers/245855870",
+      "accountId": "6343424624",
+      "containerId": "245855870",
+      "name": "TestSalute",
+      "publicId": "GTM-NDGGVVFF",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "10",
+        "name": "GA4 - quiz_start",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_start"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"}
+        ],
+        "firingTriggerId": ["100"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "11",
+        "name": "GA4 - quiz_intro_view",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_intro_view"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "utm_source"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - utm_source}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "utm_medium"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - utm_medium}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "utm_campaign"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - utm_campaign}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["101"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "12",
+        "name": "GA4 - quiz_segment_assigned",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_segment_assigned"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["102"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "13",
+        "name": "GA4 - quiz_step_view",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_step_view"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_number"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_number}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_name"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_name}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["103"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "14",
+        "name": "GA4 - quiz_step_complete",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_step_complete"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_number"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_number}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_name"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_name}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["104"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "15",
+        "name": "GA4 - quiz_step_time",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_step_time"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_name"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_name}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_number"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_number}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "time_seconds"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - time_seconds}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["105"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "16",
+        "name": "GA4 - quiz_option_select",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_option_select"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "step_name"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - step_name}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "option_key"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - option_key}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "option_value"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - option_value}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["106"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "17",
+        "name": "GA4 - quiz_step_back",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_step_back"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "from_step"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - from_step}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "to_step"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - to_step}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["107"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "18",
+        "name": "GA4 - quiz_esito_view",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_esito_view"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "tags"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - tags}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "tag_count"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - tag_count}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "top_tag"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - top_tag}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["108"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "19",
+        "name": "GA4 - quiz_esito_cta_click",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_esito_cta_click"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["109"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "20",
+        "name": "GA4 - quiz_scroll_esito",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_scroll_esito"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["110"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "21",
+        "name": "GA4 - quiz_complete",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_complete"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "total_time_seconds"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - total_time_seconds}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["111"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "22",
+        "name": "GA4 - quiz_field_focus",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_field_focus"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "field_name"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - field_name}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["112"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "23",
+        "name": "GA4 - quiz_validation_error",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_validation_error"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "missing_fields"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - missing_fields}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["113"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "24",
+        "name": "GA4 - quiz_submit",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_submit"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "has_referral"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - has_referral}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["114"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "25",
+        "name": "GA4 - quiz_submit_success",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_submit_success"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["115"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "26",
+        "name": "GA4 - quiz_submit_error",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_submit_error"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "error_type"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - error_type}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["116"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "27",
+        "name": "GA4 - quiz_abandon",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "quiz_abandon"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "last_step"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - last_step}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "time_on_page"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - time_on_page}}"}]},
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["117"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "6343424624",
+        "containerId": "245855870",
+        "tagId": "28",
+        "name": "GA4 - calendly_click",
+        "type": "gaawe",
+        "parameter": [
+          {"type": "BOOLEAN", "key": "sendEcommerceData", "value": "false"},
+          {"type": "TEMPLATE", "key": "eventName", "value": "calendly_click"},
+          {"type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Config"},
+          {"type": "LIST", "key": "eventParameters", "list": [
+            {"type": "MAP", "map": [{"type": "TEMPLATE", "key": "name", "value": "segment"}, {"type": "TEMPLATE", "key": "value", "value": "{{DLV - segment}}"}]}
+          ]}
+        ],
+        "firingTriggerId": ["118"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "100", "name": "CE - quiz_start", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_start"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "101", "name": "CE - quiz_intro_view", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_intro_view"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "102", "name": "CE - quiz_segment_assigned", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_segment_assigned"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "103", "name": "CE - quiz_step_view", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_step_view"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "104", "name": "CE - quiz_step_complete", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_step_complete"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "105", "name": "CE - quiz_step_time", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_step_time"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "106", "name": "CE - quiz_option_select", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_option_select"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "107", "name": "CE - quiz_step_back", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_step_back"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "108", "name": "CE - quiz_esito_view", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_esito_view"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "109", "name": "CE - quiz_esito_cta_click", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_esito_cta_click"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "110", "name": "CE - quiz_scroll_esito", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_scroll_esito"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "111", "name": "CE - quiz_complete", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_complete"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "112", "name": "CE - quiz_field_focus", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_field_focus"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "113", "name": "CE - quiz_validation_error", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_validation_error"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "114", "name": "CE - quiz_submit", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_submit"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "115", "name": "CE - quiz_submit_success", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_submit_success"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "116", "name": "CE - quiz_submit_error", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_submit_error"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "117", "name": "CE - quiz_abandon", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "quiz_abandon"}]}]},
+      {"accountId": "6343424624", "containerId": "245855870", "triggerId": "118", "name": "CE - calendly_click", "type": "CUSTOM_EVENT", "customEventFilter": [{"type": "EQUALS", "parameter": [{"type": "TEMPLATE", "key": "arg0", "value": "{{_event}}"}, {"type": "TEMPLATE", "key": "arg1", "value": "calendly_click"}]}]}
+    ],
+    "variable": [
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "200", "name": "DLV - segment", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "segment"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "201", "name": "DLV - step_number", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "step_number"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "202", "name": "DLV - step_name", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "step_name"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "203", "name": "DLV - time_seconds", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "time_seconds"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "204", "name": "DLV - total_time_seconds", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "total_time_seconds"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "205", "name": "DLV - tags", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "tags"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "206", "name": "DLV - tag_count", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "tag_count"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "207", "name": "DLV - top_tag", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "top_tag"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "208", "name": "DLV - option_key", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "option_key"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "209", "name": "DLV - option_value", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "option_value"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "210", "name": "DLV - from_step", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "from_step"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "211", "name": "DLV - to_step", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "to_step"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "212", "name": "DLV - field_name", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "field_name"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "213", "name": "DLV - missing_fields", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "missing_fields"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "214", "name": "DLV - has_referral", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "has_referral"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "215", "name": "DLV - error_type", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "error_type"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "216", "name": "DLV - last_step", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "last_step"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "217", "name": "DLV - time_on_page", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "time_on_page"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "218", "name": "DLV - utm_source", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "utm_source"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "219", "name": "DLV - utm_medium", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "utm_medium"}]},
+      {"accountId": "6343424624", "containerId": "245855870", "variableId": "220", "name": "DLV - utm_campaign", "type": "v", "parameter": [{"type": "INTEGER", "key": "dataLayerVersion", "value": "2"}, {"type": "TEMPLATE", "key": "name", "value": "utm_campaign"}]}
+    ]
+  }
+}

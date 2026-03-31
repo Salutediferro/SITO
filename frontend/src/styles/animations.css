@@ -1,0 +1,96 @@
+/* ───── FadeUp on scroll ───── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ───── Quiz card animations ───── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-12px); }
+}
+
+.card-enter {
+  animation: fadeUp .38s ease forwards;
+  opacity: 0;
+}
+.card-exit {
+  animation: fadeDown .22s ease forwards;
+}
+
+/* ───── Tag badges ───── */
+@keyframes tagPop {
+  0%   { opacity: 0; transform: scale(.5) translateY(10px); }
+  60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ───── Score dots ───── */
+@keyframes dotIn {
+  from { opacity: 0; transform: scale(.3); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ───── Count pulse ───── */
+@keyframes countPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.15); text-shadow: 0 0 40px rgba(248,113,113,0.6); }
+  100% { transform: scale(1); }
+}
+
+/* ───── Dot pulse ───── */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 6px var(--accent); }
+  50%      { box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(248,113,113,0.3); }
+}
+
+/* ───── Spinner ───── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ───── Hero gradient mesh animation ───── */
+@keyframes gradientMesh {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ───── Float badge animation ───── */
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* ───── Counter tick animation ───── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ───── Glow pulse for CTA buttons ───── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 3px 14px rgba(248,113,113,0.15); }
+  50%      { box-shadow: 0 6px 28px rgba(248,113,113,0.3); }
+}
+
+/* ───── Line grow for connecting steps ───── */
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ───── Shimmer effect ───── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

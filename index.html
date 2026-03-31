@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D0D0D">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Salute di Ferro — Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NDGGVVFF');</script>
+<!-- End Google Tag Manager -->
+
+<style>
+  :root {
+    --bg:          #0D0D0D;
+    --bg-card:     #1A1A1A;
+    --bg-elevated: #242424;
+    --accent:      #C82020;
+    --accent-dark: #A01818;
+    --accent-glow: rgba(200,32,32,0.15);
+    --accent-glow2:rgba(200,32,32,0.08);
+    --blue:        #1B4FBF;
+    --text:        #F5F5F5;
+    --text-sec:    #8A8A8A;
+    --text-muted:  #555555;
+    --border:      #2A2A2A;
+    --border-active:#C82020;
+    --input-bg:    #141414;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html {
+    -webkit-text-size-adjust:100%;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent pull-to-refresh on quiz */
+    overscroll-behavior-y: contain;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(200,32,32,0.04) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 100%, rgba(200,32,32,0.03) 0%, transparent 50%);
+  }
+
+  /* ───── PROGRESS ───── */
+  .bar-track {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--border); z-index: 100;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, #E83030 100%);
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ───── COUNTER ───── */
+  .counter {
+    position: fixed; top: 14px; right: 18px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 2px; color: var(--text-muted);
+    z-index: 100;
+  }
+  .counter b { color: var(--accent); font-weight: 400; }
+
+  /* ───── LAYOUT ───── */
+  .wrap {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 44px 16px 32px;
+    flex-wrap: nowrap;
+  }
+
+  /* ───── CARD / ANIMATION ───── */
+  .card {
+    width: 100%; max-width: 560px;
+    animation: fadeUp .32s cubic-bezier(.25,.46,.45,.94) forwards;
+    opacity: 0;
+    text-align: center;
+    will-change: transform, opacity;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translate3d(0, 18px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  .card.out {
+    animation: fadeDown .18s cubic-bezier(.55,.085,.68,.53) forwards;
+  }
+  @keyframes fadeDown {
+    from { opacity: 1; transform: translate3d(0, 0, 0); }
+    to   { opacity: 0; transform: translate3d(0, -12px, 0); }
+  }
+
+  /* ───── LOGO ───── */
+  .logo-wrap { text-align: center; margin-bottom: 28px; }
+  .logo-img {
+    max-width: 160px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* ───── STEP LABEL ───── */
+  .label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px; letter-spacing: 4px; color: var(--accent);
+    margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .label::before,
+  .label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ───── QUESTION ───── */
+  .question {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    line-height: 1.1; letter-spacing: 1px;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .hint {
+    font-size: 13px; color: var(--text-sec);
+    font-weight: 300; line-height: 1.5; margin-bottom: 20px;
+  }
+
+  /* ───── OPTIONS ───── */
+  .options { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; text-align: left; width: 100%; }
+
+  .opt {
+    display: flex; align-items: center; gap: 13px;
+    padding: 12px 14px;
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 6px; width: 100%;
+    text-align: left; cursor: pointer;
+    position: relative; overflow: hidden;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: border-color .15s, background .15s, transform .1s;
+    touch-action: manipulation;
+  }
+  .opt:active {
+    transform: scale(0.98);
+    transition-duration: .05s;
+  }
+
+  .opt::before {
+    content: ''; position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform .15s;
+  }
+  .opt.sel::before { transform: scaleY(1); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .opt:hover {
+      border-color: var(--accent);
+      background: var(--bg-elevated);
+    }
+    .opt:hover .key { color: var(--accent); }
+  }
+
+  .opt.sel {
+    border-color: var(--accent);
+    background: var(--bg-elevated);
+    box-shadow: 0 0 12px var(--accent-glow2);
+  }
+
+  .txt { font-size: 15px; color: var(--text); line-height: 1.4; flex: 1; }
+
+  /* Radio / checkbox indicator */
+  .indicator {
+    margin-left: auto; width: 18px; height: 18px;
+    border: 1.5px solid var(--border); border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s, border-color .15s;
+  }
+  .opt.sel .indicator { background: var(--accent); border-color: var(--accent); }
+  .indicator::after {
+    content: ''; width: 6px; height: 6px;
+    background: white; border-radius: 50%;
+    opacity: 0; transition: opacity .15s;
+  }
+  .opt.sel .indicator::after { opacity: 1; }
+
+  /* Checkbox variant (multi) */
+  .opt.multi .indicator { border-radius: 3px; }
+  .opt.multi.sel .indicator::after {
+    width: 9px; height: 5px;
+    background: transparent; border-radius: 0;
+    border-left: 2px solid white; border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  /* ───── INPUTS ───── */
+  .field { margin-bottom: 16px; text-align: left; }
+  .field-label {
+    display: block; margin-bottom: 7px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px; letter-spacing: 3px; color: var(--text-muted);
+    text-align: center;
+  }
+  .field-error {
+    font-size: 12px; color: var(--accent); margin-top: 4px;
+    display: none;
+  }
+  .field-input.invalid { border-color: var(--accent); }
+  .btn-loading { pointer-events: none; opacity: 0.7; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .field-input {
+    width: 100%; padding: 13px 14px;
+    background: var(--input-bg); border: 1.5px solid var(--border);
+    border-radius: 6px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    outline: none; transition: border-color .15s, box-shadow .15s;
+  }
+  .field-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .field-input::placeholder { color: var(--text-muted); }
+
+  /* ───── PRIVACY ───── */
+  .sep { height: 1px; background: var(--border); margin: 20px 0; }
+
+  .privacy {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 6px; padding: 14px; margin-bottom: 22px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .privacy:hover { border-color: var(--accent); }
+  .privacy.on { border-color: var(--accent); background: var(--bg-elevated); }
+
+  .pbox {
+    width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+    border: 1.5px solid var(--border); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s, border-color .15s;
+  }
+  .privacy.on .pbox { background: var(--accent); border-color: var(--accent); }
+  .pbox::after {
+    content: ''; display: none;
+    width: 9px; height: 5px;
+    border-left: 2px solid white; border-bottom: 2px solid white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .privacy.on .pbox::after { display: block; }
+  .ptxt { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
+  .ptxt a { color: var(--accent); text-decoration: none; }
+
+  /* ───── BUTTONS ───── */
+  .btn-primary {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; padding: 18px 32px;
+    background: linear-gradient(135deg, var(--accent) 0%, #D42B2B 100%);
+    border: none; border-radius: 6px; color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 3px;
+    cursor: pointer; position: relative; overflow: hidden;
+    box-shadow: 0 3px 14px var(--accent-glow);
+    transition: transform .18s, box-shadow .18s, background .18s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 55%);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 7px 20px var(--accent-glow);
+  }
+  .btn-primary:active:not(:disabled) { transform: translateY(0); }
+  .btn-primary:disabled {
+    opacity: .35; cursor: not-allowed;
+    transform: none !important; box-shadow: none;
+  }
+
+  .btn-back {
+    background: none; border: none;
+    color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+    font-size: 13px; cursor: pointer;
+    padding: 10px 0; margin-top: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%;
+    transition: color .15s;
+  }
+  .btn-back:hover { color: var(--accent); }
+
+  /* ───── INTRO PAGE ───── */
+  .h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 6vw, 48px);
+    line-height: 1.12; letter-spacing: 1px;
+    color: var(--text); margin-bottom: 12px;
+    text-align: center;
+  }
+  .h1 em { color: var(--accent); font-style: normal; }
+
+  .intro-p {
+    font-size: 14px; color: var(--text-sec);
+    line-height: 1.6; margin-bottom: 24px;
+    font-weight: 300; max-width: 480px;
+    text-align: center; margin-left: auto; margin-right: auto;
+  }
+
+  .stats {
+    display: flex; margin-bottom: 20px;
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .stat {
+    flex: 1; padding: 12px 10px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; color: var(--accent); line-height: 1;
+  }
+  .stat-l {
+    font-size: 10px; color: var(--text-muted);
+    margin-top: 3px; line-height: 1.2;
+  }
+
+  .time-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; }
+
+  /* ───── THANK YOU ───── */
+  .ty-icon {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #D42B2B 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  .ty-icon svg { width: 28px; height: 28px; }
+
+  .ty-h {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(30px, 5.5vw, 48px);
+    letter-spacing: 2px; line-height: 1.08;
+    color: var(--text); text-align: center; margin-bottom: 12px;
+  }
+  .ty-h em { color: var(--accent); font-style: normal; }
+
+  .ty-p {
+    font-size: 15px; color: var(--text-sec);
+    line-height: 1.75; text-align: center;
+    margin-bottom: 28px; font-weight: 300;
+  }
+
+  .ty-box {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px; padding: 20px 22px;
+  }
+  .ty-box-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px; letter-spacing: 3px; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .ty-row { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 11px; }
+  .ty-row:last-child { margin-bottom: 0; }
+  .ty-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px; color: var(--accent); min-width: 22px; line-height: 1.4;
+  }
+  .ty-t { font-size: 14px; color: var(--text-sec); line-height: 1.5; }
+  .ty-t strong { color: var(--text); }
+
+  /* ───── TOAST ───── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(70px);
+    background: var(--accent); color: white;
+    padding: 11px 22px; border-radius: 6px;
+    font-size: 13px; letter-spacing: .3px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.3);
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+    z-index: 200; white-space: nowrap; pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ───── ESITO PAGE ───── */
+  .esito-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px; letter-spacing: 5px; color: var(--accent);
+    margin-bottom: 12px; text-align: center;
+    opacity: 0; animation: fadeUp .6s ease .2s forwards;
+  }
+  .esito-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 6vw, 44px);
+    line-height: 1.1; letter-spacing: 1px;
+    color: var(--text); text-align: center; margin-bottom: 8px;
+    opacity: 0; animation: fadeUp .6s ease .4s forwards;
+  }
+  .esito-heading em { color: var(--accent); font-style: normal; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .esito-hint {
+    font-size: 14px; color: var(--text-sec); line-height: 1.6;
+    text-align: center; margin-bottom: 24px; font-weight: 300;
+  }
+  .esito-hint strong { color: var(--text); }
+
+  .tags-grid {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-bottom: 28px;
+  }
+  .tag-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: rgba(200,32,32,0.08);
+    border: 1.5px solid var(--accent);
+    border-radius: 24px;
+    animation: tagPop .5s cubic-bezier(.34,1.56,.64,1) forwards; opacity: 0;
+    box-shadow: 0 0 16px rgba(200,32,32,0.15);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .tag-badge:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 24px rgba(200,32,32,0.3);
+  }
+  @keyframes tagPop {
+    0%   { opacity: 0; transform: scale(.5) translateY(10px); }
+    60%  { opacity: 1; transform: scale(1.08) translateY(-2px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .tag-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 6px var(--accent); }
+    50%      { box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(200,32,32,0.3); }
+  }
+  .tag-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px; letter-spacing: 2px;
+    color: var(--accent);
+  }
+
+  .tag-details {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 16px 20px; margin-bottom: 20px;
+  }
+  .tag-detail-row {
+    display: flex; gap: 12px; align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .tag-detail-row:last-child { margin-bottom: 0; }
+  .tag-detail-key {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--accent); min-width: 100px; flex-shrink: 0;
+  }
+  .tag-detail-desc {
+    font-size: 13px; color: var(--text-sec); line-height: 1.4;
+  }
+
+  .esito-urgency {
+    background: var(--bg-card);
+    border: 1.5px solid var(--accent);
+    border-radius: 6px; padding: 16px 20px;
+    text-align: center; margin-bottom: 24px;
+  }
+  .esito-urgency p {
+    font-size: 14px; color: var(--text); line-height: 1.5;
+  }
+
+  /* ───── SCORE GAUGE ───── */
+  .score-gauge {
+    margin: 24px auto 28px;
+    text-align: center;
+    opacity: 0; animation: fadeUp .6s ease .6s forwards;
+  }
+  .score-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px; line-height: 1;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(200,32,32,0.4);
+    animation: countPulse .8s ease .8s;
+  }
+  @keyframes countPulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.15); text-shadow: 0 0 40px rgba(200,32,32,0.6); }
+    100% { transform: scale(1); }
+  }
+  .score-max {
+    font-size: 28px; color: var(--text-muted);
+  }
+  .score-dots {
+    display: flex; justify-content: center; gap: 10px;
+    margin-top: 16px;
+  }
+  .score-dot {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+    border: 2px solid var(--border);
+    color: var(--text-muted);
+    opacity: 0;
+    animation: dotIn .4s ease forwards;
+  }
+  .score-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    box-shadow: 0 0 12px rgba(200,32,32,0.4);
+  }
+  @keyframes dotIn {
+    from { opacity: 0; transform: scale(.3); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .esito-desc {
+    font-size: 15px; color: var(--text-sec); line-height: 1.6;
+    text-align: center; margin-bottom: 16px; padding: 0 8px;
+  }
+  .esito-msg {
+    font-size: 14px; color: var(--text); line-height: 1.5;
+    text-align: center; margin-bottom: 24px; font-weight: 500;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border-radius: 6px;
+    border-left: 4px solid var(--accent);
+  }
+
+  /* ───── ESITO REDESIGN ───── */
+  .esito-hero {
+    text-align: center; padding-bottom: 32px;
+    border-bottom: 1px solid var(--border); margin-bottom: 32px;
+  }
+  .esito-tag {
+    display: inline-block; padding: 6px 16px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 4px;
+    color: var(--gold, #D4A24C); background: rgba(212,162,76,0.1);
+    border: 1px solid rgba(212,162,76,0.25); border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .esito-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(26px, 5vw, 40px); line-height: 1.1;
+    letter-spacing: 2px; color: var(--text); margin-bottom: 12px;
+  }
+  .esito-subtitle {
+    font-size: 14px; color: var(--text-sec); line-height: 1.6;
+    max-width: 480px; margin: 0 auto;
+  }
+
+  /* Core Foundation */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+    letter-spacing: 4px; color: var(--accent); margin-bottom: 14px;
+  }
+  .core-card {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 24px; margin-bottom: 32px;
+    position: relative;
+  }
+  .core-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--accent); border-radius: 10px 0 0 10px;
+  }
+  .core-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
+  }
+  .core-icon { font-size: 20px; }
+  .core-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+    letter-spacing: 2px; color: var(--text);
+  }
+  .core-sub {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 8px;
+  }
+  .core-body {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px; margin-bottom: 16px;
+  }
+  .core-desc {
+    font-size: 13px; color: var(--text-sec); line-height: 1.6; flex: 1;
+  }
+  .core-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; background: var(--accent); border: none;
+    border-radius: 6px; color: white; font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 2px; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0; text-decoration: none;
+    transition: background .2s;
+  }
+  .core-cta:hover { background: var(--accent-dark); }
+  .core-markers {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .core-marker {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; background: var(--bg-elevated);
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 11px; color: var(--text-sec);
+  }
+  .core-marker::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: #28a745; flex-shrink: 0;
+  }
+  .core-more {
+    padding: 4px 10px; font-size: 11px; color: var(--text-muted);
+    cursor: default;
+  }
+
+  /* Moduli consigliati */
+  .modules-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px; margin-bottom: 32px;
+  }
+  .mod-card {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 20px;
+    display: flex; flex-direction: column;
+  }
+  .mod-top {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 4px;
+  }
+  .mod-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; background: rgba(200,32,32,0.08);
+  }
+  .mod-info { flex: 1; }
+  .mod-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+    letter-spacing: 1px; color: var(--text);
+  }
+  .mod-meta {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--text-muted);
+  }
+  .mod-score {
+    padding: 1px 6px; border-radius: 3px; font-size: 10px;
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;
+    background: rgba(200,32,32,0.12); color: var(--accent);
+  }
+  .mod-desc {
+    font-size: 12px; color: var(--text-sec); line-height: 1.5;
+    margin: 10px 0;
+  }
+  .mod-tags {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px;
+  }
+  .mod-tag {
+    padding: 2px 8px; font-size: 10px; border-radius: 4px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    color: var(--text-sec);
+  }
+  .mod-markers {
+    list-style: none; padding: 0; margin: 0 0 14px; flex: 1;
+  }
+  .mod-markers li {
+    display: flex; align-items: center; gap: 8px;
+    padding: 3px 0; font-size: 11px; color: var(--text-sec);
+  }
+  .mod-markers li::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; opacity: 0.6;
+  }
+  .mod-btn {
+    display: block; width: 100%; padding: 10px; text-align: center;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text-sec);
+    font-family: 'Bebas Neue', sans-serif; font-size: 11px;
+    letter-spacing: 2px; cursor: pointer;
+    transition: border-color .2s, color .2s;
+    margin-top: auto;
+  }
+  .mod-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Also section */
+  .also-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+    letter-spacing: 4px; color: var(--text-muted); margin-bottom: 12px;
+  }
+  .also-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
+  }
+  .also-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    font-size: 12px; color: var(--text-sec);
+  }
+  .also-chip-icon { font-size: 14px; }
+
+  /* Coach CTA */
+  .coach-card {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 24px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .coach-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(200,32,32,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .coach-text { flex: 1; }
+  .coach-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+    letter-spacing: 1px; color: var(--text); margin-bottom: 2px;
+  }
+  .coach-sub { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .coach-desc { font-size: 12px; color: var(--text-sec); line-height: 1.6; }
+  .coach-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; background: var(--accent); border: none;
+    border-radius: 6px; color: white; font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 2px; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0; transition: background .2s;
+  }
+  .coach-cta:hover { background: var(--accent-dark); }
+
+  /* Bottom section */
+  .esito-bottom {
+    text-align: center; padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .esito-bottom-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+    letter-spacing: 2px; color: var(--text); margin-bottom: 8px;
+  }
+  .esito-bottom-desc {
+    font-size: 13px; color: var(--text-sec); margin-bottom: 16px;
+  }
+  .esito-bottom-btns {
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+  }
+  .esito-btn-outline {
+    padding: 10px 24px; background: transparent;
+    border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text-sec); font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 2px; cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .esito-btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ───── PANEL ACCORDION ───── */
+  .panel-accordion {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    border-radius: 10px; margin-bottom: 10px; overflow: hidden;
+  }
+  .panel-accordion-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background .15s;
+  }
+  .panel-accordion-header:hover { background: var(--bg-elevated); }
+  .panel-accordion-name {
+    font-family: 'Bebas Neue', sans-serif; font-size: 17px;
+    letter-spacing: 2px; color: var(--text);
+  }
+  .panel-accordion-toggle {
+    font-size: 12px; color: var(--accent);
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;
+    display: flex; align-items: center; gap: 6px;
+    flex-shrink: 0;
+  }
+  .panel-accordion-arrow {
+    transition: transform .3s ease;
+    display: inline-block;
+  }
+  .panel-accordion.open .panel-accordion-arrow { transform: rotate(180deg); }
+  .panel-accordion-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s ease;
+  }
+  .panel-accordion.open .panel-accordion-body { max-height: 600px; }
+  .panel-accordion-content {
+    padding: 0 20px 20px; border-top: 1px solid var(--border);
+  }
+  .panel-accordion-focus {
+    font-size: 13px; color: var(--text-sec); line-height: 1.5;
+    margin: 14px 0 10px;
+  }
+  .panel-accordion-target {
+    font-size: 12px; color: var(--text-muted); line-height: 1.4;
+    margin-bottom: 12px; font-style: italic;
+  }
+  .panel-accordion-markers {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .panel-accordion-markers li {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; background: var(--bg-elevated);
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 11px; color: var(--text-sec);
+  }
+  .panel-accordion-markers li::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; opacity: 0.6;
+  }
+
+  /* Membership badge */
+  .membership-badge {
+    display: inline-block; padding: 3px 10px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 9px;
+    letter-spacing: 2px; color: #28a745;
+    background: rgba(40,167,69,0.1); border: 1px solid rgba(40,167,69,0.25);
+    border-radius: 4px; margin-left: 10px; vertical-align: middle;
+  }
+
+  /* ───── RESPONSIVE — MOBILE FULL-SCREEN (90% of users) ───── */
+  @media (max-width: 768px) {
+
+    /* ── Layout: full-screen, safe areas ── */
+    .wrap {
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: center !important;
+      flex-direction: column !important;
+      padding: 48px 20px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    #root {
+      width: 100% !important;
+      margin: auto 0 !important;
+    }
+    .card {
+      max-width: 100% !important;
+      width: 100% !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+      text-align: center !important;
+    }
+
+    /* ── Progress bar ── */
+    .bar-track { height: 4px; }
+    .counter { top: 16px; right: 18px; font-size: 13px; }
+
+    /* ── Step label: centered with lines ── */
+    .label {
+      font-size: 12px; letter-spacing: 5px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .label::before, .label::after {
+      content: ''; flex: 0 0 40px; height: 1px; background: var(--border);
+    }
+
+    /* ── Question text: big, centered ── */
+    .question {
+      font-size: 30px !important;
+      margin-bottom: 10px;
+      line-height: 1.12;
+      text-align: center !important;
+    }
+    .hint {
+      font-size: 15px;
+      margin-bottom: 22px;
+      line-height: 1.5;
+      text-align: center !important;
+    }
+
+    /* ── Options: full-width, large touch targets, centered ── */
+    .options {
+      gap: 10px; margin-bottom: 24px;
+      width: 100%;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .opt {
+      padding: 16px 18px !important;
+      min-height: 56px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 10px;
+      justify-content: space-between;
+    }
+    .txt { font-size: 16px !important; }
+    .key { font-size: 12px; }
+    .indicator { width: 22px; height: 22px; }
+
+    /* ── AVANTI button: full-width, tall, unmissable ── */
+    .btn-primary {
+      width: 100% !important;
+      min-height: 58px !important;
+      padding: 18px 32px !important;
+      font-size: 19px !important;
+      letter-spacing: 4px;
+      border-radius: 10px;
+    }
+    .btn-back {
+      margin-top: 12px; padding: 12px 0; font-size: 15px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* ── Contact form: bigger inputs, centered labels ── */
+    .field { margin-bottom: 18px; width: 100%; }
+    .field-label {
+      font-size: 11px; letter-spacing: 3px; margin-bottom: 8px;
+      text-align: center; display: block;
+    }
+    .field-input {
+      padding: 16px 18px !important; font-size: 17px !important;
+      border-radius: 10px; width: 100%;
+    }
+    .privacy {
+      padding: 16px; margin-bottom: 24px; border-radius: 10px;
+      text-align: left;
+    }
+    .ptxt { font-size: 14px; }
+    .sep { margin: 24px 0; }
+
+    /* ── Intro page ── */
+    .h1 { font-size: 36px; text-align: center; }
+    .intro-p { font-size: 15px; line-height: 1.6; text-align: center; padding: 0 4px; }
+    .logo-wrap { margin-bottom: 16px !important; }
+    .logo-img { max-width: 140px; }
+    .time-note { text-align: center; }
+
+    /* ── Stats: horizontal on mobile too (compact) ── */
+    .stats { flex-direction: row; }
+    .stat {
+      border-right: 1px solid var(--border); border-bottom: none;
+      padding: 14px 8px;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-size: 22px; }
+    .stat-l { font-size: 10px; }
+
+    /* ── Esito page ── */
+    .esito-hero { text-align: center; }
+    .esito-title { text-align: center; }
+    .esito-subtitle { text-align: center; padding: 0 4px; }
+
+    /* Score gauge */
+    .score-gauge { text-align: center; }
+    .score-dots { justify-content: center; }
+
+    /* Tags grid */
+    .tags-grid { justify-content: center; }
+
+    /* Core panel */
+    .core-card { padding: 20px; }
+    .core-body { flex-direction: column; }
+    .core-header { justify-content: center; }
+    .core-sub { text-align: center; }
+    .core-desc { text-align: center; }
+    .core-markers { justify-content: center; }
+    .core-cta { width: 100%; justify-content: center; }
+
+    /* Modules */
+    .modules-grid { grid-template-columns: 1fr !important; gap: 12px; }
+    .mod-card { padding: 18px; }
+    .mod-btn { padding: 12px; font-size: 12px; }
+
+    /* Panel accordion */
+    .panel-accordion { padding: 16px; }
+
+    /* Coach card */
+    .coach-card { flex-direction: column; text-align: center; align-items: center; }
+    .coach-cta { width: 100%; justify-content: center; }
+
+    /* Tag details */
+    .tag-detail-row { flex-direction: column; gap: 2px; }
+    .tag-detail-key { min-width: auto; text-align: center; }
+    .tag-detail-desc { text-align: center; }
+
+    /* Bottom CTA */
+    .esito-bottom { text-align: center; }
+    .esito-bottom-btns { flex-direction: column; gap: 10px; }
+    .esito-btn-outline { width: 100%; }
+
+    /* ── Payment page ── */
+    .ty-h { text-align: center; }
+    .ty-p { text-align: center; }
+    .ty-box { padding: 18px; }
+    .ty-icon { margin: 0 auto 20px; }
+  }
+
+  /* ── Small phones (< 380px) ── */
+  @media (max-width: 380px) {
+    .wrap { padding: 48px 16px calc(16px + env(safe-area-inset-bottom, 0px)) !important; }
+    .question { font-size: 26px !important; }
+    .opt { padding: 14px 14px !important; min-height: 52px !important; }
+    .txt { font-size: 15px !important; }
+    .btn-primary { min-height: 54px !important; font-size: 17px !important; }
+    .score-number { font-size: 60px; }
+    .tag-badge { padding: 8px 14px; }
+    .tag-name { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDGGVVFF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="bar-track"><div class="bar-fill" id="bar" style="width:0"></div></div>
+<div class="counter" id="counter" style="display:none">STEP <b id="cs">1</b> / <b>15</b></div>
+<div class="wrap"><div id="root"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════
+   ANALYTICS
+════════════════════════════════════════ */
+window.dataLayer = window.dataLayer || [];
+var UTM = {};
+try { var sp = new URLSearchParams(window.location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ if(sp.get(k)) UTM[k]=sp.get(k); });
+} catch(e){}
+function track(event, params) {
+  var seg = getSegment();
+  window.dataLayer.push(Object.assign({ event: event, segment: seg || '' }, params));
+}
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+var S = (function() {
+  try {
+    var saved = sessionStorage.getItem('sdf_state');
+    if (saved) { var p = JSON.parse(saved); if (p && typeof p.step === 'number') return p; }
+  } catch(e) {}
+  return { step: 0, a: {}, privacy: false, sent: false, startTime: null };
+})();
+function saveState() { try { sessionStorage.setItem('sdf_state', JSON.stringify(S)); } catch(e) {} }
+var LAST_CONTENT = 15;
+
+/* ════════════════════════════════════════
+   STEP DEFINITIONS
+════════════════════════════════════════ */
+var COMMON_START = [
+  { t: 'intro' },
+  { t: 'single', k: 'sex', label: 'STEP 1',
+    q: 'QUAL \u00c8 IL\nTUO SESSO?', hint: 'Se alzi meno della tua anima gemella abbiamo un problema. Oppure \u00e8 il nostro prossimo cliente.',
+    opts: [{ k:'M', v:'Uomo' }, { k:'F', v:'Donna' }] },
+  { t: 'single', k: 'age', label: 'STEP 2',
+    q: "QUAL \u00c8 LA TUA\nFASCIA D'ET\u00c0?", hint: 'Non \u00e8 mai troppo tardi per spostare il FERRO.',
+    opts: [{ k:'u30', v:'- 30' }, { k:'30-39', v:'30 - 39' }, { k:'40-49', v:'40 - 49' }, { k:'50+', v:'50 +' }] },
+  { t: 'single', k: 'training', label: 'STEP 3',
+    q: 'COME TI ALLENI\nATTUALMENTE?', hint: 'Se fai gambe sulla spin bike chiudi subito.',
+    opts: [{ k:'none', v:'Non mi alleno' }, { k:'2-3', v:'2-3 allenamenti a settimana' }, { k:'4+', v:'4+ a settimana' }, { k:'agonista', v:'Sono un atleta agonista' }] },
+  { t: 'single', k: 'pharma', label: 'STEP 4',
+    q: 'UTILIZZI O HAI UTILIZZATO\nFARMACI / DOPING / ANABOLIZZANTI?', hint: 'Qui non si giudica, ma si aiuta',
+    opts: [{ k:'mai', v:'Mai utilizzati' }, { k:'passato', v:'Li ho utilizzati in passato' }, { k:'attuale', v:'Li utilizzo attualmente' }, { k:'no_risposta', v:'Preferisco non rispondere' }] },
+  { t: 'single', k: 'energia', label: 'STEP 5',
+    q: 'COME TI SENTI\nNEGLI ULTIMI MESI?', hint: 'Sempre in pre-gara? Qualcosa non quadra.',
+    opts: [{ k:'molto_energico', v:'Molto energico' }, { k:'normale', v:'Normale' }, { k:'a_volte_stanco', v:'A volte stanco' }, { k:'sempre_stanco', v:'Sempre stanco' }] },
+  { t: 'single', k: 'sonno', label: 'STEP 6',
+    q: 'COME DORMI\nDI SOLITO?', hint: 'Se per dormire prendi pi\u00f9 roba che al Tomorrowland, forse non siamo al top.',
+    opts: [{ k:'molto_bene', v:'Dormo molto bene' }, { k:'abbastanza', v:'Dormo abbastanza bene' }, { k:'disturbato', v:'Ho un sonno disturbato' }, { k:'pessimo', v:'Ho un sonno disturbato e mi sveglio stanco' }] },
+  { t: 'single', k: 'recupero', label: 'STEP 7',
+    q: 'COME RECUPERI DOPO\nL\u2019ALLENAMENTO?', hint: 'Se fai gambe e non sei smontato chiudi, intendiamo gli altri allenamenti.',
+    opts: [{ k:'veloce', v:'Recupero veloce' }, { k:'normale', v:'Recupero normale' }, { k:'lento', v:'Recupero lento' }, { k:'non_recupero', v:'Non recupero' }] }
+];
+
+var BRANCHES = {
+  M: [
+    { t:'single', k:'libido', label:'STEP 8', q:'COME VALUTERESTI\nLA TUA LIBIDO?', hint:'80 voglia Disco Party.',
+      opts:[{k:'molto_alta',v:'Molto alta'},{k:'normale',v:'Normale'},{k:'bassa',v:'Bassa'},{k:'molto_bassa',v:'Molto bassa'}] },
+    { t:'single', k:'performance_sex', label:'STEP 9', q:'COME VALUTERESTI LA TUA\nPERFORMANCE SESSUALE?', hint:'Squattare i piloni di cemento non vale.',
+      opts:[{k:'ottima',v:'Ottima'},{k:'normale',v:'Normale'},{k:'in_calo',v:'In calo'},{k:'pessima',v:'Pessima da tempo'}] }
+  ],
+  F: [
+    { t:'single', k:'ciclo', label:'STEP 8', q:'COME DESCRIVERESTI\nIL TUO CICLO MESTRUALE?', hint:'Se hai la gara tra una settimana fai rispondere al tuo alter-ego.',
+      opts:[{k:'regolare',v:'Regolare'},{k:'legg_irregolare',v:'Leggermente irregolare'},{k:'molto_irregolare',v:'Molto irregolare'},{k:'no_ciclo',v:'Non ho ciclo'}] },
+    { t:'single', k:'energia_ciclo', label:'STEP 9', q:'COM\u2019\u00c8 LA TUA ENERGIA\nDURANTE IL CICLO?', hint:'S\u00ec, lo sappiamo che rimbalza tipo pungiball, ma pi\u00f9 o meno?',
+      opts:[{k:'elevata',v:'Elevata'},{k:'accettabile',v:'Accettabile'},{k:'bassa',v:'Bassa'},{k:'molto_bassa',v:'Molto bassa'}] }
+  ]
+};
+
+var COMMON_AFTER = [
+  { t:'single', k:'grasso', label:'STEP 10', q:'HAI PROBLEMI CON\nL\u2019ACCUMULO DI GRASSO?', hint:'Il FERRO non conosce il grasso.',
+    opts:[{k:'no',v:'Non ho problemi'},{k:'fatica',v:'Faccio fatica a dimagrire'},{k:'accumulo',v:'Accumulo grasso molto facilmente'}] },
+  { t:'single', k:'fame', label:'STEP 11', q:'COME DESCRIVERESTI\nLA TUA FAME?', hint:'Markus Ruhl frullava le scatolette di tonno, e tu?',
+    opts:[{k:'normale',v:'Normale'},{k:'bassa',v:'Bassa, fatico a mangiare'},{k:'zuccheri',v:'Voglia frequente di zuccheri'},{k:'incontrollata',v:'Fame incontrollata'}] },
+  { t:'single', k:'pressione', label:'STEP 12', q:'LA TUA PRESSIONE\nSANGUIGNA?', hint:'La marmellata va bene solo sulle gallette di riso',
+    opts:[{k:'bassa',v:'Bassa'},{k:'normale',v:'Normale'},{k:'legg_alta',v:'Leggermente alta'},{k:'alta',v:'Alta'},{k:'non_so',v:'Non lo so'}] },
+  { t:'single', k:'colesterolo', label:'STEP 13', q:'IL TUO LIVELLO\nDI COLESTEROLO?', hint:'Riso pollo e broccoli e poi questo \u00e8 il risultato? Houston abbiamo un problema.',
+    opts:[{k:'normale',v:'Normale'},{k:'alto',v:'Alto'},{k:'non_so',v:'Non lo so'}] },
+  { t:'multi', k:'assunzione', label:'STEP 14', q:'ASSUMI REGOLARMENTE\nQUALCUNO DI QUESTI?', hint:'Seleziona tutte le opzioni pertinenti, poi clicca Avanti.',
+    opts:[{k:'farmaci',v:'Farmaci'},{k:'alcol',v:'Alcol'},{k:'integratori',v:'Integratori'},{k:'nulla',v:'Nulla di particolare',exclusive:true}] },
+  { t:'single', k:'analisi', label:'STEP 15', q:'QUANDO HAI FATTO L\u2019ULTIMA\nANALISI DEL SANGUE?', hint:'Quelle di Ferro arriveranno.',
+    opts:[{k:'6m',v:'Meno di 6 mesi fa'},{k:'6-12m',v:'Tra 6 e 12 mesi fa'},{k:'12m+',v:'Pi\u00f9 di un anno fa'},{k:'mai',v:'Mai'}] }
+];
+
+var COMMON_END = [
+  { t: 'contacts', label: 'I TUOI DATI',
+    q: 'LASCIACI I TUOI DATI\nPER PROCEDERE',
+    hint: 'Ti serve meno di 1 minuto' },
+  { t: 'esito' },
+  { t: 'payment' }
+];
+
+/* ════════════════════════════════════════
+   HASHTAG RULES — answer → hashtag tags
+════════════════════════════════════════ */
+var HASHTAG_RULES = {
+  age:            { u30:[], '30-39':[], '40-49':['over40','prevenzione'], '50+':['over40','prevenzione'] },
+  training:       { none:[], '2-3':['fitness'], '4+':['atleta','performance'], agonista:['atleta','performance'] },
+  pharma:         { mai:['natural'], passato:['postcycle'], attuale:['enhanced','monitoraggio'], no_risposta:['monitoraggio'] },
+  energia:        { molto_energico:[], normale:[], a_volte_stanco:['energia','fatica'], sempre_stanco:['energia','fatica','recupero'] },
+  sonno:          { molto_bene:[], abbastanza:[], disturbato:['sonno','cortisolo'], pessimo:['sonno','cortisolo','stress'] },
+  recupero:       { veloce:[], normale:[], lento:['recupero','infiammazione'], non_recupero:['recupero','infiammazione'] },
+  libido:         { molto_alta:[], normale:[], bassa:['testosterone','libido'], molto_bassa:['testosterone','libido'] },
+  performance_sex:{ ottima:[], normale:[], in_calo:['testosterone','ormoni'], pessima:['testosterone','ormoni'] },
+  ciclo:          { regolare:[], legg_irregolare:['equilibrioormonale'], molto_irregolare:['equilibrioormonale','ciclo'], no_ciclo:['ciclo'] },
+  energia_ciclo:  { elevata:[], accettabile:[], bassa:['ormoni'], molto_bassa:['ormoni','energia'] },
+  grasso:         { no:[], fatica:['metabolismo','insulina'], accumulo:['metabolismo','insulina'] },
+  fame:           { normale:[], bassa:[], zuccheri:['glicemia','insulina'], incontrollata:['glicemia','insulina'] },
+  pressione:      { bassa:[], normale:[], legg_alta:['cuore','pressione'], alta:['cuore','pressione'], non_so:[] },
+  colesterolo:    { normale:[], alto:['colesterolo','cuore'], non_so:[] },
+  assunzione:     { farmaci:['fegato'], alcol:['fegato'], integratori:['fegato'], nulla:[] },
+  analisi:        { '6m':[], '6-12m':[], '12m+':['checkup'], mai:['checkup','prevenzione'] }
+};
+
+var TAG_INFO = {
+  testosterone:       { name:'#TESTOSTERONE',        desc:'Il testosterone va misurato e monitorato' },
+  cuore:              { name:'#CUORE',               desc:'Il cuore merita un controllo approfondito' },
+  fegato:             { name:'#FEGATO',              desc:'La funzionalit\u00e0 epatica va monitorata' },
+  ormoni:             { name:'#ORMONI',              desc:'Il profilo ormonale richiede attenzione' },
+  metabolismo:        { name:'#METABOLISMO',         desc:'Metabolismo e insulina da controllare' },
+  recupero:           { name:'#RECUPERO',            desc:'Il recupero indica lo stato infiammatorio' },
+  energia:            { name:'#ENERGIA',             desc:'I livelli di energia vanno indagati' },
+  sonno:              { name:'#SONNO',               desc:'La qualit\u00e0 del sonno impatta su tutto' },
+  cortisolo:          { name:'#CORTISOLO',           desc:'I livelli di stress vanno valutati' },
+  stress:             { name:'#STRESS',              desc:'Lo stress cronico altera i parametri' },
+  performance:        { name:'#PERFORMANCE',         desc:'Le tue performance meritano un check\u2011up' },
+  prevenzione:        { name:'#PREVENZIONE',         desc:'La prevenzione \u00e8 il miglior investimento' },
+  checkup:            { name:'#CHECK\u2011UP',       desc:'\u00c8 ora di fare un check\u2011up completo' },
+  monitoraggio:       { name:'#MONITORAGGIO',        desc:'Monitorare i parametri \u00e8 fondamentale' },
+  libido:             { name:'#LIBIDO',              desc:'La libido \u00e8 un indicatore ormonale chiave' },
+  infiammazione:      { name:'#INFIAMMAZIONE',       desc:'Lo stato infiammatorio va controllato' },
+  insulina:           { name:'#INSULINA',            desc:'La sensibilit\u00e0 insulinica va verificata' },
+  glicemia:           { name:'#GLICEMIA',            desc:'La glicemia va tenuta sotto controllo' },
+  pressione:          { name:'#PRESSIONE',           desc:'La pressione va monitorata regolarmente' },
+  colesterolo:        { name:'#COLESTEROLO',         desc:'I lipidi nel sangue vanno controllati' },
+  reni:               { name:'#RENI',                desc:'La funzionalit\u00e0 renale va verificata' },
+  analisi:            { name:'#ANALISI',             desc:'\u00c8 il momento di fare le analisi' },
+  over40:             { name:'#OVER 40',             desc:'Dopo i 40 il monitoraggio \u00e8 essenziale' },
+  atleta:             { name:'#ATLETA',              desc:'Il tuo livello richiede monitoraggio specifico' },
+  fitness:            { name:'#FITNESS',             desc:'Anche il fitness richiede controlli periodici' },
+  natural:            { name:'#NATURAL',             desc:'Profilo naturale, ottimizzazione possibile' },
+  enhanced:           { name:'#ENHANCED',            desc:'Il monitoraggio medico \u00e8 essenziale' },
+  postcycle:          { name:'#POST CYCLE',          desc:'Il post\u2011ciclo richiede controlli specifici' },
+  fatica:             { name:'#FATICA',              desc:'La fatica cronica va indagata' },
+  equilibrioormonale: { name:'#EQUILIBRIO ORMONALE', desc:'L\u2019equilibrio ormonale va verificato' },
+  ciclo:              { name:'#CICLO',               desc:'Il ciclo mestruale va monitorato' },
+  estrogeni:          { name:'#ESTROGENI',           desc:'Il profilo estrogenico va controllato' }
+};
+
+/* ════════════════════════════════════════
+   SCORING SYSTEM
+════════════════════════════════════════ */
+var SCORE_RULES = {
+  pharma:         { mai:1, passato:0, attuale:-1, no_risposta:0 },
+  energia:        { molto_energico:2, normale:1, a_volte_stanco:0, sempre_stanco:-1 },
+  sonno:          { molto_bene:2, abbastanza:1, disturbato:0, pessimo:-1 },
+  recupero:       { veloce:2, normale:1, lento:0, non_recupero:-1 },
+  libido:         { molto_alta:1, normale:1, bassa:0, molto_bassa:-1 },
+  performance_sex:{ ottima:1, normale:0, in_calo:-1, pessima:-1 },
+  ciclo:          { regolare:1, legg_irregolare:0, molto_irregolare:-1, no_ciclo:0 },
+  energia_ciclo:  { elevata:1, accettabile:0, bassa:-1, molto_bassa:-2 },
+  grasso:         { no:1, fatica:0, accumulo:-1 },
+  fame:           { normale:1, bassa:0, zuccheri:0, incontrollata:-1 },
+  pressione:      { bassa:1, normale:2, legg_alta:-1, alta:-1, non_so:0 },
+  colesterolo:    { normale:2, alto:-1, non_so:0 },
+  analisi:        { '6m':3, '6-12m':2, '12m+':1, mai:0 }
+};
+
+var SCORE_LEVELS = [
+  { min:-99, max:2,  level:1, name:'IL KAMIKAZE DELLA PALESTRA',
+    desc:'Ti alleni duro ma la tua salute la controlli pi\u00f9 o meno come controlli le calorie a Natale.',
+    msg:'Prima di pensare al prossimo PR in palestra, forse \u00e8 il caso di dare un\u2019occhiata a cosa succede dentro il tuo corpo.' },
+  { min:3,   max:5,  level:2, name:'IL BODYBUILDER SPERICOLATO',
+    desc:'Ti alleni seriamente, ma la salute la controlli solo quando qualcosa non va.',
+    msg:'Il motore gira, ma non lo stai controllando abbastanza spesso.' },
+  { min:6,   max:8,  level:3, name:'IL BODYBUILDER SEMI-PROFESSIONISTA',
+    desc:'Hai capito che monitorare la salute \u00e8 importante, ma non sei ancora completamente sistematico.',
+    msg:'Sei sulla strada giusta. Con qualche controllo in pi\u00f9 puoi ottimizzare davvero le performance.' },
+  { min:9,   max:11, level:4, name:'ATLETA CONSAPEVOLE',
+    desc:'Sai che la salute \u00e8 parte della performance e monitori il tuo corpo con una certa regolarit\u00e0.',
+    msg:'Sei tra quelli che capiscono che la vera forza \u00e8 anche sapere cosa succede dentro il proprio corpo.' },
+  { min:12,  max:99, level:5, name:'SALUTE DI FERRO',
+    desc:'Monitori regolarmente i tuoi parametri e tratti il tuo corpo come una macchina da gara.',
+    msg:'Non lasci nulla al caso. Questo \u00e8 il livello a cui ogni atleta dovrebbe arrivare.' }
+];
+
+function computeScore() {
+  var total = 0;
+  var keys = Object.keys(SCORE_RULES);
+  keys.forEach(function(key) {
+    var answer = S.a[key];
+    if (!answer || !SCORE_RULES[key]) return;
+    var pts = SCORE_RULES[key][answer];
+    if (typeof pts === 'number') total += pts;
+  });
+  return Math.max(0, total);
+}
+
+function getScoreLevel(score) {
+  for (var i = 0; i < SCORE_LEVELS.length; i++) {
+    if (score >= SCORE_LEVELS[i].min && score <= SCORE_LEVELS[i].max) return SCORE_LEVELS[i];
+  }
+  return SCORE_LEVELS[0];
+}
+
+function computeTags() {
+  var tagSet = {};
+  var allKeys = Object.keys(HASHTAG_RULES);
+  allKeys.forEach(function(key) {
+    var answer = S.a[key];
+    if (!answer || !HASHTAG_RULES[key]) return;
+    if (Array.isArray(answer)) {
+      answer.forEach(function(a) { (HASHTAG_RULES[key][a] || []).forEach(function(tag) { tagSet[tag] = (tagSet[tag]||0) + 1; }); });
+    } else {
+      (HASHTAG_RULES[key][answer] || []).forEach(function(tag) { tagSet[tag] = (tagSet[tag]||0) + 1; });
+    }
+  });
+  var sorted = Object.keys(tagSet).sort(function(a,b) { return tagSet[b] - tagSet[a]; });
+  return sorted.slice(0, 3);
+}
+
+/* ════════════════════════════════════════
+   SEGMENT + DYNAMIC STEPS
+════════════════════════════════════════ */
+function getSexLetter() {
+  var sex = S.a.sex;
+  if (!sex) return null;
+  return sex === 'M' ? 'M' : 'F';
+}
+function getSegment() {
+  var base = getSexLetter();
+  if (!base) return null;
+  var age = S.a.age;
+  if (!age) return base;
+  var over40 = (age === '40-49' || age === '50+');
+  return base + (over40 ? '_O40' : '_U40');
+}
+
+function getSteps() {
+  var sex = getSexLetter();
+  var branch = sex && BRANCHES[sex] ? BRANCHES[sex] : BRANCHES['M'];
+  return COMMON_START.concat(branch).concat(COMMON_AFTER).concat(COMMON_END);
+}
+
+/* ════════════════════════════════════════
+   SEND
+════════════════════════════════════════ */
+async function sendLead() {
+  var c = S.a.contacts || {};
+  var score = computeScore();
+  var lvl = getScoreLevel(score);
+  // Resolve option keys to human-readable text
+  function resolveKey(stepKey, val) {
+    if (!val) return '';
+    var steps = getSteps();
+    for (var i = 0; i < steps.length; i++) {
+      if (steps[i].k === stepKey && steps[i].opts) {
+        var opt = steps[i].opts.find(function(o) { return o.k === val; });
+        if (opt) return opt.v;
+      }
+    }
+    return val;
+  }
+  function resolveMulti(stepKey, vals) {
+    if (!Array.isArray(vals) || vals.length === 0) return [];
+    return vals.map(function(v) { return resolveKey(stepKey, v); });
+  }
+  var payload = {
+    name: c.name || '', phone: c.phone || '', email: c.email || '', referral: S.a.referral || '',
+    segment: getSegment() || '',
+    sex: resolveKey('sex', S.a.sex), age: resolveKey('age', S.a.age),
+    training: resolveKey('training', S.a.training),
+    pharma: resolveKey('pharma', S.a.pharma), energia: resolveKey('energia', S.a.energia),
+    sonno: resolveKey('sonno', S.a.sonno), recupero: resolveKey('recupero', S.a.recupero),
+    libido: resolveKey('libido', S.a.libido), performance_sex: resolveKey('performance_sex', S.a.performance_sex),
+    ciclo: resolveKey('ciclo', S.a.ciclo), energia_ciclo: resolveKey('energia_ciclo', S.a.energia_ciclo),
+    grasso: resolveKey('grasso', S.a.grasso), fame: resolveKey('fame', S.a.fame),
+    pressione: resolveKey('pressione', S.a.pressione), colesterolo: resolveKey('colesterolo', S.a.colesterolo),
+    assunzione: resolveMulti('assunzione', S.a.assunzione),
+    analisi: resolveKey('analisi', S.a.analisi),
+    tags: computeTags(), score: score, score_level: lvl.level, score_name: lvl.name,
+    suggested_panels: recommendPanels().join(', '),
+    panel_scores: (function() { var s = computePanelScores(); var r = {}; for (var i = 0; i < PANEL_KEYS.length; i++) r[PANEL_KEYS[i]] = s[i]; return r; })()
+  };
+  try { var res = await fetch('/send-lead', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) }); if(res.ok){track('quiz_submit_success',{});}else{track('quiz_submit_error',{error_type:'http_'+res.status});} } catch(e){ console.error(e); track('quiz_submit_error',{error_type:e.message||'network'}); }
+  try { var prev = JSON.parse(localStorage.getItem('sdf_leads')||'[]'); prev.push(Object.assign({}, payload, {id:Date.now(), ts:new Date().toISOString()})); localStorage.setItem('sdf_leads', JSON.stringify(prev)); } catch(e){}
+}
+
+/* ════════════════════════════════════════
+   RENDER
+════════════════════════════════════════ */
+function render() {
+  var steps = getSteps();
+  var step = steps[S.step];
+  var contentSteps = steps.length - 2; // exclude intro and thanks
+
+  var el = { bar: document.getElementById('bar'), counter: document.getElementById('counter'), cs: document.getElementById('cs') };
+  if (S.step === 0 || step.t === 'esito' || step.t === 'payment') {
+    el.bar.style.width = step.t === 'payment' ? '100%' : step.t === 'esito' ? '97%' : '0%';
+    el.counter.style.display = 'none';
+  } else if (step.t === 'contacts') {
+    el.bar.style.width = '95%';
+    el.counter.style.display = 'none';
+  } else {
+    var stepNum = step.label ? step.label.replace('STEP ', '') : S.step;
+    el.bar.style.width = (parseInt(stepNum) / LAST_CONTENT * 100) + '%';
+    el.counter.style.display = 'block';
+    el.cs.textContent = stepNum;
+  }
+
+  if (step.t === 'intro') {
+    track('quiz_intro_view', UTM);
+  } else if (step.t === 'payment') {
+    track('payment_view', {});
+  } else {
+    track('quiz_step_view', { step_number: S.step, step_name: step.k || step.t });
+  }
+  S.stepStartTime = Date.now();
+
+  var html = '';
+  if (step.t === 'intro')    html = buildIntro();
+  if (step.t === 'single')   html = buildOptions(step);
+  if (step.t === 'multi')    html = buildOptions(step);
+  if (step.t === 'esito')    html = buildEsito();
+  if (step.t === 'contacts') html = buildContacts(step);
+  if (step.t === 'payment')  html = buildPayment();
+
+  var root = document.getElementById('root');
+  var old  = root.querySelector('.card');
+  function inject() { root.innerHTML = '<div class="card">' + html + '</div>'; }
+  if (old) { old.classList.add('out'); setTimeout(inject, 210); } else { inject(); }
+}
+
+/* ════════════════════════════════════════
+   BUILDERS
+════════════════════════════════════════ */
+function buildIntro() {
+  return '<div class="logo-wrap"><picture><source srcset="/LOGO.webp" type="image/webp"><img src="/LOGO-opt.png" alt="Salute di Ferro" class="logo-img" width="427" height="584" loading="eager"></picture></div>' +
+    '<div class="h1">SCOPRI IL TUO<br><em>STATO DI SALUTE</em></div>' +
+    '<p class="intro-p">Rispondi a poche domande per permetterci di costruire il percorso pi\u00f9 adatto a te. Ci vogliono solo 2 minuti.</p>' +
+    '<button class="btn-primary" type="button" onclick="startQuiz()">INIZIA IL TEST</button>' +
+    '<div class="stats"><div class="stat"><div class="stat-n">72H</div><div class="stat-l">Max per i tuoi esami</div></div>' +
+    '<div class="stat"><div class="stat-n">100%</div><div class="stat-l">Medici specializzati</div></div>' +
+    '<div class="stat"><div class="stat-n">ZERO</div><div class="stat-l">Sbatti per te</div></div></div>' +
+    '<p class="time-note">Pochi dettagli e partiamo</p>';
+}
+
+var shuffledOpts = {};
+function getShuffledOpts(step) {
+  if (!shuffledOpts[step.k]) {
+    var arr = step.opts.slice();
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    shuffledOpts[step.k] = arr;
+  }
+  return shuffledOpts[step.k];
+}
+
+function buildOptions(step) {
+  var isMulti = step.t === 'multi';
+  var sel = S.a[step.k] || (isMulti ? [] : '');
+  var hasAny = isMulti ? sel.length > 0 : !!sel;
+  var opts = '';
+  var shuffled = getShuffledOpts(step);
+  shuffled.forEach(function(o) {
+    var active = isMulti ? sel.includes(o.k) : sel === o.k;
+    opts += '<button type="button" class="opt' + (isMulti ? ' multi' : '') + (active ? ' sel' : '') + '" data-key="' + o.k + '" onclick="pick(\'' + step.k + '\',\'' + o.k + '\',' + isMulti + ')">' +
+      '<span class="txt">' + o.v + '</span><span class="indicator"></span></button>';
+  });
+  return '<div class="label">' + step.label + '</div>' +
+    '<div class="question">' + step.q.replace('\n', '<br>') + '</div>' +
+    '<div class="options">' + opts + '</div>' +
+    '<button class="btn-primary" id="cta" type="button" onclick="goNext()" ' + (!hasAny ? 'disabled' : '') + '>AVANTI</button>' +
+    (S.step > 1 ? '<button class="btn-back" type="button" onclick="goBack()">\u2190 Torna indietro</button>' : '');
+}
+
+function buildContacts(step) {
+  var c = S.a.contacts || {};
+  var ok = c.name && c.phone && c.email && S.privacy && isValidEmail(c.email||'') && isValidPhone(c.phone||'');
+  return '<div class="label">' + step.label + '</div>' +
+    '<div class="question">' + step.q.replace('\n', '<br>') + '</div>' +
+    '<p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:18px;">Ti serve meno di 1 minuto</p>' +
+    '<div class="field"><label class="field-label">NOME E COGNOME</label><input class="field-input" type="text" placeholder="Mario Rossi" value="' + (c.name||'') + '" oninput="setContact(\'name\',this.value)" onfocus="track(\'quiz_field_focus\',{field_name:\'name\'})" autocomplete="name"></div>' +
+    '<div class="field"><label class="field-label">NUMERO DI TELEFONO</label><input class="field-input" type="tel" placeholder="+39 333 123 4567" value="' + (c.phone||'') + '" oninput="setContact(\'phone\',this.value)" onfocus="track(\'quiz_field_focus\',{field_name:\'phone\'})" autocomplete="tel"><div class="field-error" id="err-phone"></div></div>' +
+    '<div class="field"><label class="field-label">EMAIL</label><input class="field-input" type="email" placeholder="nome@email.com" value="' + (c.email||'') + '" oninput="setContact(\'email\',this.value)" onfocus="track(\'quiz_field_focus\',{field_name:\'email\'})" autocomplete="email"><div class="field-error" id="err-email"></div></div>' +
+    '<div class="sep"></div>' +
+    '<div class="privacy' + (S.privacy?' on':'') + '" id="privacy-wrap" onclick="togglePrivacy()"><div class="pbox"></div><p class="ptxt">Dichiaro di aver letto la <a href="/privacy.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Privacy Policy</a> (art. 13 GDPR) e acconsento al trattamento dei miei dati personali.</p></div>' +
+    '<button class="btn-primary" id="cta" type="button" onclick="contactsNext()" ' + (!ok?'disabled':'') + '>AVANTI</button>' +
+    '<button class="btn-back" type="button" onclick="goBack()">\u2190 Torna indietro</button>';
+}
+
+/* ── Panel recommendation engine ── */
+var PANELS = {
+  androgeno: { name:'FERRO ANDROGENO', type:'Add-on', focus:'Asse androgenico completo + coagulazione + omocisteina', tests:12, gender:'M',
+    target:'Uomini sintomatici, TRT, ex/attuali AAS',
+    tags:['testosterone','libido','ormoni','postcycle','enhanced'] },
+  cuore: { name:'FERRO CUORE', type:'Add-on', focus:'Rischio CV avanzato: ApoB, Lp(a), VES, Acido urico', tests:4, gender:'M/F',
+    target:'Familiarit\u00e0 CVD, AAS, ipertensione',
+    tags:['cuore','pressione','colesterolo'] },
+  reni: { name:'FERRO RENI', type:'Add-on', focus:'Funzione renale avanzata + elettroliti', tests:8, gender:'M/F',
+    target:'Bodybuilder, iperproteica, diuretici',
+    tags:['reni'] },
+  fegato: { name:'FERRO FEGATO', type:'Add-on', focus:'Profilo epatico completo', tests:6, gender:'M/F',
+    target:'AAS orali, alcol, farmaci epatotossici',
+    tags:['fegato'] },
+  metabolico: { name:'FERRO METABOLICO', type:'Add-on', focus:'Insulino-resistenza + cortisolo', tests:4, gender:'M/F',
+    target:'Overfat, cut difficile, uso GH, stress',
+    tags:['metabolismo','insulina','glicemia','cortisolo','stress'] },
+  tiroide: { name:'FERRO TIROIDE', type:'Add-on', focus:'Profilo tiroideo completo + autoimmunit\u00e0', tests:4, gender:'M/F',
+    target:'TSH alterato, sospetto autoimmune',
+    tags:['tiroide'] },
+  recovery: { name:'FERRO RECOVERY', type:'Add-on', focus:'Assetto marziale completo + B12/Folati', tests:7, gender:'M/F',
+    target:'Fatigue, diete restrittive, endurance',
+    tags:['energia','fatica','recupero','infiammazione','sonno'] },
+  donna: { name:'FERRO DONNA', type:'Add-on', focus:'Asse ormonale femminile completo', tests:6, gender:'F',
+    target:'Peri-menopausa, amenorrea, PCOS, RED-S',
+    tags:['ciclo','estrogeni','equilibrioormonale'] }
+};
+
+/* ── PANEL SCORING MATRIX v5 ──
+   Ogni risposta assegna punteggi diretti ai pannelli add-on.
+   Ordine: [ANDROGENO, CUORE, RENI, FEGATO, METABOLICO, TIROIDE, RECOVERY, DONNA]
+   Soglia suggerimento: punteggio >= 3 → pannello suggerito. Top 3 mostrati.
+   Suggerimento: se >=3 add-on con score >=3
+*/
+var PANEL_SCORE_MATRIX = {
+  // Q1 Sesso — nessun punteggio diretto, ma filtra genere
+  // Q2 Età
+  age:    { u30:[0,0,0,0,0,0,0,0], '30-39':[0,1,0,0,0,0,0,0], '40-49':[1,2,0,0,1,0,0,'D3'], '50+':[1,2,0,0,2,1,0,'D3'] },
+  // Q3 Frequenza allenamento
+  training:{ none:[0,0,0,0,0,0,0,0], '2-3':[0,0,0,0,0,0,0,0], '4+':[0,0,0,0,0,0,1,0], agonista:[0,0,1,0,0,0,2,0] },
+  // Q4 Uso sostanze
+  pharma: { mai:[0,0,0,0,0,0,0,0], passato:[3,2,0,2,0,0,0,0], attuale:[3,2,2,3,0,0,0,0], no_risposta:[0,0,0,0,0,0,0,0] },
+  // Q5 Come ti senti
+  energia:{ molto_energico:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], a_volte_stanco:[0,0,0,0,0,2,2,0], sempre_stanco:[0,0,0,0,0,3,3,0] },
+  // Q6 Come dormi
+  sonno:  { molto_bene:[0,0,0,0,0,0,0,0], abbastanza:[0,0,0,0,0,0,0,0], disturbato:[0,0,0,0,0,0,2,0], pessimo:[0,0,0,0,0,0,3,0] },
+  // Q7 Come recuperi
+  recupero:{ veloce:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], lento:[0,0,0,0,0,0,2,0], non_recupero:[0,0,1,0,0,0,3,0] },
+  // Q8F Ciclo (donna)
+  ciclo:  { regolare:[0,0,0,0,0,0,0,0], legg_irregolare:[0,0,0,0,0,0,0,0], molto_irregolare:[0,0,0,0,0,0,0,3], no_ciclo:[0,0,0,0,0,0,3,3] },
+  // Q9F Energia ciclo (donna)
+  energia_ciclo:{ elevata:[0,0,0,0,0,0,0,0], accettabile:[0,0,0,0,0,0,0,0], bassa:[0,0,0,0,0,2,2,0], molto_bassa:[0,0,0,0,0,3,3,0] },
+  // Q8M Libido (uomo)
+  libido: { molto_alta:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], bassa:[2,0,0,0,0,0,0,0], molto_bassa:[3,0,0,0,0,0,0,0] },
+  // Q9M Performance sessuale (uomo)
+  performance_sex:{ ottima:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], in_calo:[2,0,0,0,0,0,0,0], pessima:[3,0,0,0,0,0,0,0] },
+  // Q10 Grasso
+  grasso: { no:[0,0,0,0,0,0,0,0], fatica:[0,0,0,0,2,1,0,0], accumulo:[0,0,0,0,3,2,0,0] },
+  // Q11 Fame
+  fame:   { normale:[0,0,0,0,0,0,0,0], bassa:[0,0,0,0,0,0,0,0], zuccheri:[0,0,0,0,2,0,0,0], incontrollata:[0,0,0,0,3,0,0,0] },
+  // Q12 Pressione
+  pressione:{ bassa:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], legg_alta:[0,2,1,0,0,0,0,0], alta:[0,3,2,0,0,0,0,0], non_so:[0,0,0,0,0,0,0,0] },
+  // Q13 Colesterolo
+  colesterolo:{ normale:[0,0,0,0,0,0,0,0], alto:[0,3,0,3,0,0,0,0], non_so:[0,0,0,0,0,0,0,0] },
+  // Q14 Assunzione (multi)
+  assunzione:{ farmaci:[0,0,0,0,0,0,0,0], alcol:[0,0,0,3,0,0,0,0], integratori:[0,0,1,0,0,0,0,0], nulla:[0,0,0,0,0,0,0,0] },
+  // Q15 Analisi sangue
+  analisi:{ '6m':[0,0,0,0,0,0,0,0], '6-12m':[0,0,0,0,0,0,0,0], '12m+':[0,0,0,0,0,0,0,0], mai:[2,0,0,0,0,0,0,0] }
+};
+
+var PANEL_KEYS = ['androgeno','cuore','reni','fegato','metabolico','tiroide','recovery','donna'];
+
+function computePanelScores() {
+  var scores = [0,0,0,0,0,0,0,0]; // same order as PANEL_KEYS
+  var sex = getSexLetter();
+  Object.keys(PANEL_SCORE_MATRIX).forEach(function(key) {
+    var answer = S.a[key];
+    if (!answer) return;
+    var rule = PANEL_SCORE_MATRIX[key];
+    if (Array.isArray(answer)) {
+      // Multi-select: sum scores for each selected option
+      answer.forEach(function(a) {
+        var pts = rule[a];
+        if (!pts) return;
+        for (var i = 0; i < 8; i++) {
+          var v = pts[i];
+          if (typeof v === 'number') scores[i] += v;
+          // Handle conditional "+3 se donna"
+          else if (typeof v === 'string' && v === 'D3' && sex === 'F') scores[7] += 3;
+        }
+      });
+    } else {
+      var pts = rule[answer];
+      if (!pts) return;
+      for (var i = 0; i < 8; i++) {
+        var v = pts[i];
+        if (typeof v === 'number') scores[i] += v;
+        else if (typeof v === 'string' && v === 'D3' && sex === 'F') scores[7] += 3;
+      }
+    }
+  });
+  return scores;
+}
+
+function recommendPanels() {
+  var scores = computePanelScores();
+  var sex = getSexLetter();
+  var result = [];
+  for (var i = 0; i < PANEL_KEYS.length; i++) {
+    var pk = PANEL_KEYS[i];
+    var p = PANELS[pk];
+    // Filter by gender
+    if (p.gender === 'M' && sex === 'F') continue;
+    if (p.gender === 'F' && sex === 'M') continue;
+    if (scores[i] >= 2) result.push({ key: pk, score: scores[i] });
+  }
+  // Sort by score descending, pick top 3
+  result.sort(function(a,b) { return b.score - a.score; });
+  return result.slice(0, 3).map(function(r) { return r.key; });
+}
+
+// Keep computeAllTags for hashtag display
+function computeAllTags() {
+  var tagSet = {};
+  var allKeys = Object.keys(HASHTAG_RULES);
+  allKeys.forEach(function(key) {
+    var answer = S.a[key];
+    if (!answer || !HASHTAG_RULES[key]) return;
+    if (Array.isArray(answer)) {
+      answer.forEach(function(a) { (HASHTAG_RULES[key][a] || []).forEach(function(tag) { tagSet[tag] = (tagSet[tag]||0) + 1; }); });
+    } else {
+      (HASHTAG_RULES[key][answer] || []).forEach(function(tag) { tagSet[tag] = (tagSet[tag]||0) + 1; });
+    }
+  });
+  return tagSet;
+}
+
+var CORE_MARKERS = ['Emocromo completo (con formula e piastrine)','Glicemia a digiuno','Colesterolo totale','HDL-C','LDL-C','Trigliceridi','Creatinina','eGFR (CKD-EPI)','ALT','GGT','TSH','Ferritina','Vitamina D (25-OH)','Testosterone totale','PCR','Sideremia'];
+var PANEL_ICONS = { androgeno:'\u2642', cuore:'\u2764', reni:'\uD83E\uDEC0', fegato:'\uD83E\uDDEA', metabolico:'\u26A1', tiroide:'\uD83E\uDDE0', recovery:'\uD83D\uDCA4', donna:'\u2640' };
+var PANEL_MARKERS = {
+  androgeno:['SHBG','Testosterone libero (calcolato)','LH','FSH','Estradiolo','Prolattina','PSA totale','Fibrinogeno','D-dimero','PT / INR','APTT','Omocisteina'],
+  cuore:['ApoB','Lp(a)','VES','Acido urico'],
+  reni:['Cistatina C','Azotemia (BUN/Urea)','Sodio','Potassio','Calcio','Fosforo','Magnesio','Esame urine'],
+  fegato:['AST','Bilirubina totale','Bilirubina diretta','Fosfatasi alcalina (ALP)','Albumina','Proteine totali'],
+  metabolico:['HbA1c','Insulina a digiuno','HOMA-IR (calcolato)','Cortisolo mattutino'],
+  tiroide:['fT4','fT3','Anti-TPO','Anti-Tg'],
+  recovery:['Sideremia','Transferrina','Saturazione transferrina','TIBC','Vitamina B12','Folati','Reticolociti'],
+  donna:['FSH','LH','Estradiolo','Progesterone','Prolattina','DHEA-S']
+};
+
+function togglePanel(el) {
+  var accordion = el.closest('.panel-accordion');
+  if (accordion) accordion.classList.toggle('open');
+}
+
+function buildEsito() {
+  var tags = computeTags();
+  var score = computeScore();
+  var lvl = getScoreLevel(score);
+  var recommended = recommendPanels();
+  var panelScores = computePanelScores();
+  track('quiz_esito_view', { tags: tags.join(','), tag_count: tags.length, top_tag: tags[0]||'', score: score, score_level: lvl.level, panels: recommended.join(',') });
+
+  var firstName = '';
+
+  // Core markers badges (show first 7 + "altri X")
+  var visibleMarkers = 7;
+  var markersHtml = CORE_MARKERS.slice(0, visibleMarkers).map(function(m) {
+    return '<span class="core-marker">' + m + '</span>';
+  }).join('');
+  if (CORE_MARKERS.length > visibleMarkers) {
+    markersHtml += '<span class="core-more">+altri ' + (CORE_MARKERS.length - visibleMarkers) + '</span>';
+  }
+
+  // Recommended panels as accordions
+  var accordionHtml = recommended.map(function(pk) {
+    var p = PANELS[pk];
+    var markers = PANEL_MARKERS[pk] || [];
+    var markersListHtml = markers.map(function(m) {
+      return '<li>' + m + '</li>';
+    }).join('');
+
+    return '<div class="panel-accordion">' +
+      '<div class="panel-accordion-header" onclick="togglePanel(this)">' +
+      '<span class="panel-accordion-name">' + p.name + '</span>' +
+      '<span class="panel-accordion-toggle">SCOPRI DI PIU <span class="panel-accordion-arrow">&#9660;</span></span></div>' +
+      '<div class="panel-accordion-body"><div class="panel-accordion-content">' +
+      '<div class="panel-accordion-focus">' + p.focus + '</div>' +
+      '<div class="panel-accordion-target">Indicato per: ' + p.target + '</div>' +
+      '<ul class="panel-accordion-markers">' + markersListHtml + '</ul>' +
+      '</div></div></div>';
+  }).join('');
+
+  // ── 1. HERO + CTA CONSULENZA (primo piano) ──
+  // ── 2. FERRO CORE (incluso nella membership) ──
+  // ── 3. PANNELLI CONSIGLIATI (accordion) ──
+  // ── 4. CTA SECONDARIO + footer ──
+
+  return '<div class="esito-hero">' +
+    '<div class="esito-tag">IL TUO PROTOCOLLO PERSONALIZZATO</div>' +
+    '<div class="esito-title">ECCO IL TUO PROTOCOLLO,<br>' + (firstName ? firstName.toUpperCase() + '.' : 'SALUTE DI FERRO') + '</div>' +
+    '<div class="esito-subtitle">In base alle tue risposte, abbiamo costruito il percorso diagnostico ideale per te. Il prossimo passo: parlare con il team di Salute di Ferro.</div>' +
+    '<button class="btn-primary" style="margin-top:24px;" type="button" onclick="track(\'quiz_esito_cta_click\',{});goNext()">PRENOTA LA TUA CONSULENZA</button>' +
+    '<div style="font-size:12px;color:var(--text-muted);margin-top:10px;text-align:center;">30 min con il team di Salute di Ferro &mdash; 47 EUR</div></div>' +
+
+    '<div class="section-label">FERRO CORE<span class="membership-badge">INCLUSO</span></div>' +
+    '<div class="core-card">' +
+    '<div class="core-header"><span class="core-name">FERRO CORE</span></div>' +
+    '<div class="core-sub">16 biomarcatori &mdash; Screening completo per atleti</div>' +
+    '<div class="core-desc" style="margin-bottom:14px;">Include Testosterone, Vitamina D, Ferritina e profilo lipidico completo. Il punto di partenza per ogni percorso diagnostico.</div>' +
+    '<div class="core-markers">' + markersHtml + '</div></div>' +
+
+    (recommended.length > 0 ? '<div class="section-label">PANNELLI CONSIGLIATI PER TE</div>' + accordionHtml : '') +
+
+    '<button class="btn-primary" style="margin-top:24px;" type="button" onclick="track(\'quiz_esito_cta_click\',{});goNext()">PRENOTA LA TUA CONSULENZA</button>' +
+
+    '<div class="esito-bottom">' +
+    '<div class="esito-bottom-btns">' +
+    '<button class="esito-btn-outline" type="button" onclick="sessionStorage.removeItem(\'sdf_state\');location.reload()">RIFAI IL TEST</button>' +
+    '<a class="esito-btn-outline" href="https://salutediferro.com/pannelli" style="text-decoration:none;">TUTTI I PANNELLI</a></div></div>';
+}
+
+function buildPayment() {
+  var name = ((S.a.contacts||{}).name||'').split(' ')[0].toUpperCase();
+  var elapsed = S.startTime ? Math.round((Date.now()-S.startTime)/1000) : 0;
+  track('quiz_complete', { total_time_seconds: elapsed });
+  return '<div style="text-align:center"><div class="logo-wrap"><picture><source srcset="/LOGO.webp" type="image/webp"><img src="/LOGO-opt.png" alt="Salute di Ferro" class="logo-img" width="427" height="584" loading="eager"></picture></div>' +
+    '<div class="ty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>' +
+    '<div class="ty-h">' + (name?name+',<br>':'') + 'IL TUO PROFILO<br><em>\u00c8 PRONTO.</em></div>' +
+    '<p class="ty-p">Abbiamo analizzato le tue risposte e identificato le aree da controllare. Ora il passo pi\u00f9 importante: parlare con il team di Salute di Ferro.</p></div>' +
+    '<div style="margin:28px 0;padding:24px;background:var(--bg-card);border-radius:8px;border:1.5px solid var(--border);">' +
+    '<div style="text-align:center;margin-bottom:20px;">' +
+    '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:10px;letter-spacing:4px;color:var(--accent);margin-bottom:12px;">COSA INCLUDE LA CALL</div>' +
+    '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:clamp(22px,4vw,32px);color:var(--text);line-height:1.2;">CONSULENZA PERSONALIZZATA<br>CON IL TEAM DI SALUTE DI FERRO</div></div>' +
+    '<div class="ty-box" style="margin-bottom:20px;border:none;background:transparent;padding:0 8px;">' +
+    '<div class="ty-row"><span class="ty-n">01</span><span class="ty-t">Analisi completa del tuo profilo e delle tue risposte</span></div>' +
+    '<div class="ty-row"><span class="ty-n">02</span><span class="ty-t">Piano personalizzato di analisi da fare</span></div>' +
+    '<div class="ty-row"><span class="ty-n">03</span><span class="ty-t">Guida passo-passo su come procedere, senza sbatti</span></div></div>' +
+    '<div style="margin:16px 0 0;padding:12px 16px;background:rgba(200,32,32,0.04);border:1px solid var(--border);border-radius:8px;">' +
+    '<label style="font-size:11px;letter-spacing:2px;color:var(--text-sec);font-weight:600;display:block;margin-bottom:6px;">CODICE REFERRAL (opzionale)</label>' +
+    '<div style="position:relative;">' +
+    '<input type="text" id="referral-input" placeholder="Inserisci il codice" oninput="updateReferral(this.value)" style="width:100%;padding:10px 36px 10px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none;transition:border-color .3s ease,box-shadow .3s ease;" autocomplete="off">' +
+    '<span id="referral-icon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);opacity:0;transition:opacity .3s ease;"></span></div>' +
+    '<div id="referral-msg" style="font-size:12px;color:#28a745;margin-top:6px;display:none;"></div>' +
+    '<div id="referral-err" style="font-size:12px;color:var(--text-muted);margin-top:6px;display:none;">Codice non valido</div></div>' +
+    '<div style="text-align:center;margin:16px 0 8px;">' +
+    '<div id="price-display" style="font-family:\'Bebas Neue\',sans-serif;font-size:42px;color:var(--text);line-height:1;">47<span style="font-size:22px;color:var(--text-sec);"> \u20ac</span></div>' +
+    '<div style="font-size:12px;color:var(--text-sec);margin-top:4px;">Consulenza di 30 minuti</div></div>' +
+    '<button type="button" onclick="startCheckout(this)" class="btn-primary" id="cta-checkout" style="display:flex;margin-top:16px;">PRENOTA LA TUA CALL \u2014 47\u20ac</button>' +
+    '<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:10px 16px;background:rgba(200,32,32,0.06);border:1px solid rgba(200,32,32,0.15);border-radius:6px;">' +
+    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C82020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>' +
+    '<span style="font-size:12px;color:var(--text-sec);line-height:1.3;">Garanzia soddisfatti o rimborsati. Se la call non ti \u00e8 utile, ti rimborsiamo.</span></div></div>' +
+    '<div style="display:flex;justify-content:center;gap:24px;margin:20px 0;flex-wrap:wrap;">' +
+    '<div style="text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:var(--accent);">500+</div><div style="font-size:12px;color:var(--text-sec);">Atleti seguiti</div></div>' +
+    '<div style="text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:var(--accent);">30 min</div><div style="font-size:12px;color:var(--text-sec);">Call dedicata</div></div>' +
+    '<div style="text-align:center;"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;color:var(--accent);">100%</div><div style="font-size:12px;color:var(--text-sec);">Personalizzato</div></div></div>' +
+    '<button class="btn-back" type="button" onclick="track(\'payment_back_to_results\',{});goBack()">\u2190 Torna ai risultati</button>';
+}
+
+/* ════════════════════════════════════════
+   ACTIONS
+════════════════════════════════════════ */
+function startQuiz() { S.startTime = Date.now(); track('quiz_start', {}); go(1); }
+async function contactsNext() {
+  var c = S.a.contacts || {};
+  if (!c.name || !c.phone || !c.email || !S.privacy) return;
+  if (!S.sent) {
+    S.sent = true;
+    var btn = document.getElementById('cta');
+    if (btn) { btn.classList.add('btn-loading'); btn.innerHTML = '<span class="spinner"></span>INVIO IN CORSO...'; }
+    track('quiz_submit', { has_referral: !!S.a.referral, referral: S.a.referral||'' });
+    await sendLead();
+  }
+  goNext();
+}
+async function submitAndPay() {
+  if (!S.sent) {
+    S.sent = true;
+    var btn = document.querySelector('.btn-primary');
+    if (btn) { btn.classList.add('btn-loading'); btn.innerHTML = '<span class="spinner"></span>INVIO IN CORSO...'; }
+    track('quiz_submit', { has_referral: !!S.a.referral, referral: S.a.referral||'' });
+    await sendLead();
+  }
+  goNext();
+}
+
+async function startCheckout(btn) {
+  track('payment_click', {});
+  btn.classList.add('btn-loading');
+  btn.innerHTML = '<span class="spinner"></span>REINDIRIZZAMENTO...';
+  try {
+    var contactEmail = (S.a.contacts||{}).email||'';
+    var referral = (S.a.referral && isValidReferral(S.a.referral)) ? S.a.referral : '';
+    var res = await fetch('/create-checkout-session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: contactEmail, referral: referral }) });
+    var text = await res.text();
+    var data;
+    try { data = JSON.parse(text); } catch (_) { data = {}; }
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      btn.classList.remove('btn-loading');
+      var dp = getReferralPrice(); btn.innerHTML = (S.a.referral && isValidReferral(S.a.referral) && dp) ? 'PRENOTA LA TUA CALL \u2014 ' + dp + '\u20ac' : 'PRENOTA LA TUA CALL \u2014 47\u20ac';
+      alert('Errore durante il pagamento. Riprova.');
+    }
+  } catch (e) {
+    console.error(e);
+    btn.classList.remove('btn-loading');
+    btn.innerHTML = (S.a.referral && isValidReferral(S.a.referral)) ? 'PRENOTA LA TUA CALL \u2014 42,30\u20ac' : 'PRENOTA LA TUA CALL \u2014 47\u20ac';
+    alert('Errore di connessione. Riprova.');
+  }
+}
+
+// Referral validation is server-side only — no codes exposed in client
+function isValidReferral(code) {
+  // Returns cached server response; defaults to false until validated
+  return !!code && S._referralValid === code.toUpperCase();
+}
+async function validateReferralServer(code) {
+  if (!code) { S._referralValid = ''; S._referralDiscount = 0; return false; }
+  try {
+    var res = await fetch('https://form.salutediferro.com/validate-referral', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: code })
+    });
+    var json = await res.json();
+    if (json.valid) { S._referralValid = code.toUpperCase(); S._referralDiscount = json.discount || 10; return true; }
+    S._referralValid = ''; S._referralDiscount = 0;
+    return false;
+  } catch (e) { S._referralValid = ''; S._referralDiscount = 0; return false; }
+}
+function getReferralPrice() {
+  var d = S._referralDiscount || 0;
+  if (!d) return null;
+  var price = 47 * (1 - d / 100);
+  return price % 1 === 0 ? price.toFixed(0) : price.toFixed(2).replace('.', ',');
+}
+var _referralDebounce;
+function updateReferral(val) {
+  var code = val.trim();
+  S.a.referral = code;
+  saveState();
+  // Debounce server validation
+  clearTimeout(_referralDebounce);
+  if (!code) { applyReferralUI(code, false); return; }
+  _referralDebounce = setTimeout(async function() {
+    var valid = await validateReferralServer(code);
+    applyReferralUI(code, valid);
+  }, 400);
+}
+function applyReferralUI(code, valid) {
+  var input = document.getElementById('referral-input');
+  var iconEl = document.getElementById('referral-icon');
+  var msg = document.getElementById('referral-msg');
+  var errMsg = document.getElementById('referral-err');
+  var priceEl = document.getElementById('price-display');
+  var ctaEl = document.getElementById('cta-checkout');
+  // Bordi e icona
+  if (input) {
+    if (valid) {
+      input.style.borderColor = '#28a745';
+      input.style.boxShadow = '0 0 0 3px rgba(40,167,69,0.15)';
+    } else if (code) {
+      input.style.borderColor = '#C82020';
+      input.style.boxShadow = '0 0 0 3px rgba(200,32,32,0.1)';
+    } else {
+      input.style.borderColor = 'var(--border)';
+      input.style.boxShadow = 'none';
+    }
+  }
+  if (iconEl) {
+    if (valid) {
+      iconEl.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      iconEl.style.opacity = '1';
+    } else if (code) {
+      iconEl.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C82020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      iconEl.style.opacity = '1';
+    } else {
+      iconEl.style.opacity = '0';
+    }
+  }
+  if (msg) {
+    if (valid) { msg.innerHTML = '&#10003; Sconto ' + (S._referralDiscount || 10) + '% applicato!'; }
+    msg.style.display = valid ? 'block' : 'none';
+  }
+  if (errMsg) errMsg.style.display = (code && !valid) ? 'block' : 'none';
+  var discPrice = getReferralPrice();
+  if (priceEl) {
+    priceEl.innerHTML = valid && discPrice
+      ? '<span style="text-decoration:line-through;color:var(--text-sec);font-size:28px;">47\u20ac</span> ' + discPrice + '<span style="font-size:22px;color:var(--text-sec);"> \u20ac</span>'
+      : '47<span style="font-size:22px;color:var(--text-sec);"> \u20ac</span>';
+    if (valid) { priceEl.style.animation = 'none'; priceEl.offsetHeight; priceEl.style.animation = 'countPulse .5s ease'; }
+  }
+  if (ctaEl && !ctaEl.classList.contains('btn-loading')) ctaEl.innerHTML = valid && discPrice ? 'PRENOTA LA TUA CALL \u2014 ' + discPrice + '\u20ac' : 'PRENOTA LA TUA CALL \u2014 47\u20ac';
+}
+
+function pick(key, val, isMulti) {
+  var steps = getSteps();
+  var step = steps[S.step];
+  if (isMulti) {
+    var cur = Array.isArray(S.a[key]) ? S.a[key] : [];
+    // Exclusive options: find if this step has opts with an 'exclusive' flag or if key is 'valori'
+    var exclusiveKeys = [];
+    if (step.opts) {
+      step.opts.forEach(function(o) { if (o.exclusive) exclusiveKeys.push(o.k); });
+    }
+    var isExclusive = exclusiveKeys.includes(val);
+    if (isExclusive) {
+      // Clicking an exclusive option: toggle it alone, deselect everything else
+      S.a[key] = cur.includes(val) ? [] : [val];
+    } else {
+      // Clicking a normal option: remove any exclusive options first
+      cur = cur.filter(function(v) { return !exclusiveKeys.includes(v); });
+      S.a[key] = cur.includes(val) ? cur.filter(function(v){return v!==val;}) : cur.concat([val]);
+    }
+  } else {
+    S.a[key] = val;
+  }
+  var optObj = step.opts.find(function(o){return o.k===val;});
+  saveState();
+  track('quiz_option_select', { step_number: S.step, step_name: key, option_key: val, option_value: optObj?optObj.v:val });
+  refreshOptions(key, isMulti);
+}
+
+function refreshOptions(key, isMulti) {
+  var sel = S.a[key] || (isMulti ? [] : '');
+  document.querySelectorAll('.opt').forEach(function(btn) {
+    var k = btn.getAttribute('data-key');
+    btn.classList.toggle('sel', isMulti ? sel.includes(k) : sel === k);
+  });
+  var cta = document.getElementById('cta');
+  if (cta) cta.disabled = isMulti ? sel.length === 0 : !sel;
+}
+
+function goNext() {
+  var steps = getSteps();
+  var step = steps[S.step];
+  if (S.stepStartTime) {
+    track('quiz_step_time', { step_name: step.k||step.t, step_number: S.step, time_seconds: Math.round((Date.now()-S.stepStartTime)/1000) });
+  }
+  track('quiz_step_complete', { step_number: S.step, step_name: step.k||step.t, answer: S.a[step.k]||'' });
+  if (step.k === 'sex') track('quiz_segment_assigned', { segment: getSegment() });
+  go(S.step + 1);
+}
+
+function goBack() {
+  track('quiz_step_back', { from_step: S.step, to_step: S.step-1 });
+  go(S.step - 1);
+}
+
+function go(n, fromPop) {
+  var steps = getSteps();
+  if (n < 0 || n >= steps.length) return;
+  S.step = n;
+  saveState();
+  if (!fromPop) history.pushState({ step: n }, '', '');
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('popstate', function(e) {
+  if (e.state && typeof e.state.step === 'number') {
+    go(e.state.step, true);
+  } else {
+    go(0, true);
+  }
+});
+
+function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function isValidPhone(v) { return /^[\d\s\+\-\(\)]{7,}$/.test(v); }
+function setContact(field, val) {
+  if (!S.a.contacts) S.a.contacts = {};
+  S.a.contacts[field] = val.trim();
+  var errEl = document.getElementById('err-' + field);
+  if (field === 'email' && val.trim() && !isValidEmail(val.trim())) {
+    if (errEl) { errEl.textContent = 'Inserisci un\'email valida'; errEl.style.display = 'block'; }
+  } else if (field === 'phone' && val.trim() && !isValidPhone(val.trim())) {
+    if (errEl) { errEl.textContent = 'Inserisci un numero di telefono valido'; errEl.style.display = 'block'; }
+  } else {
+    if (errEl) { errEl.style.display = 'none'; }
+  }
+  saveState();
+  checkCta();
+}
+function togglePrivacy() {
+  S.privacy = !S.privacy;
+  saveState();
+  var w = document.getElementById('privacy-wrap');
+  if (w) w.classList.toggle('on', S.privacy);
+  checkCta();
+}
+function checkCta() {
+  var c = S.a.contacts || {};
+  var btn = document.getElementById('cta');
+  var valid = c.name && c.phone && c.email && S.privacy && isValidEmail(c.email) && isValidPhone(c.phone);
+  if (btn) btn.disabled = !valid;
+}
+
+/* ════════════════════════════════════════
+   TOAST + KEYBOARD + ABANDON + BOOT
+════════════════════════════════════════ */
+function toast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},3600); }
+
+document.addEventListener('keydown', function(e) {
+  var steps=getSteps(); var step=steps[S.step]; if(!step) return;
+  if (e.key==='Enter' && (step.t==='multi'||step.t==='single'||step.t==='contacts')) { var btn=document.getElementById('cta'); if(btn&&!btn.disabled) btn.click(); }
+});
+
+window.addEventListener('beforeunload', function() {
+  var steps=getSteps();
+  if (S.step>0 && S.step<steps.length-1) {
+    var elapsed=S.startTime?Math.round((Date.now()-S.startTime)/1000):0;
+    track('quiz_abandon', { last_step:S.step, time_on_page:elapsed });
+  }
+});
+
+// Ricostruisci la history stack per il browser back
+if (S.step > 0) {
+  history.replaceState({ step: 0 }, '', '');
+  for (var _i = 1; _i <= S.step; _i++) {
+    history.pushState({ step: _i }, '', '');
+  }
+} else {
+  history.replaceState({ step: 0 }, '', '');
+}
+render();
+</script>
+</body>
+</html>

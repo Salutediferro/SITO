@@ -1,0 +1,31 @@
+name = "sdf-lead-collector"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[[routes]]
+pattern = "form.salutediferro.com/send-lead"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/create-checkout-session"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/payment-success*"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/validate-referral"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/calendly-webhook"
+zone_name = "salutediferro.com"
+
+[triggers]
+crons = ["*/30 * * * *"]
+
+[vars]
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzotnzD1Uq5pSBQ4fRScmhVj6afxOpTUJvqdZwCkXuf_5T0nMNZLEQlBIYhqRf2Ew0PzA/exec"
+# RESEND_API_KEY è ora in Cloudflare Secrets (wrangler secret put RESEND_API_KEY)
+# STRIPE_SECRET_KEY è già in Cloudflare Secrets
