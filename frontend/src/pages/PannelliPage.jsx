@@ -176,6 +176,10 @@ const s = {
     background: 'rgba(40,167,69,0.12)', border: '1px solid rgba(40,167,69,0.3)',
     color: '#28a745',
   },
+  priceTag: {
+    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1,
+    color: 'var(--accent)',
+  },
   ctaBtn: {
     display: 'inline-flex', alignItems: 'center', gap: 6,
     padding: '8px 16px', marginTop: 16,
@@ -211,6 +215,7 @@ export default function PannelliPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
             <h2 style={{ ...s.sectionTitle, marginBottom: 0 }}>FERRO CORE</h2>
             <span style={s.inclusoBadge}>INCLUSO</span>
+            <span style={s.priceTag}>{FERRO_CORE.price}&euro;</span>
           </div>
           <div style={{ marginBottom: 16 }}>
             <span style={s.pill}>Testosterone</span>
@@ -253,7 +258,10 @@ export default function PannelliPage() {
                   {mod.icon && getIcon(mod.icon)}
                   <h3 style={s.moduleName}>{mod.name}</h3>
                 </div>
-                <span style={s.moduleMeta}>{mod.tests} esami{mod.gender ? ` · ${mod.gender}` : ''}</span>
+                <div style={{display:'flex', alignItems:'center', gap:12}}>
+                  <span style={s.moduleMeta}>{mod.tests} esami{mod.gender ? ` \u00b7 ${mod.gender}` : ''}</span>
+                  {mod.price && <span style={s.priceTag}>{mod.price}&euro;</span>}
+                </div>
               </div>
               <div style={s.moduleTags}>
                 {mod.tags.map(t => <span key={t} style={s.moduleTag}>{t}</span>)}
