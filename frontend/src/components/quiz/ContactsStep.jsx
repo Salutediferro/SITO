@@ -58,7 +58,7 @@ export default function ContactsStep({ quiz }) {
   return (
     <>
       <div className="q-label">I TUOI DATI</div>
-      <div className="q-question">LASCIACI I TUOI DATI<br />PER RICEVERE IL PERCORSO</div>
+      <div className="q-question">MOSTRAMI IL MIO<br />PROFILO DI FERRO</div>
       <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 18 }}>
         Ti contatteremo per guidarti nel tuo percorso di analisi.
       </p>
