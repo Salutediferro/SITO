@@ -69,7 +69,6 @@ export default function Navbar() {
     { to: '/', label: 'Home' },
     { to: '/pannelli', label: 'Pannelli' },
     { to: '/chi-siamo', label: 'Chi Siamo' },
-    { to: FORM_URL, label: 'Test di Ferro', external: true },
   ];
 
   return (
