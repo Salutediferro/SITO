@@ -25,9 +25,9 @@ function doGet(e) {
       sheet.clear();
       var headers = [
         'Timestamp','Nome','Telefono','Email','Segmento',
-        'Sesso','Età','Allenamento','Farmacologico','Energia','Sonno','Recupero',
-        'Libido','Performance sessuale','Ciclo','Energia ciclo',
-        'Grasso','Fame','Pressione','Colesterolo','Assunzione','Analisi sangue',
+        'Sesso','Età','Allenamento','Farmacologico','Energia','Sonno',
+        'Libido','Ciclo',
+        'Grasso','Pressione','Assunzione','Analisi sangue',
         'Pannelli consigliati','Tag','Score','Score Level','Score Name',
         'Referral',
         'stato','pagato_il','calendly_booked'

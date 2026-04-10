@@ -65,7 +65,7 @@ export default function useQuiz() {
   const panelScores = computePanelScores(state.a);
   const suggestedPanels = getSuggestedPanels(panelScores);
 
-  // Progress: intro=0, questions 1-15 = 2%-90%, esito=92%, contacts=96%, payment=100%
+  // Progress: intro=0, questions 1-11 = 2%-90%, esito=92%, contacts=96%, payment=100%
   let progressPct = 0;
   let stepNum = null;
   if (state.step === 0) {

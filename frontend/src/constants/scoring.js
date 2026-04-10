@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────
-   Scoring v2 — Profilo salute + Pannelli add-on
+   Scoring v3 — Profilo salute + Pannelli add-on
    ────────────────────────────────────────── */
 
 /* ── 1. PROFILO SALUTE (punteggio 1-5) ── */
@@ -50,7 +50,7 @@ export function getScoreLevel(score) {
   return SCORE_LEVELS[0];
 }
 
-/* ── 2. PANNELLI ADD-ON SCORING (da XLSX FORM SCORING - 15) ── */
+/* ── 2. PANNELLI ADD-ON SCORING (da XLSX FORM SCORING - 11) ── */
 const PANEL_IDS = ['androgeno', 'cuore', 'reni', 'fegato', 'metabolico', 'tiroide', 'recovery', 'donna'];
 
 // [ANDROGENO, CUORE, RENI, FEGATO, METABOLICO, TIROIDE, RECOVERY, DONNA]
@@ -58,8 +58,8 @@ const PANEL_RULES = {
   age: {
     'u30':   [0, 0, 0, 0, 0, 0, 0, 0],
     '30-39': [0, 1, 0, 0, 0, 0, 0, 0],
-    '40-49': [1, 2, 0, 0, 1, 0, 0, 0], // +3 donna if sex=F (handled in compute)
-    '50+':   [1, 2, 0, 0, 2, 1, 0, 0], // +3 donna if sex=F
+    '40-49': [1, 2, 0, 0, 1, 0, 0, 0],
+    '50+':   [1, 2, 0, 0, 2, 1, 0, 0],
   },
   training: {
     none:      [0, 0, 0, 0, 0, 0, 0, 0],
@@ -85,24 +85,12 @@ const PANEL_RULES = {
     disturbato: [0, 0, 0, 0, 0, 0, 2, 0],
     pessimo:    [0, 0, 0, 0, 0, 0, 3, 0],
   },
-  recupero: {
-    veloce:        [0, 0, 0, 0, 0, 0, 0, 0],
-    normale:       [0, 0, 0, 0, 0, 0, 0, 0],
-    lento:         [0, 0, 0, 0, 0, 0, 2, 0],
-    non_recupero:  [0, 0, 1, 0, 0, 0, 3, 0],
-  },
   // Male-only
   libido: {
     molto_alta:  [0, 0, 0, 0, 0, 0, 0, 0],
     normale:     [0, 0, 0, 0, 0, 0, 0, 0],
     bassa:       [2, 0, 0, 0, 0, 0, 0, 0],
     molto_bassa: [3, 0, 0, 0, 0, 0, 0, 0],
-  },
-  performance_sex: {
-    ottima:  [0, 0, 0, 0, 0, 0, 0, 0],
-    normale: [0, 0, 0, 0, 0, 0, 0, 0],
-    in_calo: [2, 0, 0, 0, 0, 0, 0, 0],
-    pessima: [3, 0, 0, 0, 0, 0, 0, 0],
   },
   // Female-only
   ciclo: {
@@ -111,22 +99,10 @@ const PANEL_RULES = {
     molto_irregolare: [0, 0, 0, 0, 0, 0, 0, 3],
     no_ciclo:         [0, 0, 0, 0, 0, 0, 3, 3],
   },
-  energia_ciclo: {
-    elevata:    [0, 0, 0, 0, 0, 0, 0, 0],
-    accettabile:[0, 0, 0, 0, 0, 0, 0, 0],
-    bassa:      [0, 0, 0, 0, 0, 2, 2, 0],
-    molto_bassa:[0, 0, 0, 0, 0, 3, 3, 0],
-  },
   grasso: {
     no:       [0, 0, 0, 0, 0, 0, 0, 0],
     fatica:   [0, 0, 0, 0, 2, 1, 0, 0],
     accumulo: [0, 0, 0, 0, 3, 2, 0, 0],
-  },
-  fame: {
-    normale:       [0, 0, 0, 0, 0, 0, 0, 0],
-    bassa:         [0, 0, 0, 0, 2, 0, 0, 0],
-    zuccheri:      [0, 0, 0, 0, 2, 0, 0, 0],
-    incontrollata: [0, 0, 0, 0, 3, 0, 0, 0],
   },
   pressione: {
     non_so:    [0, 0, 0, 0, 0, 0, 0, 0],
@@ -135,16 +111,11 @@ const PANEL_RULES = {
     legg_alta: [0, 2, 1, 0, 0, 0, 0, 0],
     alta:      [0, 3, 3, 0, 0, 0, 0, 0],
   },
-  colesterolo: {
-    non_so:  [0, 0, 0, 0, 0, 0, 0, 0],
-    normale: [0, 0, 0, 0, 0, 0, 0, 0],
-    alto:    [0, 3, 0, 3, 0, 0, 0, 0],
-  },
   analisi: {
     '6m':   [0, 0, 0, 0, 0, 0, 0, 0],
     '6-12m':[0, 0, 0, 0, 0, 0, 0, 0],
     '12m+': [0, 0, 0, 0, 0, 0, 0, 0],
-    mai:    [0, 0, 0, 0, 0, 0, 0, 0], // +2 conditional (handled below)
+    mai:    [0, 0, 0, 0, 0, 0, 0, 0],
   },
 };
 

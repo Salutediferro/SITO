@@ -57,7 +57,7 @@ export default function QuizContainer() {
       </div>
       {showCounter && (
         <div className="quiz-counter">
-          STEP <b>{stepNum}</b> / <b>15</b>
+          STEP <b>{stepNum}</b> / <b>11</b>
         </div>
       )}
       <div className="quiz-center">
