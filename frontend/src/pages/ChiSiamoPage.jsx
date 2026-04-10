@@ -241,7 +241,7 @@ export default function ChiSiamoPage() {
           <div style={s.tag}>CHI SIAMO</div>
           <h1 style={s.h1}>LA PALESTRA DELLA SALUTE</h1>
           <p style={s.heroSub}>
-            Salute di Ferro coordina il tuo percorso diagnostico: dai pannelli di analisi mirati agli specialisti che capiscono il mondo palestra e performance. Zero pregiudizi, zero complessit\u00e0.
+            Salute di Ferro coordina il tuo percorso diagnostico: dai pannelli di analisi mirati agli specialisti che capiscono il mondo palestra e performance. Zero pregiudizi, zero complessità.
           </p>
           <a href={FORM_URL} style={s.btn}>
             FAI IL TEST DI FERRO
@@ -291,7 +291,7 @@ export default function ChiSiamoPage() {
           <div style={s.sectionTag}>LA FIGURA CHIAVE</div>
           <div style={s.sectionTitle}>IL COACH DI FERRO</div>
           <p style={s.sectionDesc}>
-            Il Coach di Ferro \u00e8 il coordinatore del tuo percorso. Non \u00e8 un medico, non \u00e8 un trainer: \u00e8 chi tiene insieme tutto.
+            Il Coach di Ferro è il coordinatore del tuo percorso. Non è un medico, non è un trainer: è chi tiene insieme tutto.
           </p>
         </FadeUp>
         <FadeUp delay={0.1}>
