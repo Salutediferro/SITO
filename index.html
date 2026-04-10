@@ -1409,28 +1409,28 @@ function buildContacts(step) {
 
 /* ── Panel recommendation engine ── */
 var PANELS = {
-  androgeno: { name:'FERRO ANDROGENO', type:'Add-on', focus:'Asse androgenico completo + coagulazione + omocisteina', tests:12, gender:'M',
+  androgeno: { name:'FERRO ANDROGENO', price:125, type:'Add-on', focus:'Asse androgenico completo + coagulazione + omocisteina', tests:12, gender:'M',
     target:'Uomini sintomatici, TRT, ex/attuali AAS',
     tags:['testosterone','libido','ormoni','postcycle','enhanced'] },
-  cuore: { name:'FERRO CUORE', type:'Add-on', focus:'Rischio CV avanzato: ApoB, Lp(a), VES, Acido urico', tests:4, gender:'M/F',
+  cuore: { name:'FERRO CUORE', price:23, type:'Add-on', focus:'Rischio CV avanzato: ApoB, Lp(a), VES, Acido urico', tests:4, gender:'M/F',
     target:'Familiarit\u00e0 CVD, AAS, ipertensione',
     tags:['cuore','pressione','colesterolo'] },
-  reni: { name:'FERRO RENI', type:'Add-on', focus:'Funzione renale avanzata + elettroliti', tests:8, gender:'M/F',
+  reni: { name:'FERRO RENI', price:28, type:'Add-on', focus:'Funzione renale avanzata + elettroliti', tests:8, gender:'M/F',
     target:'Bodybuilder, iperproteica, diuretici',
     tags:['reni'] },
-  fegato: { name:'FERRO FEGATO', type:'Add-on', focus:'Profilo epatico completo', tests:6, gender:'M/F',
+  fegato: { name:'FERRO FEGATO', price:12, type:'Add-on', focus:'Profilo epatico completo', tests:6, gender:'M/F',
     target:'AAS orali, alcol, farmaci epatotossici',
     tags:['fegato'] },
-  metabolico: { name:'FERRO METABOLICO', type:'Add-on', focus:'Insulino-resistenza + cortisolo', tests:4, gender:'M/F',
+  metabolico: { name:'FERRO METABOLICO', price:33, type:'Add-on', focus:'Insulino-resistenza + cortisolo', tests:4, gender:'M/F',
     target:'Overfat, cut difficile, uso GH, stress',
     tags:['metabolismo','insulina','glicemia','cortisolo','stress'] },
-  tiroide: { name:'FERRO TIROIDE', type:'Add-on', focus:'Profilo tiroideo completo + autoimmunit\u00e0', tests:4, gender:'M/F',
+  tiroide: { name:'FERRO TIROIDE', price:40, type:'Add-on', focus:'Profilo tiroideo completo + autoimmunit\u00e0', tests:4, gender:'M/F',
     target:'TSH alterato, sospetto autoimmune',
     tags:['tiroide'] },
-  recovery: { name:'FERRO RECOVERY', type:'Add-on', focus:'Assetto marziale completo + B12/Folati', tests:7, gender:'M/F',
+  recovery: { name:'FERRO RECOVERY', price:43, type:'Add-on', focus:'Assetto marziale completo + B12/Folati', tests:7, gender:'M/F',
     target:'Fatigue, diete restrittive, endurance',
     tags:['energia','fatica','recupero','infiammazione','sonno'] },
-  donna: { name:'FERRO DONNA', type:'Add-on', focus:'Asse ormonale femminile completo', tests:6, gender:'F',
+  donna: { name:'FERRO DONNA', price:65, type:'Add-on', focus:'Asse ormonale femminile completo', tests:6, gender:'F',
     target:'Peri-menopausa, amenorrea, PCOS, RED-S',
     tags:['ciclo','estrogeni','equilibrioormonale'] }
 };
@@ -1581,7 +1581,7 @@ function buildEsito() {
 
     return '<div class="panel-accordion">' +
       '<div class="panel-accordion-header" onclick="togglePanel(this)">' +
-      '<span class="panel-accordion-name">' + p.name + '</span>' +
+      '<div style="display:flex;align-items:center;gap:10px;"><span class="panel-accordion-name">' + p.name + '</span><span style="font-family:Bebas Neue,sans-serif;font-size:18px;color:var(--text);letter-spacing:1px;">' + p.price + '\u20ac</span></div>' +
       '<span class="panel-accordion-toggle">SCOPRI DI PIU <span class="panel-accordion-arrow">&#9660;</span></span></div>' +
       '<div class="panel-accordion-body"><div class="panel-accordion-content">' +
       '<div class="panel-accordion-focus">' + p.focus + '</div>' +
@@ -1604,7 +1604,7 @@ function buildEsito() {
 
     '<div class="section-label">FERRO CORE<span class="membership-badge">INCLUSO</span></div>' +
     '<div class="core-card">' +
-    '<div class="core-header"><span class="core-name">FERRO CORE</span></div>' +
+    '<div class="core-header"><span class="core-name">FERRO CORE</span><span style="font-family:Bebas Neue,sans-serif;font-size:20px;color:var(--text);letter-spacing:1px;">80\u20ac</span></div>' +
     '<div class="core-sub">16 biomarcatori &mdash; Screening completo per atleti</div>' +
     '<div class="core-desc" style="margin-bottom:14px;">Include Testosterone, Vitamina D, Ferritina e profilo lipidico completo. Il punto di partenza per ogni percorso diagnostico.</div>' +
     '<div class="core-markers">' + markersHtml + '</div></div>' +

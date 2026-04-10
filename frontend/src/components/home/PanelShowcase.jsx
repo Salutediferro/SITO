@@ -8,6 +8,7 @@ const FORM_URL = 'https://form.salutediferro.com';
 const SLIDES = [
   {
     name: FERRO_CORE.name,
+    price: FERRO_CORE.price,
     tag: 'Core Foundation',
     headline: 'IL TUO PUNTO\nDI PARTENZA',
     headlineAccent: 'OBBLIGATORIO',
@@ -18,6 +19,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO ANDROGENO',
+    price: 125,
     tag: 'Modulo Add-on',
     headline: 'IL TUO ASSE\nORMONALE',
     headlineAccent: 'SOTTO CONTROLLO',
@@ -28,6 +30,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO CUORE',
+    price: 23,
     tag: 'Modulo Add-on',
     headline: 'IL TUO CUORE\nMERITA',
     headlineAccent: 'ATTENZIONE',
@@ -38,6 +41,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO RENI',
+    price: 28,
     tag: 'Modulo Add-on',
     headline: 'PROTEINE ALTE\nRENI',
     headlineAccent: 'SOTTO PRESSIONE',
@@ -48,6 +52,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO FEGATO',
+    price: 12,
     tag: 'Modulo Add-on',
     headline: 'IL TUO FEGATO\nTI STA',
     headlineAccent: 'PARLANDO',
@@ -58,6 +63,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO METABOLICO',
+    price: 33,
     tag: 'Modulo Add-on',
     headline: 'IL CUT\nNON FUNZIONA?',
     headlineAccent: 'SCOPRI PERCHÉ',
@@ -68,6 +74,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO TIROIDE',
+    price: 40,
     tag: 'Modulo Add-on',
     headline: 'METABOLISMO\nIN',
     headlineAccent: 'STALLO?',
@@ -78,6 +85,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO RECOVERY',
+    price: 43,
     tag: 'Modulo Add-on',
     headline: 'SEMPRE\nSTANCO?',
     headlineAccent: 'NON È NORMALE',
@@ -88,6 +96,7 @@ const SLIDES = [
   },
   {
     name: 'FERRO DONNA',
+    price: 65,
     tag: 'Modulo Add-on',
     headline: 'NON È "L\'ETÀ"',
     headlineAccent: 'SONO I TUOI ORMONI',
@@ -253,7 +262,10 @@ export default function PanelShowcase() {
               ...s.badge,
               opacity: fade ? 1 : 0,
             }}>
-              <div style={s.badgeTitle}>{slide.name}</div>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                <div style={s.badgeTitle}>{slide.name}</div>
+                {slide.price && <div style={{fontFamily:"'Bebas Neue', sans-serif", fontSize:20, color:'var(--text)', letterSpacing:1}}>{slide.price}&euro;</div>}
+              </div>
               <div style={s.badgeText}>{slide.badge}</div>
             </div>
           </div>

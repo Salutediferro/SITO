@@ -130,6 +130,10 @@ const s = {
     padding: '3px 10px', borderRadius: 4,
     background: 'rgba(248,113,113,0.1)', color: 'var(--accent)',
   },
+  price: {
+    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 1,
+    color: 'var(--text)', fontWeight: 700,
+  },
 };
 
 export default function ModulesGrid() {
@@ -157,7 +161,10 @@ export default function ModulesGrid() {
               <p style={s.desc}>{mod.desc}</p>
               <div style={s.meta}>
                 <span style={s.tests}>{mod.tests} esami</span>
-                {mod.gender && <span style={s.gender}>{mod.gender}</span>}
+                <div style={{display:'flex', alignItems:'center', gap:8}}>
+                  {mod.gender && <span style={s.gender}>{mod.gender}</span>}
+                  {mod.price && <span style={s.price}>{mod.price}\u20ac</span>}
+                </div>
               </div>
             </div>
           </FadeUp>

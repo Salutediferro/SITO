@@ -1,5 +1,6 @@
 export const FERRO_CORE = {
   name: 'FERRO CORE',
+  price: 80,
   subtitle: '16 biomarcatori. Il pannello che ogni atleta dovrebbe fare',
   description: 'Screening metabolico, epatico, renale, tiroideo, marziale + Testosterone + Vitamina D + PCR. Tutto in un unico pannello obbligatorio.',
   highlights: ['Testosterone', 'Vitamina D'],
@@ -27,6 +28,7 @@ export const MODULES = [
   {
     id: 'androgeno',
     name: 'FERRO ANDROGENO',
+    price: 125,
     icon: 'dna',
     tags: ['Uomini sintomatici', 'TRT', 'Ex/attuali AAS'],
     desc: 'Asse androgenico completo + coagulazione + omocisteina',
@@ -37,6 +39,7 @@ export const MODULES = [
   {
     id: 'cuore',
     name: 'FERRO CUORE',
+    price: 23,
     icon: 'heart',
     tags: ['Familiarità CVD', 'AAS', 'Ipertensione'],
     desc: 'Rischio CV avanzato: ApoB, Lp(a), VES, Acido urico',
@@ -46,6 +49,7 @@ export const MODULES = [
   {
     id: 'reni',
     name: 'FERRO RENI',
+    price: 28,
     icon: 'kidney',
     tags: ['Bodybuilder', 'Iperproteica', 'Diuretici'],
     desc: 'Funzione renale avanzata + elettroliti',
@@ -55,6 +59,7 @@ export const MODULES = [
   {
     id: 'fegato',
     name: 'FERRO FEGATO',
+    price: 12,
     icon: 'liver',
     tags: ['AAS orali', 'Alcol', 'Farmaci epatotossici'],
     desc: 'Profilo epatico completo',
@@ -64,6 +69,7 @@ export const MODULES = [
   {
     id: 'metabolico',
     name: 'FERRO METABOLICO',
+    price: 33,
     icon: 'metabolism',
     tags: ['Overfat', 'Cut difficile', 'Uso GH', 'Stress'],
     desc: 'Insulino-resistenza + cortisolo',
@@ -73,6 +79,7 @@ export const MODULES = [
   {
     id: 'tiroide',
     name: 'FERRO TIROIDE',
+    price: 40,
     icon: 'thyroid',
     tags: ['TSH alterato', 'Sospetto autoimmune'],
     desc: 'Profilo tiroideo completo + autoimmunità',
@@ -82,6 +89,7 @@ export const MODULES = [
   {
     id: 'recovery',
     name: 'FERRO RECOVERY',
+    price: 43,
     icon: 'recovery',
     tags: ['Fatigue', 'Diete restrittive', 'Endurance'],
     desc: 'Assetto marziale completo + B12/Folati',
@@ -91,6 +99,7 @@ export const MODULES = [
   {
     id: 'donna',
     name: 'FERRO DONNA',
+    price: 65,
     icon: 'woman',
     tags: ['Peri-menopausa', 'Amenorrea', 'PCOS', 'RED-S'],
     desc: 'Asse ormonale femminile completo',
