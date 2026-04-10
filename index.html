@@ -1033,7 +1033,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <div class="bar-track"><div class="bar-fill" id="bar" style="width:0"></div></div>
-<div class="counter" id="counter" style="display:none">STEP <b id="cs">1</b> / <b>15</b></div>
+<div class="counter" id="counter" style="display:none">STEP <b id="cs">1</b> / <b>11</b></div>
 <div class="wrap"><div id="root"></div></div>
 <div class="toast" id="toast"></div>
 
@@ -1062,7 +1062,7 @@ var S = (function() {
   return { step: 0, a: {}, privacy: false, sent: false, startTime: null };
 })();
 function saveState() { try { sessionStorage.setItem('sdf_state', JSON.stringify(S)); } catch(e) {} }
-var LAST_CONTENT = 15;
+var LAST_CONTENT = 11;
 
 /* ════════════════════════════════════════
    STEP DEFINITIONS
@@ -1087,38 +1087,27 @@ var COMMON_START = [
   { t: 'single', k: 'sonno', label: 'STEP 6',
     q: 'COME DORMI\nDI SOLITO?', hint: 'Se per dormire prendi pi\u00f9 roba che al Tomorrowland, forse non siamo al top.',
     opts: [{ k:'molto_bene', v:'Dormo molto bene' }, { k:'abbastanza', v:'Dormo abbastanza bene' }, { k:'disturbato', v:'Ho un sonno disturbato' }, { k:'pessimo', v:'Ho un sonno disturbato e mi sveglio stanco' }] },
-  { t: 'single', k: 'recupero', label: 'STEP 7',
-    q: 'COME RECUPERI DOPO\nL\u2019ALLENAMENTO?', hint: 'Se fai gambe e non sei smontato chiudi, intendiamo gli altri allenamenti.',
-    opts: [{ k:'veloce', v:'Recupero veloce' }, { k:'normale', v:'Recupero normale' }, { k:'lento', v:'Recupero lento' }, { k:'non_recupero', v:'Non recupero' }] }
 ];
 
 var BRANCHES = {
   M: [
-    { t:'single', k:'libido', label:'STEP 8', q:'COME VALUTERESTI\nLA TUA LIBIDO?', hint:'80 voglia Disco Party.',
-      opts:[{k:'molto_alta',v:'Molto alta'},{k:'normale',v:'Normale'},{k:'bassa',v:'Bassa'},{k:'molto_bassa',v:'Molto bassa'}] },
-    { t:'single', k:'performance_sex', label:'STEP 9', q:'COME VALUTERESTI LA TUA\nPERFORMANCE SESSUALE?', hint:'Squattare i piloni di cemento non vale.',
-      opts:[{k:'ottima',v:'Ottima'},{k:'normale',v:'Normale'},{k:'in_calo',v:'In calo'},{k:'pessima',v:'Pessima da tempo'}] }
+    { t:'single', k:'libido', label:'STEP 7', q:'COME VALUTERESTI\nLA TUA LIBIDO?', hint:'80 voglia Disco Party.',
+      opts:[{k:'molto_alta',v:'Molto alta'},{k:'normale',v:'Normale'},{k:'bassa',v:'Bassa'},{k:'molto_bassa',v:'Molto bassa'}] }
   ],
   F: [
-    { t:'single', k:'ciclo', label:'STEP 8', q:'COME DESCRIVERESTI\nIL TUO CICLO MESTRUALE?', hint:'Se hai la gara tra una settimana fai rispondere al tuo alter-ego.',
-      opts:[{k:'regolare',v:'Regolare'},{k:'legg_irregolare',v:'Leggermente irregolare'},{k:'molto_irregolare',v:'Molto irregolare'},{k:'no_ciclo',v:'Non ho ciclo'}] },
-    { t:'single', k:'energia_ciclo', label:'STEP 9', q:'COM\u2019\u00c8 LA TUA ENERGIA\nDURANTE IL CICLO?', hint:'S\u00ec, lo sappiamo che rimbalza tipo pungiball, ma pi\u00f9 o meno?',
-      opts:[{k:'elevata',v:'Elevata'},{k:'accettabile',v:'Accettabile'},{k:'bassa',v:'Bassa'},{k:'molto_bassa',v:'Molto bassa'}] }
+    { t:'single', k:'ciclo', label:'STEP 7', q:'COME DESCRIVERESTI\nIL TUO CICLO MESTRUALE?', hint:'Se hai la gara tra una settimana fai rispondere al tuo alter-ego.',
+      opts:[{k:'regolare',v:'Regolare'},{k:'legg_irregolare',v:'Leggermente irregolare'},{k:'molto_irregolare',v:'Molto irregolare'},{k:'no_ciclo',v:'Non ho ciclo'}] }
   ]
 };
 
 var COMMON_AFTER = [
-  { t:'single', k:'grasso', label:'STEP 10', q:'HAI PROBLEMI CON\nL\u2019ACCUMULO DI GRASSO?', hint:'Il FERRO non conosce il grasso.',
+  { t:'single', k:'grasso', label:'STEP 8', q:'HAI PROBLEMI CON\nL\u2019ACCUMULO DI GRASSO?', hint:'Il FERRO non conosce il grasso.',
     opts:[{k:'no',v:'Non ho problemi'},{k:'fatica',v:'Faccio fatica a dimagrire'},{k:'accumulo',v:'Accumulo grasso molto facilmente'}] },
-  { t:'single', k:'fame', label:'STEP 11', q:'COME DESCRIVERESTI\nLA TUA FAME?', hint:'Markus Ruhl frullava le scatolette di tonno, e tu?',
-    opts:[{k:'normale',v:'Normale'},{k:'bassa',v:'Bassa, fatico a mangiare'},{k:'zuccheri',v:'Voglia frequente di zuccheri'},{k:'incontrollata',v:'Fame incontrollata'}] },
-  { t:'single', k:'pressione', label:'STEP 12', q:'LA TUA PRESSIONE\nSANGUIGNA?', hint:'La marmellata va bene solo sulle gallette di riso',
+  { t:'single', k:'pressione', label:'STEP 9', q:'LA TUA PRESSIONE\nSANGUIGNA?', hint:'La marmellata va bene solo sulle gallette di riso',
     opts:[{k:'bassa',v:'Bassa'},{k:'normale',v:'Normale'},{k:'legg_alta',v:'Leggermente alta'},{k:'alta',v:'Alta'},{k:'non_so',v:'Non lo so'}] },
-  { t:'single', k:'colesterolo', label:'STEP 13', q:'IL TUO LIVELLO\nDI COLESTEROLO?', hint:'Riso pollo e broccoli e poi questo \u00e8 il risultato? Houston abbiamo un problema.',
-    opts:[{k:'normale',v:'Normale'},{k:'alto',v:'Alto'},{k:'non_so',v:'Non lo so'}] },
-  { t:'multi', k:'assunzione', label:'STEP 14', q:'ASSUMI REGOLARMENTE\nQUALCUNO DI QUESTI?', hint:'Seleziona tutte le opzioni pertinenti, poi clicca Avanti.',
+  { t:'multi', k:'assunzione', label:'STEP 10', q:'ASSUMI REGOLARMENTE\nQUALCUNO DI QUESTI?', hint:'Seleziona tutte le opzioni pertinenti, poi clicca Avanti.',
     opts:[{k:'farmaci',v:'Farmaci'},{k:'alcol',v:'Alcol'},{k:'integratori',v:'Integratori'},{k:'nulla',v:'Nulla di particolare',exclusive:true}] },
-  { t:'single', k:'analisi', label:'STEP 15', q:'QUANDO HAI FATTO L\u2019ULTIMA\nANALISI DEL SANGUE?', hint:'Quelle di Ferro arriveranno.',
+  { t:'single', k:'analisi', label:'STEP 11', q:'QUANDO HAI FATTO L\u2019ULTIMA\nANALISI DEL SANGUE?', hint:'Quelle di Ferro arriveranno.',
     opts:[{k:'6m',v:'Meno di 6 mesi fa'},{k:'6-12m',v:'Tra 6 e 12 mesi fa'},{k:'12m+',v:'Pi\u00f9 di un anno fa'},{k:'mai',v:'Mai'}] }
 ];
 
@@ -1139,15 +1128,10 @@ var HASHTAG_RULES = {
   pharma:         { mai:['natural'], passato:['postcycle'], attuale:['enhanced','monitoraggio'], no_risposta:['monitoraggio'] },
   energia:        { molto_energico:[], normale:[], a_volte_stanco:['energia','fatica'], sempre_stanco:['energia','fatica','recupero'] },
   sonno:          { molto_bene:[], abbastanza:[], disturbato:['sonno','cortisolo'], pessimo:['sonno','cortisolo','stress'] },
-  recupero:       { veloce:[], normale:[], lento:['recupero','infiammazione'], non_recupero:['recupero','infiammazione'] },
   libido:         { molto_alta:[], normale:[], bassa:['testosterone','libido'], molto_bassa:['testosterone','libido'] },
-  performance_sex:{ ottima:[], normale:[], in_calo:['testosterone','ormoni'], pessima:['testosterone','ormoni'] },
   ciclo:          { regolare:[], legg_irregolare:['equilibrioormonale'], molto_irregolare:['equilibrioormonale','ciclo'], no_ciclo:['ciclo'] },
-  energia_ciclo:  { elevata:[], accettabile:[], bassa:['ormoni'], molto_bassa:['ormoni','energia'] },
   grasso:         { no:[], fatica:['metabolismo','insulina'], accumulo:['metabolismo','insulina'] },
-  fame:           { normale:[], bassa:[], zuccheri:['glicemia','insulina'], incontrollata:['glicemia','insulina'] },
   pressione:      { bassa:[], normale:[], legg_alta:['cuore','pressione'], alta:['cuore','pressione'], non_so:[] },
-  colesterolo:    { normale:[], alto:['colesterolo','cuore'], non_so:[] },
   assunzione:     { farmaci:['fegato'], alcol:['fegato'], integratori:['fegato'], nulla:[] },
   analisi:        { '6m':[], '6-12m':[], '12m+':['checkup'], mai:['checkup','prevenzione'] }
 };
@@ -1191,19 +1175,11 @@ var TAG_INFO = {
    SCORING SYSTEM
 ════════════════════════════════════════ */
 var SCORE_RULES = {
-  pharma:         { mai:1, passato:0, attuale:-1, no_risposta:0 },
-  energia:        { molto_energico:2, normale:1, a_volte_stanco:0, sempre_stanco:-1 },
+  analisi:        { '6m':3, '6-12m':2, '12m+':1, mai:0 },
   sonno:          { molto_bene:2, abbastanza:1, disturbato:0, pessimo:-1 },
-  recupero:       { veloce:2, normale:1, lento:0, non_recupero:-1 },
-  libido:         { molto_alta:1, normale:1, bassa:0, molto_bassa:-1 },
-  performance_sex:{ ottima:1, normale:0, in_calo:-1, pessima:-1 },
-  ciclo:          { regolare:1, legg_irregolare:0, molto_irregolare:-1, no_ciclo:0 },
-  energia_ciclo:  { elevata:1, accettabile:0, bassa:-1, molto_bassa:-2 },
-  grasso:         { no:1, fatica:0, accumulo:-1 },
-  fame:           { normale:1, bassa:0, zuccheri:0, incontrollata:-1 },
   pressione:      { bassa:1, normale:2, legg_alta:-1, alta:-1, non_so:0 },
-  colesterolo:    { normale:2, alto:-1, non_so:0 },
-  analisi:        { '6m':3, '6-12m':2, '12m+':1, mai:0 }
+  energia:        { molto_energico:2, normale:1, a_volte_stanco:0, sempre_stanco:-1 },
+  pharma:         { mai:1, passato:0, attuale:-1, no_risposta:0 }
 };
 
 var SCORE_LEVELS = [
@@ -1311,11 +1287,11 @@ async function sendLead() {
     sex: resolveKey('sex', S.a.sex), age: resolveKey('age', S.a.age),
     training: resolveKey('training', S.a.training),
     pharma: resolveKey('pharma', S.a.pharma), energia: resolveKey('energia', S.a.energia),
-    sonno: resolveKey('sonno', S.a.sonno), recupero: resolveKey('recupero', S.a.recupero),
-    libido: resolveKey('libido', S.a.libido), performance_sex: resolveKey('performance_sex', S.a.performance_sex),
-    ciclo: resolveKey('ciclo', S.a.ciclo), energia_ciclo: resolveKey('energia_ciclo', S.a.energia_ciclo),
-    grasso: resolveKey('grasso', S.a.grasso), fame: resolveKey('fame', S.a.fame),
-    pressione: resolveKey('pressione', S.a.pressione), colesterolo: resolveKey('colesterolo', S.a.colesterolo),
+    sonno: resolveKey('sonno', S.a.sonno),
+    libido: resolveKey('libido', S.a.libido),
+    ciclo: resolveKey('ciclo', S.a.ciclo),
+    grasso: resolveKey('grasso', S.a.grasso),
+    pressione: resolveKey('pressione', S.a.pressione),
     assunzione: resolveMulti('assunzione', S.a.assunzione),
     analisi: resolveKey('analisi', S.a.analisi),
     tags: computeTags(), score: score, score_level: lvl.level, score_name: lvl.name,
@@ -1477,27 +1453,17 @@ var PANEL_SCORE_MATRIX = {
   energia:{ molto_energico:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], a_volte_stanco:[0,0,0,0,0,2,2,0], sempre_stanco:[0,0,0,0,0,3,3,0] },
   // Q6 Come dormi
   sonno:  { molto_bene:[0,0,0,0,0,0,0,0], abbastanza:[0,0,0,0,0,0,0,0], disturbato:[0,0,0,0,0,0,2,0], pessimo:[0,0,0,0,0,0,3,0] },
-  // Q7 Come recuperi
-  recupero:{ veloce:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], lento:[0,0,0,0,0,0,2,0], non_recupero:[0,0,1,0,0,0,3,0] },
-  // Q8F Ciclo (donna)
+  // Q7F Ciclo (donna)
   ciclo:  { regolare:[0,0,0,0,0,0,0,0], legg_irregolare:[0,0,0,0,0,0,0,0], molto_irregolare:[0,0,0,0,0,0,0,3], no_ciclo:[0,0,0,0,0,0,3,3] },
-  // Q9F Energia ciclo (donna)
-  energia_ciclo:{ elevata:[0,0,0,0,0,0,0,0], accettabile:[0,0,0,0,0,0,0,0], bassa:[0,0,0,0,0,2,2,0], molto_bassa:[0,0,0,0,0,3,3,0] },
-  // Q8M Libido (uomo)
+  // Q7M Libido (uomo)
   libido: { molto_alta:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], bassa:[2,0,0,0,0,0,0,0], molto_bassa:[3,0,0,0,0,0,0,0] },
-  // Q9M Performance sessuale (uomo)
-  performance_sex:{ ottima:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], in_calo:[2,0,0,0,0,0,0,0], pessima:[3,0,0,0,0,0,0,0] },
-  // Q10 Grasso
+  // Q8 Grasso
   grasso: { no:[0,0,0,0,0,0,0,0], fatica:[0,0,0,0,2,1,0,0], accumulo:[0,0,0,0,3,2,0,0] },
-  // Q11 Fame
-  fame:   { normale:[0,0,0,0,0,0,0,0], bassa:[0,0,0,0,0,0,0,0], zuccheri:[0,0,0,0,2,0,0,0], incontrollata:[0,0,0,0,3,0,0,0] },
-  // Q12 Pressione
+  // Q9 Pressione
   pressione:{ bassa:[0,0,0,0,0,0,0,0], normale:[0,0,0,0,0,0,0,0], legg_alta:[0,2,1,0,0,0,0,0], alta:[0,3,2,0,0,0,0,0], non_so:[0,0,0,0,0,0,0,0] },
-  // Q13 Colesterolo
-  colesterolo:{ normale:[0,0,0,0,0,0,0,0], alto:[0,3,0,3,0,0,0,0], non_so:[0,0,0,0,0,0,0,0] },
-  // Q14 Assunzione (multi)
+  // Q10 Assunzione (multi)
   assunzione:{ farmaci:[0,0,0,0,0,0,0,0], alcol:[0,0,0,3,0,0,0,0], integratori:[0,0,1,0,0,0,0,0], nulla:[0,0,0,0,0,0,0,0] },
-  // Q15 Analisi sangue
+  // Q11 Analisi sangue
   analisi:{ '6m':[0,0,0,0,0,0,0,0], '6-12m':[0,0,0,0,0,0,0,0], '12m+':[0,0,0,0,0,0,0,0], mai:[2,0,0,0,0,0,0,0] }
 };
 
