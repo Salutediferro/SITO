@@ -95,9 +95,6 @@ export default function Navbar() {
               {l.label.toUpperCase()}
             </Link>
           ))}
-          <a href={FORM_URL} style={styles.cta}>
-            TEST DI FERRO
-          </a>
         </div>
 
         <button
