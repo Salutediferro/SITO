@@ -135,22 +135,17 @@ export default {
         });
       }
 
-      // Label mappings matching quiz 15 domande v2
+      // Label mappings matching quiz 11 domande v3
       const SEX = { M: 'Uomo', F: 'Donna' };
       const AGE = { u30: 'Under 30', '30-39': '30–39 anni', '40-49': '40–49 anni', '50+': 'Over 50' };
       const TRAINING = { none: 'Non mi alleno', '2-3': '2-3 allenamenti a settimana', '4+': '>4 a settimana', agonista: 'Atleta agonista' };
       const PHARMA = { mai: 'Mai utilizzati', passato: 'In passato', attuale: 'Attualmente', no_risposta: 'Preferisco non rispondere' };
       const ENERGIA = { molto_energico: 'Molto energico', normale: 'Normale', a_volte_stanco: 'A volte stanco', sempre_stanco: 'Sempre stanco' };
       const SONNO = { molto_bene: 'Dormo molto bene', abbastanza: 'Dormo abbastanza bene', disturbato: 'Sonno disturbato', pessimo: 'Sonno disturbato e stanco' };
-      const RECUPERO = { veloce: 'Recupero veloce', normale: 'Recupero normale', lento: 'Recupero lento', non_recupero: 'Non recupero' };
       const LIBIDO = { molto_alta: 'Molto alta', normale: 'Normale', bassa: 'Bassa', molto_bassa: 'Molto bassa' };
-      const PERFORMANCE_SEX = { ottima: 'Ottima', normale: 'Normale', in_calo: 'In calo', pessima: 'Pessima da tempo' };
       const CICLO = { regolare: 'Regolare', legg_irregolare: 'Leggermente irregolare', molto_irregolare: 'Molto irregolare', no_ciclo: 'Non ho ciclo' };
-      const ENERGIA_CICLO = { elevata: 'Elevata', accettabile: 'Accettabile', bassa: 'Bassa', molto_bassa: 'Molto bassa' };
       const GRASSO = { no: 'Non ho problemi', fatica: 'Fatico a dimagrire', accumulo: 'Accumulo grasso facilmente' };
-      const FAME = { normale: 'Normale', bassa: 'Bassa, fatico a mangiare', zuccheri: 'Voglia frequente di zuccheri', incontrollata: 'Fame incontrollata' };
       const PRESSIONE = { bassa: 'Bassa', normale: 'Normale', legg_alta: 'Leggermente alta', alta: 'Alta', non_so: 'Non lo so' };
-      const COLESTEROLO = { normale: 'Normale', alto: 'Alto', non_so: 'Non lo so' };
       const ASSUNZIONE = { farmaci: 'Farmaci', alcol: 'Alcol', integratori: 'Integratori', nulla: 'Nulla di particolare' };
       const ANALISI = { '6m': 'Meno di 6 mesi fa', '6-12m': 'Tra 6 e 12 mesi fa', '12m+': 'Più di un anno fa', mai: 'Mai' };
       const SEGMENT_LABEL = { M_U40: 'Maschio Under 40', M_O40: 'Maschio Over 40', F_U40: 'Femmina Under 40', F_O40: 'Femmina Over 40' };
@@ -175,15 +170,10 @@ export default {
           'Farmacologico': r(PHARMA, data.pharma),
           'Energia': r(ENERGIA, data.energia),
           'Sonno': r(SONNO, data.sonno),
-          'Recupero': r(RECUPERO, data.recupero),
           'Libido': r(LIBIDO, data.libido),
-          'Performance sessuale': r(PERFORMANCE_SEX, data.performance_sex),
           'Ciclo': r(CICLO, data.ciclo),
-          'Energia ciclo': r(ENERGIA_CICLO, data.energia_ciclo),
           'Grasso': r(GRASSO, data.grasso),
-          'Fame': r(FAME, data.fame),
           'Pressione': r(PRESSIONE, data.pressione),
-          'Colesterolo': r(COLESTEROLO, data.colesterolo),
           'Assunzione': mapArray(data.assunzione, ASSUNZIONE),
           'Analisi sangue': r(ANALISI, data.analisi),
           'Pannelli consigliati': (() => { const PNAMES = { androgeno:'FERRO ANDROGENO', cuore:'FERRO CUORE', reni:'FERRO RENI', fegato:'FERRO FEGATO', metabolico:'FERRO METABOLICO', tiroide:'FERRO TIROIDE', recovery:'FERRO RECOVERY', donna:'FERRO DONNA' }; const v = data.suggested_panels; if (Array.isArray(v)) return v.map(k => PNAMES[k] || k).join(', '); if (typeof v === 'string') return v.split(',').map(k => { const t = k.trim(); return PNAMES[t] || t; }).join(', '); return ''; })(),
@@ -275,6 +265,66 @@ export default {
           });
         } catch (e) {
           console.error('Follow-up email error:', e.message);
+        }
+
+        // ── Notifica al team: nuovo lead ──
+        try {
+          const teamNotifyHtml = `<!DOCTYPE html>
+<html lang="it">
+<head><meta charset="UTF-8"></head>
+<body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
+<div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
+  <div style="background:#1B4FBF;padding:24px 28px;">
+    <div style="color:white;font-size:18px;letter-spacing:3px;font-weight:bold;">NUOVO LEAD</div>
+    <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px;">Salute di Ferro \u2014 Test completato</div>
+  </div>
+  <div style="padding:28px;">
+    <div style="background:#242424;border-radius:6px;padding:16px;margin-bottom:16px;">
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Nome:</strong> <span style="color:#CCC;">${data.name || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Email:</strong> <span style="color:#CCC;">${data.email || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Telefono:</strong> <span style="color:#CCC;">${data.phone || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Segmento:</strong> <span style="color:#CCC;">${SEGMENT_LABEL[seg] || seg}</span></p>
+    </div>
+    <div style="background:#242424;border-radius:6px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:11px;letter-spacing:2px;color:#1B4FBF;font-weight:bold;margin-bottom:10px;">RISPOSTE</div>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sesso: ${r(SEX, data.sex)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Et\u00e0: ${r(AGE, data.age)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Allenamento: ${r(TRAINING, data.training)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Farmaci: ${r(PHARMA, data.pharma)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Energia: ${r(ENERGIA, data.energia)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sonno: ${r(SONNO, data.sonno)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Libido: ${r(LIBIDO, data.libido)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Ciclo: ${r(CICLO, data.ciclo)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Grasso: ${r(GRASSO, data.grasso)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Pressione: ${r(PRESSIONE, data.pressione)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Assunzione: ${mapArray(data.assunzione, ASSUNZIONE)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Analisi: ${r(ANALISI, data.analisi)}</p>
+    </div>
+    <div style="background:#242424;border-radius:6px;padding:16px;">
+      <div style="font-size:11px;letter-spacing:2px;color:#1B4FBF;font-weight:bold;margin-bottom:10px;">RISULTATO</div>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Score: ${data.score ?? ''}/5 \u2014 ${data.score_name || ''}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Tag: ${Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags || '')}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Referral: ${data.referral || 'nessuno'}</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>`;
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${RESEND_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'Salute di Ferro <noreply@salutediferro.com>',
+              to: ['info@salutediferro.com'],
+              subject: `Nuovo lead: ${data.name || 'Anonimo'} \u2014 ${SEGMENT_LABEL[seg] || seg}`,
+              html: teamNotifyHtml,
+            }),
+          });
+        } catch (e) {
+          console.error('Team notification email error:', e.message);
         }
       }
 
