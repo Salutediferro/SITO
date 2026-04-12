@@ -56,27 +56,6 @@ const SERVICES = [
   { title: 'Dashboard Sanitaria', desc: 'Carica e consulta i tuoi documenti sanitari in un unico posto.' },
 ];
 
-const testimonials = [
-  {
-    name: 'Marco R.',
-    profile: 'Bodybuilder Natural, 34 anni',
-    stars: 5,
-    quote: 'Finalmente qualcuno che parla la mia lingua. Il Coach di Ferro ha letto i miei esami e ha capito subito cosa non andava. Mai avuto un medico cosi.',
-  },
-  {
-    name: 'Alessia T.',
-    profile: 'CrossFit Athlete, 29 anni',
-    stars: 5,
-    quote: 'Con FERRO DONNA ho scoperto che il mio ciclo irregolare era collegato allo stress da allenamento. Nessun ginecologo me l\'aveva mai detto.',
-  },
-  {
-    name: 'Luca M.',
-    profile: 'Powerlifter, 42 anni',
-    stars: 5,
-    quote: 'Uso supporti farmacologici da anni e nessun medico voleva seguirmi. Qui zero giudizi e i miei marker epatici e renali sono finalmente sotto controllo.',
-  },
-];
-
 const s = {
   hero: {
     padding: '100px 40px 60px', textAlign: 'center',
@@ -188,35 +167,6 @@ const s = {
   },
   dot: {
     width: 5, height: 5, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0,
-  },
-  testimonialsGrid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: 24, marginBottom: 40,
-  },
-  tCard: {
-    background: 'var(--bg-card)', border: '1.5px solid var(--border)',
-    borderRadius: 12, padding: 28, display: 'flex', flexDirection: 'column',
-  },
-  stars: {
-    fontSize: 16, color: '#F5A623', marginBottom: 16, letterSpacing: 2,
-  },
-  quote: {
-    fontSize: 14, color: 'var(--text-sec)', lineHeight: 1.7, fontWeight: 300,
-    fontStyle: 'italic', marginBottom: 20, flex: 1,
-  },
-  nameRow: {
-    display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
-  },
-  name: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16,
-    color: 'var(--text)', letterSpacing: 1,
-  },
-  badge: {
-    fontSize: 10, color: '#27AE60', background: 'rgba(39,174,96,0.1)',
-    padding: '2px 8px', borderRadius: 4, fontWeight: 600,
-  },
-  profile: {
-    fontSize: 12, color: 'var(--text-muted)', marginTop: 4,
   },
   ctaSection: {
     textAlign: 'center', padding: '60px 0',
@@ -336,31 +286,6 @@ export default function ChiSiamoPage() {
               <div style={s.serviceCard} className="card-hover">
                 <div style={s.serviceTitle}>{svc.title}</div>
                 <p style={s.serviceDesc}>{svc.desc}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-
-        <div style={s.divider} />
-
-        {/* TESTIMONIANZE */}
-        <FadeUp>
-          <div style={{...s.sectionTag, textAlign: 'center'}}>TESTIMONIANZE DI FERRO</div>
-          <div style={{...s.sectionTitle, textAlign: 'center'}}>CHI L'HA PROVATO PARLA</div>
-        </FadeUp>
-        <div style={s.testimonialsGrid}>
-          {testimonials.map((t, i) => (
-            <FadeUp key={i} delay={i * 0.12}>
-              <div style={s.tCard} className="card-hover">
-                <div style={s.stars}>{'★'.repeat(t.stars)}</div>
-                <p style={s.quote}>"{t.quote}"</p>
-                <div>
-                  <div style={s.nameRow}>
-                    <span style={s.name}>{t.name}</span>
-                    <span style={s.badge}>Verificato ✓</span>
-                  </div>
-                  <div style={s.profile}>{t.profile}</div>
-                </div>
               </div>
             </FadeUp>
           ))}
