@@ -8,7 +8,7 @@ const steps = [
 
 const s = {
   section: {
-    padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
+    padding: '60px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,

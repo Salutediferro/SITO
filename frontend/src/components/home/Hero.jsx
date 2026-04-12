@@ -42,8 +42,9 @@ const s = {
   bgImage: {
     position: 'absolute', inset: 0,
     backgroundImage: 'url("/hero-bg.jpg")',
-    backgroundSize: 'cover', backgroundPosition: 'center center',
-    opacity: 0.6,
+    backgroundSize: 'cover', backgroundPosition: 'center top',
+    opacity: 0.35,
+    filter: 'brightness(1.2) contrast(1.1)',
   },
   content: {
     position: 'relative', zIndex: 2,
@@ -88,12 +89,13 @@ const s = {
   btnSecondary: {
     display: 'inline-flex', alignItems: 'center',
     padding: '16px 32px',
-    background: 'transparent',
-    border: '1.5px solid var(--border-hover)', borderRadius: 6,
+    background: 'rgba(255,255,255,0.06)',
+    border: '1.5px solid rgba(255,255,255,0.2)', borderRadius: 6,
     color: 'var(--text)',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     transition: 'border-color 0.2s, background 0.2s',
+    backdropFilter: 'blur(4px)',
   },
 };
 

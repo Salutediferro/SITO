@@ -72,9 +72,9 @@ button { font-family: inherit; }
 
 @media (hover: hover) and (pointer: fine) {
   .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(248,113,113,0.08), 0 4px 12px rgba(0,0,0,0.3);
-    border-color: var(--border-hover);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(248,113,113,0.1), 0 6px 16px rgba(0,0,0,0.3);
+    border-color: rgba(248,113,113,0.25);
   }
 }
 

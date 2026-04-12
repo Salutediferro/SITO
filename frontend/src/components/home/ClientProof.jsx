@@ -2,7 +2,7 @@ import FadeUp from '../ui/FadeUp';
 
 const s = {
   section: {
-    padding: '60px 40px',
+    padding: '48px 40px',
     borderTop: '1px solid var(--border)',
     borderBottom: '1px solid var(--border)',
     background: 'linear-gradient(180deg, rgba(248,113,113,0.03) 0%, transparent 100%)',
