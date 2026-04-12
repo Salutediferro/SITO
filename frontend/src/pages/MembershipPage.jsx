@@ -137,21 +137,22 @@ const s = {
   },
   sectionDesc: {
     fontSize: 16, color: 'var(--text-sec)', lineHeight: 1.7, fontWeight: 300,
-    marginBottom: 40,
+    marginBottom: 32,
   },
   divider: {
     height: 1, background: 'var(--border)', margin: '60px 0',
   },
 
-  /* vantaggi grid */
+  /* vantaggi grid — 3 colonne come Chi Siamo pillars */
   grid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(3, 1fr)',
     gap: 24, marginBottom: 20,
   },
   card: {
     background: 'var(--bg-card)', border: '1.5px solid var(--border)',
     borderRadius: 12, padding: 28, textAlign: 'center',
+    display: 'flex', flexDirection: 'column', alignItems: 'center',
   },
   cardIcon: { marginBottom: 16 },
   cardTitle: {
@@ -162,20 +163,21 @@ const s = {
     fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6,
   },
 
-  /* servizi */
+  /* servizi — stesse card centrate */
   servicesGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: 20, marginBottom: 20,
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: 24, marginBottom: 20,
   },
   serviceCard: {
     background: 'var(--bg-card)', border: '1.5px solid var(--border)',
-    borderRadius: 12, padding: 24, display: 'flex', gap: 16, alignItems: 'flex-start',
+    borderRadius: 12, padding: 28, textAlign: 'center',
+    display: 'flex', flexDirection: 'column', alignItems: 'center',
   },
-  serviceIcon: { flexShrink: 0, marginTop: 2 },
+  serviceIcon: { marginBottom: 16 },
   serviceTitle: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
-    color: 'var(--text)', marginBottom: 8,
+    color: 'var(--text)', marginBottom: 10,
   },
   serviceDesc: {
     fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6,
@@ -199,6 +201,14 @@ const s = {
 export default function MembershipPage() {
   return (
     <main>
+      <style>{`
+        @media (max-width: 900px) {
+          .membership-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 600px) {
+          .membership-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
       {/* HERO */}
       <section style={s.hero}>
         <FadeUp>
@@ -219,7 +229,7 @@ export default function MembershipPage() {
             Tutto quello che serve per gestire la tua salute da atleta, senza sbatti e senza giudizi.
           </p>
         </FadeUp>
-        <div style={s.grid}>
+        <div style={s.grid} className="membership-grid">
           {VANTAGGI.map((v, i) => (
             <FadeUp key={i} delay={i * 0.08}>
               <div style={s.card} className="card-hover">
@@ -241,15 +251,13 @@ export default function MembershipPage() {
             Ogni membro ha accesso a strumenti concreti per monitorare e ottimizzare la propria salute nel tempo.
           </p>
         </FadeUp>
-        <div style={s.servicesGrid}>
+        <div style={s.servicesGrid} className="membership-grid">
           {PERCORSO.map((svc, i) => (
             <FadeUp key={i} delay={i * 0.1}>
               <div style={s.serviceCard} className="card-hover">
                 <div style={s.serviceIcon}>{svc.icon}</div>
-                <div>
-                  <div style={s.serviceTitle}>{svc.title}</div>
-                  <p style={s.serviceDesc}>{svc.desc}</p>
-                </div>
+                <div style={s.serviceTitle}>{svc.title}</div>
+                <p style={s.serviceDesc}>{svc.desc}</p>
               </div>
             </FadeUp>
           ))}
