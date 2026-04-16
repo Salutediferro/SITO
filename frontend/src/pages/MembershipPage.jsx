@@ -153,6 +153,7 @@ const s = {
     background: 'var(--bg-card)', border: '1.5px solid var(--border)',
     borderRadius: 12, padding: 28, textAlign: 'center',
     display: 'flex', flexDirection: 'column', alignItems: 'center',
+    height: '100%',
   },
   cardIcon: { marginBottom: 16 },
   cardTitle: {
@@ -173,6 +174,7 @@ const s = {
     background: 'var(--bg-card)', border: '1.5px solid var(--border)',
     borderRadius: 12, padding: 28, textAlign: 'center',
     display: 'flex', flexDirection: 'column', alignItems: 'center',
+    height: '100%',
   },
   serviceIcon: { marginBottom: 16 },
   serviceTitle: {
@@ -231,7 +233,7 @@ export default function MembershipPage() {
         </FadeUp>
         <div style={s.grid} className="membership-grid">
           {VANTAGGI.map((v, i) => (
-            <FadeUp key={i} delay={i * 0.08}>
+            <FadeUp key={i} delay={i * 0.08} style={{ height: '100%' }}>
               <div style={s.card} className="card-hover">
                 <div style={s.cardIcon}>{v.icon}</div>
                 <div style={s.cardTitle}>{v.title}</div>
@@ -253,7 +255,7 @@ export default function MembershipPage() {
         </FadeUp>
         <div style={s.servicesGrid} className="membership-grid">
           {PERCORSO.map((svc, i) => (
-            <FadeUp key={i} delay={i * 0.1}>
+            <FadeUp key={i} delay={i * 0.1} style={{ height: '100%' }}>
               <div style={s.serviceCard} className="card-hover">
                 <div style={s.serviceIcon}>{svc.icon}</div>
                 <div style={s.serviceTitle}>{svc.title}</div>
