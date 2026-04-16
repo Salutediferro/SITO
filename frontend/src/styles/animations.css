@@ -20,11 +20,10 @@
 }
 
 .card-enter {
-  animation: fadeUp .38s ease forwards;
-  opacity: 0;
+  animation: fadeUp .38s ease both;
 }
 .card-exit {
-  animation: fadeDown .22s ease forwards;
+  animation: fadeDown .22s ease both;
 }
 
 /* ───── Tag badges ───── */
