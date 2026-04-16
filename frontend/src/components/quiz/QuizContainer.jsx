@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import useQuiz from '../../hooks/useQuiz';
 import IntroStep from './IntroStep';
 import ContactsStep from './ContactsStep';
@@ -11,19 +11,7 @@ import './quiz.css';
 export default function QuizContainer() {
   const quiz = useQuiz();
   const { state, currentStep, progressPct, stepNum } = quiz;
-  const [animClass, setAnimClass] = useState('card-enter');
 
-  // Animate on step change
-  const prevStep = usePrevious(state.step);
-  useEffect(() => {
-    if (prevStep !== undefined && prevStep !== state.step) {
-      setAnimClass('card-exit');
-      const timer = setTimeout(() => setAnimClass('card-enter'), 220);
-      return () => clearTimeout(timer);
-    }
-  }, [state.step, prevStep]);
-
-  // Keyboard Enter
   useEffect(() => {
     const handler = (e) => {
       if (e.key !== 'Enter') return;
@@ -61,17 +49,10 @@ export default function QuizContainer() {
         </div>
       )}
       <div className="quiz-center">
-        <div className={`quiz-card ${animClass}`} key={state.step}>
+        <div className="quiz-card" key={state.step}>
           {content}
         </div>
       </div>
     </div>
   );
-}
-
-function usePrevious(value) {
-  const ref = useRef(undefined);
-  const prev = ref.current;
-  ref.current = value;
-  return prev;
 }

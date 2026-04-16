@@ -6,7 +6,7 @@ export default function IntroStep({ quiz }) {
       </div>
       <h1 className="q-h1">SCOPRI IL TUO<br /><em>PROFILO METABOLICO</em></h1>
       <p className="q-intro-p">
-        15 domande per capire il tuo stato di salute. Ci vogliono solo 2 minuti.
+        10 domande per capire il tuo stato di salute. Ci vogliono solo 2 minuti.
       </p>
       <button className="q-btn-primary" type="button" onClick={quiz.startQuiz}>
         INIZIA IL TEST
