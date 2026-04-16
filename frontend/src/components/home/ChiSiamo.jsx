@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import FadeUp from '../ui/FadeUp';
+
+const FORM_URL = 'https://form.salutediferro.com';
 
 const PILLARS = [
   {
@@ -214,10 +215,10 @@ export default function ChiSiamo() {
 
       <FadeUp>
         <div style={s.ctaWrap}>
-          <Link to="/test" style={s.btn}>
+          <a href={FORM_URL} style={s.btn}>
             SCOPRI IL TUO PROFILO DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
+          </a>
         </div>
       </FadeUp>
     </section>

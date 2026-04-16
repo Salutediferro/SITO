@@ -105,6 +105,8 @@ const PERCORSO = [
   },
 ];
 
+const FORM_URL = 'https://form.salutediferro.com';
+
 const s = {
   hero: {
     padding: '100px 40px 60px', textAlign: 'center',

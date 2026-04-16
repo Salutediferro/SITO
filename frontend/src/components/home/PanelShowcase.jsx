@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import FadeUp from '../ui/FadeUp';
 import { FERRO_CORE, MODULES } from '../../constants/panels';
 
-import { Link } from 'react-router-dom';
+const FORM_URL = 'https://form.salutediferro.com';
 
 /* ── slide data: core + all modules ── */
 const SLIDES = [
@@ -225,9 +225,9 @@ export default function PanelShowcase() {
             </h2>
             <p style={s.desc}>{slide.desc}</p>
             <div style={{display:'flex', gap: 12, flexWrap:'wrap'}}>
-              <Link to="/test" style={s.btn}>
+              <a href={FORM_URL} style={s.btn}>
                 FAI IL TEST DI FERRO
-              </Link>
+              </a>
               <a href="/pannelli" style={{...s.btn, background:'transparent', border:'1.5px solid var(--border-hover)', boxShadow:'none', color:'var(--text)'}}>
                 SCOPRI TUTTI I PANNELLI
               </a>

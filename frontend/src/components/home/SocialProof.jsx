@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import FadeUp from '../ui/FadeUp';
+
+const FORM_URL = 'https://form.salutediferro.com';
 
 const s = {
   section: {
@@ -42,10 +43,10 @@ export default function SocialProof() {
           <p style={s.desc}>
             328+ atleti hanno già scelto di sapere. Ogni giorno rimandato è un giorno senza risposte. Il Test di Ferro richiede 2 minuti.
           </p>
-          <Link to="/test" style={s.btn}>
+          <a href={FORM_URL} style={s.btn}>
             INIZIA IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
+          </a>
         </FadeUp>
       </div>
     </section>

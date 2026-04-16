@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
 import FadeUp from '../components/ui/FadeUp';
 import { FERRO_CORE, MODULES } from '../constants/panels';
+
+const FORM_URL = 'https://form.salutediferro.com';
 
 function getIcon(iconId) {
   const size = 28;
@@ -200,10 +201,10 @@ export default function PannelliPage() {
           <p style={s.sub}>
             Ogni pannello è costruito su linee guida internazionali e pensato per chi si allena sul serio. Nessun check-up generico da medico di base. Ogni esame ha un motivo preciso e una fonte verificabile.
           </p>
-          <Link to="/test" style={s.btn}>
+          <a href={FORM_URL} style={s.btn}>
             FAI IL TEST PER SCOPRIRE I TUOI
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
+          </a>
         </FadeUp>
       </section>
 
@@ -232,9 +233,9 @@ export default function PannelliPage() {
                 <li key={b} style={s.item}><span style={s.dot} />{b}</li>
               ))}
             </ul>
-            <Link to="/test" style={s.ctaBtn}>
+            <a href={FORM_URL} style={s.ctaBtn}>
               SCOPRI SE FA PER TE &rarr;
-            </Link>
+            </a>
           </div>
         </FadeUp>
 
@@ -271,9 +272,9 @@ export default function PannelliPage() {
                   <li key={b} style={s.item}><span style={s.dot} />{b}</li>
                 ))}
               </ul>
-              <Link to="/test" style={s.ctaBtn}>
+              <a href={FORM_URL} style={s.ctaBtn}>
                 SCOPRI SE FA PER TE &rarr;
-              </Link>
+              </a>
             </div>
           </FadeUp>
         ))}

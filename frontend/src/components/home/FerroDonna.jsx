@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import FadeUp from '../ui/FadeUp';
+
+const FORM_URL = 'https://form.salutediferro.com';
 
 const s = {
   section: {
@@ -69,7 +70,7 @@ export default function FerroDonna() {
           <p style={s.desc}>
             Il pannello Ferro Donna va a leggere FSH, Estradiolo, Prolattina e tutto quello che serve per capire cosa sta succedendo davvero.
           </p>
-          <Link to="/test" style={s.btn}>FAI IL TEST DI FERRO</Link>
+          <a href={FORM_URL} style={s.btn}>FAI IL TEST DI FERRO</a>
         </FadeUp>
 
         <FadeUp delay={0.2}>

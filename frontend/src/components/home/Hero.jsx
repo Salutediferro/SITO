@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const FORM_URL = 'https://form.salutediferro.com';
+
 const ROTATING_PHRASES = [
   'Sempre stanco ma non sai perch\u00e9?',
   'Da quando hai 40 anni ti senti sempre pi\u00f9 stanco?',
@@ -116,10 +118,10 @@ export default function Hero() {
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero sbatti.
         </p>
         <div style={s.buttons}>
-          <Link to="/test" style={s.btnPrimary}>
+          <a href={FORM_URL} style={s.btnPrimary}>
             FAI IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </Link>
+          </a>
           <Link to="/pannelli" style={s.btnSecondary}>
             SCOPRI I PANNELLI
           </Link>

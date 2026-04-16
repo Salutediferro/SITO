@@ -64,7 +64,7 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  const TEST_URL = '/test';
+  const FORM_URL = 'https://form.salutediferro.com';
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/pannelli', label: 'Pannelli' },
@@ -97,9 +97,9 @@ export default function Navbar() {
               {l.label.toUpperCase()}
             </Link>
           ))}
-          <Link to={TEST_URL} style={styles.cta}>
+          <a href={FORM_URL} style={styles.cta}>
             TEST DI FERRO
-          </Link>
+          </a>
         </div>
 
         <button
@@ -139,9 +139,9 @@ export default function Navbar() {
               {l.label.toUpperCase()}
             </Link>
           ))}
-          <Link to={TEST_URL} style={{ ...styles.cta, padding: '14px 40px', fontSize: 18 }}>
+          <a href={FORM_URL} style={{ ...styles.cta, padding: '14px 40px', fontSize: 18 }}>
             INIZIA IL TEST
-          </Link>
+          </a>
         </div>
       )}
 
