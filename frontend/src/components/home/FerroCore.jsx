@@ -1,7 +1,6 @@
+import { Link } from 'react-router-dom';
 import FadeUp from '../ui/FadeUp';
 import { FERRO_CORE } from '../../constants/panels';
-
-const FORM_URL = 'https://form.salutediferro.com';
 
 const s = {
   section: {
@@ -93,7 +92,7 @@ export default function FerroCore() {
                 </li>
               ))}
             </ul>
-            <a href={FORM_URL} style={s.btn}>SCOPRI SE FA PER TE</a>
+            <Link to="/test" style={s.btn}>SCOPRI SE FA PER TE</Link>
           </div>
         </FadeUp>
       </div>
