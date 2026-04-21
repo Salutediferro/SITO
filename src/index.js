@@ -238,7 +238,7 @@ export default {
       <p style="font-size:13px;color:#888;margin:8px 0 0;">Garanzia soddisfatti o rimborsati.</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL \u2014 47\u20ac</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL \u2014 27\u20ac</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">Clicca il bottone, completa il pagamento sicuro con Stripe e prenota il tuo slot su Calendly.</p>
   </div>
@@ -390,13 +390,14 @@ export default {
         }
       }
 
-      const baseAmount = 4700; // 47€ in cents
-      const unitAmount = String(discountPct ? Math.round(baseAmount * (1 - discountPct / 100)) : baseAmount);
+      const baseAmount = 2700; // 27€ in cents — Promo Lancio
+      const referralAmount = 2200; // 22€ in cents — prezzo referral fisso promo lancio
+      const unitAmount = String(referral ? referralAmount : baseAmount);
 
       const params = {
         'mode': 'payment',
         'line_items[0][price_data][currency]': 'eur',
-        'line_items[0][price_data][product_data][name]': 'Consulenza Salute di Ferro \u2014 30 min',
+        'line_items[0][price_data][product_data][name]': 'Promo Lancio \u2014 Membership 1 mese + Consulenza',
         'line_items[0][price_data][unit_amount]': unitAmount,
         'line_items[0][quantity]': '1',
         'success_url': origin + '/payment-success?session_id={CHECKOUT_SESSION_ID}',
@@ -452,7 +453,7 @@ export default {
 
       let customerEmail = '';
       let customerName = '';
-      let amountPaid = '47.00';
+      let amountPaid = '27.00';
       let referralUsed = '';
 
       if (sessionId && STRIPE_SECRET_KEY) {
@@ -685,7 +686,7 @@ export default {
       <p style="font-size:13px;color:#888;margin:8px 0 0;">Garanzia soddisfatti o rimborsati.</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 47\u20ac</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 27\u20ac</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">I posti disponibili si esauriscono velocemente.</p>
   </div>

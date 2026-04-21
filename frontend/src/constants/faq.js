@@ -25,7 +25,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Quanto costa?',
-    a: 'Il Test di Ferro costa 47€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
+    a: 'Il Test di Ferro costa 27€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
   },
   {
     q: 'Ogni quanto dovrei rifare gli esami?',

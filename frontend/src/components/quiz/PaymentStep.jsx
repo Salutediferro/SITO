@@ -36,7 +36,7 @@ export default function PaymentStep({ quiz }) {
     }
   };
 
-  const price = valid ? '42,30' : '47';
+  const price = valid ? '22' : '27';
 
   return (
     <div>
@@ -120,7 +120,8 @@ export default function PaymentStep({ quiz }) {
         {/* Price */}
         <div style={{ textAlign: 'center', margin: '16px 0 8px' }}>
           <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, color: 'var(--text)', lineHeight: 1 }}>
-            {valid && <span style={{ textDecoration: 'line-through', color: 'var(--text-sec)', fontSize: 28 }}>47€</span>}
+            {valid && <span style={{ textDecoration: 'line-through', color: 'var(--text-sec)', fontSize: 28 }}>27€</span>}
+
             {' '}{price}<span style={{ fontSize: 22, color: 'var(--text-sec)' }}> €</span>
           </div>
           <div style={{ fontSize: 12, color: 'var(--text-sec)', marginTop: 4 }}>Consulenza di 30 minuti</div>
