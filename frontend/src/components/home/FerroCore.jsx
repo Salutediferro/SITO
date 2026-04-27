@@ -24,7 +24,7 @@ const s = {
   },
   hl: {
     display: 'inline-flex', padding: '6px 16px',
-    background: 'rgba(248,113,113,0.08)', border: '1px solid var(--accent)',
+    background: 'rgba(236,71,87,0.08)', border: '1px solid var(--accent)',
     borderRadius: 20, fontFamily: "'Bebas Neue', sans-serif",
     fontSize: 13, letterSpacing: 2, color: 'var(--accent)',
   },
@@ -58,7 +58,7 @@ const s = {
   btn: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: '14px 28px', marginTop: 24,
-    background: 'linear-gradient(135deg, var(--accent) 0%, #EF4444 100%)',
+    background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',

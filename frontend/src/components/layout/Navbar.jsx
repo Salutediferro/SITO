@@ -6,7 +6,7 @@ const styles = {
     position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     padding: '0 40px', height: 72,
-    background: 'rgba(8,14,28,0.92)', backdropFilter: 'blur(12px)',
+    background: 'rgba(10,10,12,0.92)', backdropFilter: 'blur(12px)',
     borderBottom: '1px solid var(--border)',
     transition: 'transform 0.3s ease',
   },
@@ -41,7 +41,7 @@ const styles = {
   },
   mobileMenu: {
     position: 'fixed', top: 72, left: 0, right: 0, bottom: 0,
-    background: 'rgba(8,14,28,0.98)', backdropFilter: 'blur(12px)',
+    background: 'rgba(10,10,12,0.98)', backdropFilter: 'blur(12px)',
     display: 'flex', flexDirection: 'column', alignItems: 'center',
     justifyContent: 'center', gap: 32, zIndex: 49,
   },

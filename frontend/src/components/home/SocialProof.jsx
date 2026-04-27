@@ -5,7 +5,7 @@ const FORM_URL = 'https://form.salutediferro.com';
 const s = {
   section: {
     padding: '80px 40px',
-    background: 'linear-gradient(180deg, rgba(248,113,113,0.04) 0%, transparent 100%)',
+    background: 'linear-gradient(180deg, rgba(236,71,87,0.04) 0%, transparent 100%)',
   },
   inner: {
     maxWidth: 800, margin: '0 auto', textAlign: 'center',
@@ -25,7 +25,7 @@ const s = {
   btn: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: '16px 36px',
-    background: 'linear-gradient(135deg, var(--accent) 0%, #EF4444 100%)',
+    background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',

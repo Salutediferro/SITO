@@ -15,6 +15,11 @@ export default function QuizContainer() {
   useEffect(() => {
     const handler = (e) => {
       if (e.key !== 'Enter') return;
+      // Skip se l'utente sta digitando in input/textarea: il submit form nativo gestirà già
+      const tag = e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      // Skip se è già su un bottone/link: gli serve il click nativo, non il nostro
+      if (tag === 'BUTTON' || tag === 'A') return;
       const step = currentStep;
       if (step.t === 'single' || step.t === 'multi' || step.t === 'contacts') {
         const btn = document.getElementById('quiz-cta');
@@ -40,8 +45,15 @@ export default function QuizContainer() {
 
   return (
     <div className="quiz-wrap">
-      <div className="quiz-bar-track">
-        <div className="quiz-bar-fill" style={{ width: `${progressPct}%` }} />
+      <div
+        className="quiz-bar-track"
+        role="progressbar"
+        aria-valuenow={Math.round(progressPct)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Avanzamento quiz"
+      >
+        <div className="quiz-bar-fill" style={{ transform: `scaleX(${progressPct / 100})` }} />
       </div>
       {showCounter && (
         <div className="quiz-counter">

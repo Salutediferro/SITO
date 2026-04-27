@@ -1,28 +1,29 @@
 :root {
-  /* Backgrounds — pitch deck palette */
-  --bg:           #0B1120;
-  --bg-card:      #111827;
-  --bg-elevated:  #1E293B;
-  /* Accent */
-  --accent:       #F87171;
-  --accent-dark:  #EF4444;
-  --accent-glow:  rgba(239,68,68,0.15);
-  --accent-glow2: rgba(239,68,68,0.08);
-  /* Utility */
-  --blue:         #6366F1;
-  /* Text — brighter for readability */
-  --text:         #F8FAFC;
-  --text-sec:     #CBD5E1;
-  --text-muted:   #64748B;
-  /* Borders — softer rgba */
-  --border:       rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.14);
-  --border-active:#EF4444;
-  --input-bg:     #0B1120;
-  /* Brand */
-  --gold:         #F59E0B;
-  --gold-glow:    rgba(245,158,11,0.12);
-  --green:        #10B981;
+  /* Backgrounds — Iron Blood: carbon/gunmetal deep */
+  --bg:           #0A0A0C;
+  --bg-card:      #131316;
+  --bg-elevated:  #1F1F23;
+  /* Accent — pure crimson red (no orange shift, B ≥ G always) */
+  --accent:       #EC4757;
+  --accent-fill:  #7A0815;
+  --accent-dark:  #500511;
+  --accent-glow:  rgba(236,71,87,0.18);
+  --accent-glow2: rgba(236,71,87,0.10);
+  /* Utility — cool metallics */
+  --blue:         #8C9AA8;
+  /* Text — cool whites, no warm cast */
+  --text:         #F2F2F4;
+  --text-sec:     #B8B8BC;
+  --text-muted:   #9A9AA0;
+  /* Borders — cool hairlines */
+  --border:       rgba(242,242,244,0.08);
+  --border-hover: rgba(242,242,244,0.16);
+  --border-active:#EC4757;
+  --input-bg:     #0A0A0C;
+  /* Brand — chrome/silver instead of bronze, sage success */
+  --gold:         #C8C8CC;
+  --gold-glow:    rgba(200,200,204,0.14);
+  --green:        #9BB89B;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,9 +46,9 @@ body::before {
   content: '';
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(248,113,113,0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 100%, rgba(248,113,113,0.03) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 50%, rgba(251,191,36,0.015) 0%, transparent 60%);
+    radial-gradient(ellipse at 15% 0%, rgba(236,71,87,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(236,71,87,0.03) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(200,200,204,0.015) 0%, transparent 60%);
 }
 
 body::after {
@@ -73,14 +74,15 @@ button { font-family: inherit; }
 @media (hover: hover) and (pointer: fine) {
   .card-hover:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(248,113,113,0.1), 0 6px 16px rgba(0,0,0,0.3);
-    border-color: rgba(248,113,113,0.25);
+    box-shadow: 0 16px 48px rgba(236,71,87,0.1), 0 6px 16px rgba(0,0,0,0.3);
+    border-color: rgba(236,71,87,0.25);
   }
 }
 
 /* ───── Gradient text utility ───── */
+/* Tutto rossi puri cremisi (B ≥ G sempre, no orange shift). Bello acceso, niente chrome. */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, #EF4444 40%, var(--gold) 100%);
+  background: linear-gradient(135deg, #FF4555 0%, var(--accent) 45%, #9A0E1F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -94,7 +96,7 @@ button { font-family: inherit; }
 
 /* ───── Selection ───── */
 ::selection {
-  background: rgba(248,113,113,0.3);
+  background: rgba(236,71,87,0.3);
   color: var(--text);
 }
 
@@ -102,7 +104,7 @@ button { font-family: inherit; }
 .sticky-cta {
   position: fixed; bottom: 0; left: 0; right: 0;
   padding: 12px 20px;
-  background: rgba(8,14,28,0.95);
+  background: rgba(10,10,12,0.95);
   backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
   z-index: 40;

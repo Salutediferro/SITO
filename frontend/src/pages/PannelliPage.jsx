@@ -5,7 +5,7 @@ const FORM_URL = 'https://form.salutediferro.com';
 
 function getIcon(iconId) {
   const size = 28;
-  const color = '#F87171';
+  const color = '#EC4757';
   const props = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' };
 
   switch (iconId) {
@@ -77,7 +77,7 @@ function getIcon(iconId) {
 const s = {
   hero: {
     padding: '100px 40px 60px', textAlign: 'center',
-    background: 'linear-gradient(180deg, rgba(248,113,113,0.04) 0%, transparent 60%)',
+    background: 'linear-gradient(180deg, rgba(236,71,87,0.04) 0%, transparent 60%)',
   },
   tag: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
@@ -149,7 +149,7 @@ const s = {
   },
   moduleTag: {
     fontSize: 13, padding: '4px 12px', borderRadius: 12,
-    background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
+    background: 'rgba(236,71,87,0.08)', border: '1px solid rgba(236,71,87,0.2)',
     color: 'var(--accent)',
   },
   moduleDesc: {
@@ -167,7 +167,7 @@ const s = {
   },
   pill: {
     display: 'inline-block', fontSize: 13, padding: '4px 12px', borderRadius: 12,
-    background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
+    background: 'rgba(236,71,87,0.08)', border: '1px solid rgba(236,71,87,0.2)',
     color: 'var(--accent)', marginRight: 6,
   },
   inclusoBadge: {

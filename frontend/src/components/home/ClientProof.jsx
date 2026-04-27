@@ -5,7 +5,7 @@ const s = {
     padding: '48px 40px',
     borderTop: '1px solid var(--border)',
     borderBottom: '1px solid var(--border)',
-    background: 'linear-gradient(180deg, rgba(248,113,113,0.03) 0%, transparent 100%)',
+    background: 'linear-gradient(180deg, rgba(236,71,87,0.03) 0%, transparent 100%)',
   },
   inner: {
     maxWidth: 1000, margin: '0 auto',

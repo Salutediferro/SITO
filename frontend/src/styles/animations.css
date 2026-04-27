@@ -1,22 +1,50 @@
-/* ───── FadeUp on scroll ───── */
+/* ───── Motion tokens (Iron Forge / Blood — DESIGN.md §7.1) ───── */
+:root {
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-medium: 300ms;
+  --motion-slow: 400ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ───── prefers-reduced-motion global guard (WCAG 2.3.3 / 2.2.2) ───── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ───── FadeUp on scroll (Jakub: aggiunto blur "materializing" + ease-out-quint, durata ridotta) ───── */
 .fade-up {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  filter: blur(4px);
+  transition:
+    opacity var(--motion-slow) var(--ease-out-quint),
+    transform var(--motion-slow) var(--ease-out-quint),
+    filter var(--motion-slow) var(--ease-out-quint);
 }
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
-/* ───── Quiz card animations ───── */
+/* ───── Quiz card animations (Jakub: blur "materializing" su enter, exit subtler) ───── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(18px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
 }
 @keyframes fadeDown {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-12px); }
+  from { opacity: 1; transform: translateY(0);   filter: blur(0); }
+  to   { opacity: 0; transform: translateY(-8px); filter: blur(4px); }
 }
 
 .card-enter {
@@ -42,14 +70,14 @@
 /* ───── Count pulse ───── */
 @keyframes countPulse {
   0%   { transform: scale(1); }
-  40%  { transform: scale(1.15); text-shadow: 0 0 40px rgba(248,113,113,0.6); }
+  40%  { transform: scale(1.15); text-shadow: 0 0 40px rgba(236,71,87,0.6); }
   100% { transform: scale(1); }
 }
 
 /* ───── Dot pulse ───── */
 @keyframes pulse {
   0%, 100% { box-shadow: 0 0 6px var(--accent); }
-  50%      { box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(248,113,113,0.3); }
+  50%      { box-shadow: 0 0 14px var(--accent), 0 0 24px rgba(236,71,87,0.3); }
 }
 
 /* ───── Spinner ───── */
@@ -78,8 +106,8 @@
 
 /* ───── Glow pulse for CTA buttons ───── */
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 3px 14px rgba(248,113,113,0.15); }
-  50%      { box-shadow: 0 6px 28px rgba(248,113,113,0.3); }
+  0%, 100% { box-shadow: 0 3px 14px rgba(236,71,87,0.15); }
+  50%      { box-shadow: 0 6px 28px rgba(236,71,87,0.3); }
 }
 
 /* ───── Line grow for connecting steps ───── */

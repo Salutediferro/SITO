@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 const s = {
   item: {
@@ -10,15 +10,22 @@ const s = {
     justifyContent: 'space-between', cursor: 'pointer',
     color: 'var(--text)', fontSize: 16, fontWeight: 500,
     textAlign: 'left', fontFamily: "'DM Sans', sans-serif",
-    transition: 'color 0.2s',
+    transition: 'color var(--motion-fast) var(--ease-standard)',
   },
   arrow: {
     width: 20, height: 20, flexShrink: 0, marginLeft: 16,
-    transition: 'transform 0.3s ease',
+    transition: 'transform var(--motion-medium) var(--ease-standard)',
     color: 'var(--accent)',
   },
+  // Pattern grid-template-rows 0fr → 1fr: GPU-friendly, niente layout-trigger su max-height,
+  // niente magic number di altezza massima.
   content: {
-    overflow: 'hidden', transition: 'max-height 0.3s ease, opacity 0.3s ease',
+    display: 'grid',
+    transition: 'grid-template-rows var(--motion-medium) var(--ease-standard), opacity var(--motion-base) var(--ease-standard)',
+  },
+  contentInnerWrap: {
+    overflow: 'hidden',
+    minHeight: 0,
   },
   inner: {
     paddingBottom: 20, fontSize: 14, color: 'var(--text-sec)',
@@ -28,14 +35,21 @@ const s = {
 
 export default function Accordion({ items }) {
   const [openIdx, setOpenIdx] = useState(null);
+  const baseId = useId();
 
   return (
     <div>
       {items.map((item, i) => {
         const isOpen = openIdx === i;
+        const panelId = `${baseId}-panel-${i}`;
+        const triggerId = `${baseId}-trigger-${i}`;
         return (
           <div key={i} style={s.item}>
             <button
+              type="button"
+              id={triggerId}
+              aria-expanded={isOpen}
+              aria-controls={panelId}
               style={{ ...s.trigger, color: isOpen ? 'var(--accent)' : 'var(--text)' }}
               onClick={() => setOpenIdx(isOpen ? null : i)}
             >
@@ -44,8 +58,15 @@ export default function Accordion({ items }) {
                 <polyline points="6 9 12 15 18 9" />
               </svg>
             </button>
-            <div style={{ ...s.content, maxHeight: isOpen ? 300 : 0, opacity: isOpen ? 1 : 0 }}>
-              <div style={s.inner}>{item.a}</div>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={triggerId}
+              style={{ ...s.content, gridTemplateRows: isOpen ? '1fr' : '0fr', opacity: isOpen ? 1 : 0 }}
+            >
+              <div style={s.contentInnerWrap}>
+                <div style={s.inner}>{item.a}</div>
+              </div>
             </div>
           </div>
         );

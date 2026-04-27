@@ -29,14 +29,14 @@ const s = {
   },
   bg: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(135deg, rgba(8,14,28,0.95) 0%, rgba(8,14,28,0.7) 50%, rgba(8,14,28,0.85) 100%)',
+    background: 'linear-gradient(135deg, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0.7) 50%, rgba(10,10,12,0.85) 100%)',
     zIndex: 1,
   },
   meshBg: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(-45deg, rgba(248,113,113,0.06), rgba(239,68,68,0.04), rgba(8,14,28,0.9), rgba(248,113,113,0.05))',
+    background: 'linear-gradient(-45deg, rgba(236,71,87,0.06), rgba(122,8,21,0.04), rgba(10,10,12,0.9), rgba(236,71,87,0.05))',
     backgroundSize: '400% 400%',
-    animation: 'gradientMesh 15s ease infinite',
+    backgroundPosition: '0% 50%',
     zIndex: 1,
   },
   bgImage: {
@@ -53,8 +53,8 @@ const s = {
   tag: {
     display: 'inline-block', padding: '8px 20px',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
-    color: 'var(--gold)', background: 'rgba(251,191,36,0.1)',
-    border: '1px solid rgba(251,191,36,0.25)', borderRadius: 4,
+    color: 'var(--gold)', background: 'rgba(200,200,204,0.1)',
+    border: '1px solid rgba(200,200,204,0.25)', borderRadius: 4,
     marginBottom: 24,
   },
   h1: {
@@ -83,8 +83,7 @@ const s = {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    animation: 'glowPulse 2s ease-in-out infinite',
+    transition: 'transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard)',
   },
   btnSecondary: {
     display: 'inline-flex', alignItems: 'center',
@@ -106,7 +105,7 @@ export default function Hero() {
     <section style={s.section}>
       <div style={s.bgImage} />
       <div style={s.bg} />
-      <div style={s.meshBg} />
+      <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
         <div style={s.tag}>LA PALESTRA DELLA SALUTE</div>
         <h1 style={s.h1}>
@@ -118,7 +117,7 @@ export default function Hero() {
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero sbatti.
         </p>
         <div style={s.buttons}>
-          <a href={FORM_URL} style={s.btnPrimary}>
+          <a href={FORM_URL} style={s.btnPrimary} className="hero-cta">
             FAI IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -129,14 +128,10 @@ export default function Hero() {
       </div>
 
       <style>{`
-        @keyframes gradientMesh {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes glowPulse {
-          0%, 100% { box-shadow: 0 3px 14px rgba(248,113,113,0.15); }
-          50% { box-shadow: 0 3px 28px rgba(248,113,113,0.35), 0 0 60px rgba(248,113,113,0.1); }
+        /* Hero ambient animations: ON solo per utenti che NON preferiscono ridurre il movimento */
+        @media (prefers-reduced-motion: no-preference) {
+          .hero-mesh { animation: gradientMesh 18s ease-in-out infinite; }
+          .hero-cta { animation: glowPulse 2.4s ease-in-out infinite; }
         }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }

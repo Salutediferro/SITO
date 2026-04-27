@@ -5,7 +5,7 @@ const FORM_URL = 'https://form.salutediferro.com';
 const PILLARS = [
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
         <polyline points="16 17 21 12 16 7" />
         <line x1="21" y1="12" x2="9" y2="12" />
@@ -16,7 +16,7 @@ const PILLARS = [
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
         <circle cx="9" cy="7" r="4" />
         <path d="M23 21v-2a4 4 0 00-3-3.87" />
@@ -28,7 +28,7 @@ const PILLARS = [
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <polyline points="12 6 12 12 16 14" />
       </svg>
@@ -59,7 +59,7 @@ const SERVICES = [
 const s = {
   hero: {
     padding: '100px 40px 60px', textAlign: 'center',
-    background: 'linear-gradient(180deg, rgba(248,113,113,0.04) 0%, transparent 60%)',
+    background: 'linear-gradient(180deg, rgba(236,71,87,0.04) 0%, transparent 60%)',
   },
   tag: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
@@ -104,7 +104,7 @@ const s = {
   },
   problemBadge: {
     fontSize: 13, padding: '8px 16px', borderRadius: 20,
-    background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.2)',
+    background: 'rgba(236,71,87,0.06)', border: '1px solid rgba(236,71,87,0.2)',
     color: 'var(--text-sec)',
   },
   pillarsGrid: {
@@ -174,7 +174,7 @@ const s = {
   ctaBtn: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: '16px 36px',
-    background: 'linear-gradient(135deg, var(--accent) 0%, #EF4444 100%)',
+    background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',

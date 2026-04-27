@@ -3,7 +3,7 @@ import { MODULES } from '../../constants/panels';
 
 function getIcon(iconId) {
   const size = 28;
-  const color = '#F87171';
+  const color = '#EC4757';
   const props = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' };
 
   switch (iconId) {
@@ -111,7 +111,7 @@ const s = {
   },
   tagBadge: {
     fontSize: 11, padding: '4px 10px', borderRadius: 12,
-    background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
+    background: 'rgba(236,71,87,0.08)', border: '1px solid rgba(236,71,87,0.2)',
     color: 'var(--accent)',
   },
   desc: {
@@ -128,7 +128,7 @@ const s = {
   gender: {
     fontSize: 10, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif",
     padding: '3px 10px', borderRadius: 4,
-    background: 'rgba(248,113,113,0.1)', color: 'var(--accent)',
+    background: 'rgba(236,71,87,0.1)', color: 'var(--accent)',
   },
   price: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 1,

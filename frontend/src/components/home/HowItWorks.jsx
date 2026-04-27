@@ -48,8 +48,8 @@ const s = {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     borderRadius: '50%',
     border: '2px solid var(--accent)',
-    background: 'rgba(248,113,113,0.06)',
-    boxShadow: '0 0 20px rgba(248,113,113,0.12), 0 0 40px rgba(248,113,113,0.04)',
+    background: 'rgba(236,71,87,0.06)',
+    boxShadow: '0 0 20px rgba(236,71,87,0.12), 0 0 40px rgba(236,71,87,0.04)',
     marginBottom: 16,
   },
   numText: {

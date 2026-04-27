@@ -25,7 +25,7 @@ const s = {
   btn: {
     display: 'inline-flex', alignItems: 'center', gap: 10,
     padding: '14px 28px', marginTop: 8,
-    background: 'linear-gradient(135deg, var(--accent) 0%, #EF4444 100%)',
+    background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
@@ -42,7 +42,7 @@ const s = {
   },
   badge: {
     position: 'absolute', bottom: 16, left: 16, right: 16,
-    background: 'rgba(8,14,28,0.9)', border: '1px solid var(--border)',
+    background: 'rgba(10,10,12,0.9)', border: '1px solid var(--border)',
     borderRadius: 8, padding: '12px 16px',
   },
   badgeTitle: {

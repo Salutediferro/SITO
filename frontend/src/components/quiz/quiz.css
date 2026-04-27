@@ -8,11 +8,16 @@
 .quiz-bar-track {
   position: fixed; top: 0; left: 0; right: 0;
   height: 3px; background: var(--border); z-index: 100;
+  overflow: hidden;
 }
 .quiz-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, #EF4444 100%);
-  transition: width .5s cubic-bezier(.4,0,.2,1);
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, #7A0815 100%);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform var(--motion-medium) var(--ease-out-quint);
+  will-change: transform;
 }
 
 .quiz-counter {
@@ -32,6 +37,13 @@
 .quiz-card {
   width: 100%; max-width: 560px;
   text-align: center;
+  /* Step enter animation Jakub-style: opacity + translateY + blur "materializing" */
+  animation: stepEnter var(--motion-slow) var(--ease-out-quint) both;
+}
+
+@keyframes stepEnter {
+  from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
 }
 
 /* ───── Step Label ───── */
@@ -126,7 +138,7 @@
 .q-btn-primary {
   display: flex; align-items: center; justify-content: center;
   width: 100%; padding: 18px 32px;
-  background: linear-gradient(135deg, var(--accent) 0%, #EF4444 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #7A0815 100%);
   border: none; border-radius: 6px; color: white;
   font-family: 'Bebas Neue', sans-serif;
   font-size: 18px; letter-spacing: 3px;
@@ -175,14 +187,26 @@
   background: var(--input-bg); border: 1.5px solid var(--border);
   border-radius: 6px; color: var(--text);
   font-family: 'DM Sans', sans-serif; font-size: 15px;
-  outline: none; transition: border-color .15s, box-shadow .15s;
+  outline: none;
+  transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
 }
 .q-field-input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 .q-field-input::placeholder { color: var(--text-muted); }
-.q-field-input.invalid { border-color: var(--accent); }
+.q-field-input.invalid {
+  border-color: var(--accent);
+  animation: errorShake var(--motion-medium) var(--ease-standard);
+}
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .q-field-input.invalid { animation: none; }
+}
 .q-field-error {
   font-size: 12px; color: var(--accent); margin-top: 4px;
 }
@@ -248,23 +272,23 @@
   font-family: 'Bebas Neue', sans-serif;
   font-size: 11px; letter-spacing: 5px; color: var(--accent);
   margin-bottom: 12px; text-align: center;
-  opacity: 0; animation: fadeUp .6s ease .2s forwards;
+  opacity: 0; animation: fadeUp var(--motion-slow) var(--ease-out-quint) .2s forwards;
 }
 .q-esito-heading {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(28px, 6vw, 44px);
   line-height: 1.1; letter-spacing: 1px;
   color: var(--text); text-align: center; margin-bottom: 8px;
-  opacity: 0; animation: fadeUp .6s ease .4s forwards;
+  opacity: 0; animation: fadeUp var(--motion-slow) var(--ease-out-quint) .4s forwards;
 }
 .q-score-gauge {
   margin: 24px auto 28px; text-align: center;
-  opacity: 0; animation: fadeUp .6s ease .6s forwards;
+  opacity: 0; animation: fadeUp var(--motion-slow) var(--ease-out-quint) .6s forwards;
 }
 .q-score-number {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 72px; line-height: 1; color: var(--accent);
-  text-shadow: 0 0 30px rgba(248,113,113,0.4);
+  text-shadow: 0 0 30px rgba(236,71,87,0.4);
   animation: countPulse .8s ease .8s;
 }
 .q-score-max { font-size: 28px; color: var(--text-muted); }
@@ -278,7 +302,7 @@
 }
 .q-score-dot.active {
   background: var(--accent); border-color: var(--accent);
-  color: white; box-shadow: 0 0 12px rgba(248,113,113,0.4);
+  color: white; box-shadow: 0 0 12px rgba(236,71,87,0.4);
 }
 .q-tags-grid {
   display: flex; flex-wrap: wrap; gap: 10px;
@@ -287,11 +311,11 @@
 .q-tag-badge {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 18px;
-  background: rgba(248,113,113,0.08);
+  background: rgba(236,71,87,0.08);
   border: 1.5px solid var(--accent);
   border-radius: 24px;
   animation: tagPop .5s cubic-bezier(.34,1.56,.64,1) forwards; opacity: 0;
-  box-shadow: 0 0 16px rgba(248,113,113,0.15);
+  box-shadow: 0 0 16px rgba(236,71,87,0.15);
 }
 .q-tag-dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -307,7 +331,7 @@
 /* ───── Payment ───── */
 .q-ty-icon {
   width: 68px; height: 68px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent) 0%, #EF4444 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #7A0815 100%);
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 24px;
   box-shadow: 0 8px 24px var(--accent-glow);

@@ -83,7 +83,7 @@ export default function PaymentStep({ quiz }) {
         </div>
 
         {/* Referral */}
-        <div style={{ margin: '16px 0 0', padding: '12px 16px', background: 'rgba(248,113,113,0.04)', border: '1px solid var(--border)', borderRadius: 8 }}>
+        <div style={{ margin: '16px 0 0', padding: '12px 16px', background: 'rgba(236,71,87,0.04)', border: '1px solid var(--border)', borderRadius: 8 }}>
           <label style={{ fontSize: 11, letterSpacing: 2, color: 'var(--text-sec)', fontWeight: 600, display: 'block', marginBottom: 6 }}>
             CODICE REFERRAL (opzionale)
           </label>
@@ -95,23 +95,36 @@ export default function PaymentStep({ quiz }) {
               onChange={e => setReferral(e.target.value)}
               style={{
                 width: '100%', padding: '10px 36px 10px 12px',
-                background: 'var(--bg-card)', border: `1px solid ${valid ? '#28a745' : referral ? '#F87171' : 'var(--border)'}`,
+                background: 'var(--bg-card)', border: `1px solid ${valid ? '#28a745' : referral ? '#EC4757' : 'var(--border)'}`,
                 borderRadius: 6, color: 'var(--text)', fontSize: 14,
                 boxSizing: 'border-box', outline: 'none',
-                boxShadow: valid ? '0 0 0 3px rgba(40,167,69,0.15)' : referral ? '0 0 0 3px rgba(248,113,113,0.1)' : 'none',
+                boxShadow: valid ? '0 0 0 3px rgba(40,167,69,0.15)' : referral ? '0 0 0 3px rgba(236,71,87,0.1)' : 'none',
                 transition: 'border-color .3s ease, box-shadow .3s ease',
               }}
               autoComplete="off"
             />
             {(valid || referral) && (
-              <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)' }}>
+              <span
+                key={valid ? 'ok' : 'ko'}
+                style={{
+                  position: 'absolute', right: 12, top: '50%',
+                  transform: 'translateY(-50%)',
+                  animation: 'iconSwap var(--motion-medium) var(--ease-spring) both',
+                }}
+              >
                 {valid ? (
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                 ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                 )}
               </span>
             )}
+            <style>{`
+              @keyframes iconSwap {
+                from { opacity: 0; transform: translateY(-50%) scale(0.6); filter: blur(3px); }
+                to   { opacity: 1; transform: translateY(-50%) scale(1);   filter: blur(0); }
+              }
+            `}</style>
           </div>
           {valid && <div style={{ fontSize: 12, color: '#28a745', marginTop: 6 }}>&#10003; Sconto 10% applicato!</div>}
           {referral && !valid && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>Codice non valido</div>}
@@ -136,8 +149,8 @@ export default function PaymentStep({ quiz }) {
         </button>
 
         {/* Garanzia */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 14, padding: '10px 16px', background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)', borderRadius: 6 }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 14, padding: '10px 16px', background: 'rgba(236,71,87,0.06)', border: '1px solid rgba(236,71,87,0.15)', borderRadius: 6 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" />
           </svg>
           <span style={{ fontSize: 12, color: 'var(--text-sec)', lineHeight: 1.3 }}>

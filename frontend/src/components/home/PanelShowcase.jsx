@@ -151,7 +151,7 @@ const s = {
   },
   badge: {
     position: 'absolute', bottom: 16, left: 16, right: 16,
-    background: 'rgba(8,14,28,0.9)', border: '1px solid var(--border)',
+    background: 'rgba(10,10,12,0.9)', border: '1px solid var(--border)',
     borderRadius: 8, padding: '12px 16px',
     transition: 'opacity 0.4s ease',
   },
@@ -197,18 +197,33 @@ export default function PanelShowcase() {
     }, 350);
   }, []);
 
-  // auto-advance
+  // auto-advance — pausabile: skip se utente preferisce reduced-motion, hover sul carosello, o tab non visibile
+  const [paused, setPaused] = useState(false);
   useEffect(() => {
+    if (paused) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+    const onVisChange = () => setPaused(document.hidden);
+    document.addEventListener('visibilitychange', onVisChange);
     const timer = setInterval(() => {
       goTo((active + 1) % SLIDES.length);
     }, INTERVAL);
-    return () => clearInterval(timer);
-  }, [active, goTo]);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVisChange);
+    };
+  }, [active, goTo, paused]);
 
   const slide = SLIDES[active];
 
   return (
-    <section style={s.section}>
+    <section
+      style={s.section}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div style={s.layout} className="panel-showcase-grid">
         <FadeUp>
           <div style={{
