@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PricePromo from '../ui/PricePromo';
 
 const FORM_URL = 'https://form.salutediferro.com';
 
@@ -116,6 +117,39 @@ export default function Hero() {
         <p style={s.sub}>
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero sbatti.
         </p>
+
+        {/* Promo lancio: 2 prodotti distinti, layout simmetrico (stesso pattern card). */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: 24,
+          marginTop: 24,
+          marginBottom: 40,
+          maxWidth: 820,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          alignItems: 'stretch',
+          padding: '0 8px', // spazio per badge fluttuante non clippato
+        }}>
+          <PricePromo
+            fullPrice={47}
+            promoPrice={27}
+            currency="€"
+            label="Consulenza 30 minuti"
+            badge="CONSULENZA"
+            savings="Risparmi €20 (-43%)"
+          />
+          <PricePromo
+            fullPrice={297}
+            promoPrice={197}
+            period="/anno"
+            currency="€"
+            label="Annulla quando vuoi"
+            badge="MEMBERSHIP"
+            savings="2 MESI GRATIS (-34%)"
+          />
+        </div>
+
         <div style={s.buttons}>
           <a href={FORM_URL} style={s.btnPrimary} className="hero-cta">
             FAI IL TEST DI FERRO

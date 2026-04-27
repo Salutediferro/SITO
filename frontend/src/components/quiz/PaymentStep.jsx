@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { isValidReferral } from '../../constants/quiz';
 import { track } from '../../hooks/useGTM';
-import { createCheckoutSession } from '../../services/api';
+import { PAYMENT_LINKS, buildPaymentUrl } from '../../constants/payments';
+import PricePromo from '../ui/PricePromo';
 
 export default function PaymentStep({ quiz }) {
   const { state, setReferral, goBack } = quiz;
-  const [loading, setLoading] = useState(false);
 
   const name = ((state.a.contacts || {}).name || '').split(' ')[0].toUpperCase();
   const referral = state.a.referral || '';
@@ -16,24 +16,17 @@ export default function PaymentStep({ quiz }) {
     track('quiz_complete', { total_time_seconds: elapsed });
   }, []);
 
-  const handleCheckout = async (e) => {
-    track('payment_click', {});
-    setLoading(true);
-    try {
-      const email = (state.a.contacts || {}).email || '';
-      const ref = valid ? referral : '';
-      const data = await createCheckoutSession({ email, referral: ref });
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        setLoading(false);
-        alert('Errore durante il pagamento. Riprova.');
-      }
-    } catch (e) {
-      console.error(e);
-      setLoading(false);
-      alert('Errore di connessione. Riprova.');
-    }
+  const email = (state.a.contacts || {}).email || '';
+  // URL Stripe Payment Link statico con email pre-compilata + reference id
+  // (per tracking lead↔pagamento via webhook quando configurato).
+  const checkoutUrl = buildPaymentUrl(PAYMENT_LINKS.consulenza, {
+    email,
+    referenceId: email || undefined,
+  });
+
+  // Tracking GTM sincrono prima del redirect (l'<a href> nativo segue dopo)
+  const handleCtaClick = () => {
+    track('payment_click', { has_referral: valid, price: valid ? 22 : 27 });
   };
 
   const price = valid ? '22' : '27';
@@ -130,23 +123,31 @@ export default function PaymentStep({ quiz }) {
           {referral && !valid && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>Codice non valido</div>}
         </div>
 
-        {/* Price */}
-        <div style={{ textAlign: 'center', margin: '16px 0 8px' }}>
-          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 42, color: 'var(--text)', lineHeight: 1 }}>
-            {valid && <span style={{ textDecoration: 'line-through', color: 'var(--text-sec)', fontSize: 28 }}>27€</span>}
-
-            {' '}{price}<span style={{ fontSize: 22, color: 'var(--text-sec)' }}> €</span>
-          </div>
-          <div style={{ fontSize: 12, color: 'var(--text-sec)', marginTop: 4 }}>Consulenza di 30 minuti</div>
+        {/* Price — Promo €47 → €27 (€22 con referral) */}
+        <div style={{ textAlign: 'center', margin: '20px 0 16px' }}>
+          <PricePromo
+            variant="compact"
+            fullPrice={47}
+            promoPrice={Number(price)}
+            currency="€"
+            label="Consulenza 30 minuti"
+            badge="OFFERTA LANCIO"
+          />
         </div>
 
-        <button
-          className={`q-btn-primary${loading ? ' loading' : ''}`}
-          style={{ marginTop: 16 }}
-          onClick={handleCheckout}
+        {/* CTA: <a> stilizzato come button — semantica corretta per redirect a URL esterno (Stripe Checkout) */}
+        <a
+          className="q-btn-primary"
+          href={checkoutUrl}
+          onClick={handleCtaClick}
+          style={{
+            marginTop: 16,
+            textDecoration: 'none',
+          }}
+          aria-label={`Prenota la tua call e paga ${price} euro`}
         >
-          {loading ? <><span className="q-spinner" />REINDIRIZZAMENTO...</> : `PRENOTA LA TUA CALL · ${price}€`}
-        </button>
+          PRENOTA LA TUA CALL · {price}€
+        </a>
 
         {/* Garanzia */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 14, padding: '10px 16px', background: 'rgba(236,71,87,0.06)', border: '1px solid rgba(236,71,87,0.15)', borderRadius: 6 }}>

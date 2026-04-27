@@ -1,5 +1,7 @@
 import FadeUp from '../components/ui/FadeUp';
+import PricePromo from '../components/ui/PricePromo';
 import { Link } from 'react-router-dom';
+import { PAYMENT_LINKS } from '../constants/payments';
 
 const VANTAGGI = [
   {
@@ -219,6 +221,31 @@ export default function MembershipPage() {
           <p style={s.sub}>
             Un percorso completo per prendere il controllo della tua salute e performance. Diagnostica mirata, specialisti che parlano la tua lingua e un coordinamento che toglie ogni complessit&agrave;.
           </p>
+        </FadeUp>
+      </section>
+
+      {/* OFFERTA LANCIO MEMBERSHIP — €297 → €197/anno */}
+      <section style={{ padding: 'clamp(48px, 7vw, 96px) 24px', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+        <FadeUp>
+          <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
+            <PricePromo
+              fullPrice={297}
+              promoPrice={197}
+              period="/anno"
+              currency="€"
+              label="Annulla quando vuoi"
+              badge="OFFERTA LANCIO MEMBERSHIP"
+              savings="2 MESI GRATIS"
+            />
+            <a
+              href={PAYMENT_LINKS.membershipAnnuale}
+              className="q-btn-primary"
+              style={{ textDecoration: 'none', maxWidth: 380, width: '100%' }}
+              aria-label="Inizia membership annuale a 197 euro all'anno"
+            >
+              INIZIA ORA · 197€/ANNO
+            </a>
+          </div>
         </FadeUp>
       </section>
 
