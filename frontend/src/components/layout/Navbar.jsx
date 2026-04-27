@@ -24,16 +24,17 @@ const styles = {
   link: {
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'var(--text-sec)', textDecoration: 'none',
-    transition: 'color 0.2s',
+    transition: 'color var(--motion-fast) var(--ease-standard)',
   },
   linkActive: { color: 'var(--accent)' },
   cta: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     padding: '10px 24px',
-    background: 'var(--accent)', border: 'none', borderRadius: 6,
+    background: 'var(--accent-fill)', border: 'none', borderRadius: 6,
     fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'white', cursor: 'pointer', textDecoration: 'none',
-    transition: 'background 0.2s, transform 0.2s',
+    transition: 'background var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard)',
+    boxShadow: '0 2px 10px var(--accent-glow2)',
   },
   burger: {
     display: 'none', background: 'none', border: 'none',
@@ -86,14 +87,25 @@ export default function Navbar() {
 
         <div style={styles.links} className="nav-links">
           {navLinks.map(l => l.external ? (
-            <a key={l.to} href={l.to} style={styles.link}>
+            <a
+              key={l.to}
+              href={l.to}
+              style={styles.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {l.label.toUpperCase()}
             </a>
           ) : (
-            <Link key={l.to} to={l.to} style={{
-              ...styles.link,
-              ...(pathname === l.to ? styles.linkActive : {}),
-            }}>
+            <Link
+              key={l.to}
+              to={l.to}
+              aria-current={pathname === l.to ? 'page' : undefined}
+              style={{
+                ...styles.link,
+                ...(pathname === l.to ? styles.linkActive : {}),
+              }}
+            >
               {l.label.toUpperCase()}
             </Link>
           ))}
