@@ -197,33 +197,32 @@ export default function PanelShowcase() {
     }, 350);
   }, []);
 
-  // auto-advance — pausabile: skip se utente preferisce reduced-motion, hover sul carosello, o tab non visibile
-  const [paused, setPaused] = useState(false);
+  // auto-advance — pausa SOLO se utente preferisce reduced-motion (WCAG 2.2.2 minimo) o tab nascosta (perf)
   useEffect(() => {
-    if (paused) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) return;
-    const onVisChange = () => setPaused(document.hidden);
+    let timer = null;
+    const start = () => {
+      if (!timer) timer = setInterval(() => {
+        goTo((active + 1) % SLIDES.length);
+      }, INTERVAL);
+    };
+    const stop = () => {
+      if (timer) { clearInterval(timer); timer = null; }
+    };
+    const onVisChange = () => (document.hidden ? stop() : start());
+    if (!document.hidden) start();
     document.addEventListener('visibilitychange', onVisChange);
-    const timer = setInterval(() => {
-      goTo((active + 1) % SLIDES.length);
-    }, INTERVAL);
     return () => {
-      clearInterval(timer);
+      stop();
       document.removeEventListener('visibilitychange', onVisChange);
     };
-  }, [active, goTo, paused]);
+  }, [active, goTo]);
 
   const slide = SLIDES[active];
 
   return (
-    <section
-      style={s.section}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-    >
+    <section style={s.section}>
       <div style={s.layout} className="panel-showcase-grid">
         <FadeUp>
           <div style={{
