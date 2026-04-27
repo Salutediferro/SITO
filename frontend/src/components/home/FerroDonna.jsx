@@ -4,7 +4,7 @@ const FORM_URL = 'https://form.salutediferro.com';
 
 const s = {
   section: {
-    padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
+    padding: 'clamp(64px, 9vw, 120px) 40px', maxWidth: 1200, margin: '0 auto',
   },
   layout: {
     display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center',

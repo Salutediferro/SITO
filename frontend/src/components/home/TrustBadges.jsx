@@ -41,7 +41,7 @@ const badges = [
 
 const s = {
   section: {
-    padding: '60px 40px',
+    padding: 'clamp(48px, 7vw, 96px) 40px',
     textAlign: 'center',
   },
   label: {

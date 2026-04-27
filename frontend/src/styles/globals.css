@@ -1,4 +1,38 @@
 :root {
+  /* ───── Spacing scale (8px base grid, Frontend Architect spec) ───── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ───── Modular type scale (small body, massive headlines) ───── */
+  --text-xs:      14px;   /* helper, label */
+  --text-sm:      16px;   /* body sm */
+  --text-base:    17px;   /* body */
+  --text-lg:      20px;   /* large body */
+  --text-h3:      clamp(20px, 2.4vw, 28px);
+  --text-h2:      clamp(28px, 4vw, 40px);
+  --text-h1:      clamp(40px, 6vw, 64px);
+  --text-display: clamp(56px, 7.5vw, 84px);
+
+  /* ───── Border radius (committed: 8 / 12 / 16 — pick one per component class) ───── */
+  --radius-sm:    8px;
+  --radius-md:    12px;
+  --radius-lg:    16px;
+  --radius-pill:  9999px;
+
+  /* ───── Elevation ───── */
+  --shadow-sm:    0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:    0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg:    0 16px 48px rgba(0,0,0,0.5);
+  --shadow-lift:  0 8px 24px rgba(0,0,0,0.35);
+
   /* Backgrounds — Iron Blood: carbon/gunmetal deep */
   --bg:           #0A0A0C;
   --bg-card:      #131316;
@@ -75,6 +109,27 @@ button { font-family: inherit; }
 .ferro-accent {
   color: var(--accent);
   font-weight: inherit;
+}
+
+/* ───── Tactile feedback CTA (Frontend Architect spec) ───── */
+/* Applicare classe .btn-lift a bottoni/link CTA secondari per hover lift coerente. */
+.btn-lift {
+  transition:
+    transform var(--motion-base) var(--ease-standard),
+    box-shadow var(--motion-base) var(--ease-standard),
+    border-color var(--motion-base) var(--ease-standard),
+    background var(--motion-base) var(--ease-standard) !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--border-hover);
+  }
+}
+.btn-lift:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 100ms !important;
 }
 
 /* ───── Focus visible globale (WCAG 2.4.7) ───── */

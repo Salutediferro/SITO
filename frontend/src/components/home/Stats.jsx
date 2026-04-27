@@ -50,7 +50,7 @@ function StatItem({ target, suffix, label, decimals = 0, trigger }) {
 const s = {
   section: {
     position: 'relative',
-    padding: '60px 40px',
+    padding: 'clamp(48px, 7vw, 96px) 40px',
     background: 'var(--bg-card)',
     borderTop: '2px solid transparent',
     borderImage: 'linear-gradient(90deg, var(--accent), var(--gold)) 1',

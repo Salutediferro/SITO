@@ -25,7 +25,7 @@ const s = {
   section: {
     position: 'relative', minHeight: 'calc(100vh - 72px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    padding: '80px 40px', overflow: 'hidden',
+    padding: 'clamp(64px, 9vw, 120px) 40px', overflow: 'hidden',
   },
   bg: {
     position: 'absolute', inset: 0,
@@ -89,11 +89,11 @@ const s = {
     display: 'inline-flex', alignItems: 'center',
     padding: '16px 32px',
     background: 'rgba(255,255,255,0.06)',
-    border: '1.5px solid rgba(255,255,255,0.2)', borderRadius: 6,
+    border: '1.5px solid rgba(255,255,255,0.2)', borderRadius: 8,
     color: 'var(--text)',
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
-    transition: 'border-color 0.2s, background 0.2s',
+    transition: 'transform var(--motion-base) var(--ease-standard), border-color var(--motion-base) var(--ease-standard), background var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard)',
     backdropFilter: 'blur(4px)',
   },
 };
@@ -121,7 +121,7 @@ export default function Hero() {
             FAI IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <Link to="/pannelli" style={s.btnSecondary}>
+          <Link to="/pannelli" style={s.btnSecondary} className="btn-lift">
             SCOPRI I PANNELLI
           </Link>
         </div>

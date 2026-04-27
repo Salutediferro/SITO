@@ -4,7 +4,7 @@ import { FAQ_ITEMS } from '../../constants/faq';
 
 const s = {
   section: {
-    padding: '80px 40px', maxWidth: 800, margin: '0 auto',
+    padding: 'clamp(64px, 9vw, 120px) 40px', maxWidth: 800, margin: '0 auto',
   },
   tag: {
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
