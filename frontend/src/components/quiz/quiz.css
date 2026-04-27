@@ -22,7 +22,7 @@
 
 .quiz-counter {
   position: fixed; top: 14px; right: 18px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 12px; letter-spacing: 2px; color: var(--text-muted);
   z-index: 100;
 }
@@ -48,7 +48,7 @@
 
 /* ───── Step Label ───── */
 .q-label {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 10px; letter-spacing: 4px; color: var(--accent);
   margin-bottom: 12px;
   display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -58,7 +58,7 @@
 
 /* ───── Question ───── */
 .q-question {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: clamp(24px, 5vw, 36px);
   line-height: 1.1; letter-spacing: 1px;
   color: var(--text); margin-bottom: 8px;
@@ -81,7 +81,7 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
   transition: border-color .15s, background .15s;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
   color: var(--text);
 }
 
@@ -140,7 +140,7 @@
   width: 100%; padding: 18px 32px;
   background: linear-gradient(135deg, var(--accent) 0%, #7A0815 100%);
   border: none; border-radius: 6px; color: white;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 18px; letter-spacing: 3px;
   cursor: pointer; position: relative; overflow: hidden;
   box-shadow: 0 3px 14px var(--accent-glow);
@@ -170,7 +170,7 @@
 /* ───── Back Button ───── */
 .q-btn-back {
   background: none; border: none;
-  color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+  color: var(--text-muted); font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
   font-size: 13px; cursor: pointer;
   padding: 10px 0; margin-top: 10px;
   display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -183,7 +183,7 @@
 .q-field { margin-bottom: 16px; text-align: left; }
 .q-field-label {
   display: block; margin-bottom: 7px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 10px; letter-spacing: 3px; color: var(--text-muted);
   text-align: center;
 }
@@ -191,7 +191,7 @@
   width: 100%; padding: 13px 14px;
   background: var(--input-bg); border: 1.5px solid var(--border);
   border-radius: 6px; color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif; font-size: 15px;
   outline: none;
   transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
 }
@@ -249,7 +249,7 @@
 .q-logo-wrap { text-align: center; margin-bottom: 28px; }
 .q-logo-img { max-width: 160px; height: auto; display: block; margin: 0 auto; }
 .q-h1 {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: clamp(28px, 6vw, 48px);
   line-height: 1.12; letter-spacing: 1px;
   color: var(--text); margin-bottom: 12px;
@@ -269,7 +269,7 @@
 }
 .q-stat { flex: 1; padding: 12px 10px; text-align: center; border-right: 1px solid var(--border); }
 .q-stat:last-child { border-right: none; }
-.q-stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); line-height: 1; }
+.q-stat-n { font-family: 'Antonio', 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); line-height: 1; }
 .q-stat-l { font-size: 10px; color: var(--text-muted); margin-top: 3px; line-height: 1.2; }
 
 /* ───── Esito (stagger automatico via --idx) ───── */
@@ -281,13 +281,13 @@
 }
 .q-esito-label {
   --idx: 1;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 11px; letter-spacing: 5px; color: var(--accent);
   margin-bottom: 12px; text-align: center;
 }
 .q-esito-heading {
   --idx: 2;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: clamp(28px, 6vw, 44px);
   line-height: 1.1; letter-spacing: 1px;
   color: var(--text); text-align: center; margin-bottom: 8px;
@@ -297,7 +297,7 @@
   margin: 24px auto 28px; text-align: center;
 }
 .q-score-number {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 72px; line-height: 1; color: var(--accent);
   text-shadow: 0 0 30px rgba(236,71,87,0.4);
   animation: countPulse .8s ease .8s;
@@ -307,7 +307,7 @@
 .q-score-dot {
   width: 42px; height: 42px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif; font-size: 16px;
   border: 2px solid var(--border); color: var(--text-muted);
   opacity: 0; animation: dotIn .4s ease forwards;
 }
@@ -335,7 +335,7 @@
   animation: pulse 2s ease-in-out infinite;
 }
 .q-tag-name {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 15px; letter-spacing: 2px; color: var(--accent);
 }
 
@@ -349,7 +349,7 @@
 }
 .q-ty-icon svg { width: 28px; height: 28px; }
 .q-ty-h {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: clamp(30px, 5.5vw, 48px);
   letter-spacing: 2px; line-height: 1.08;
   color: var(--text); text-align: center; margin-bottom: 12px;

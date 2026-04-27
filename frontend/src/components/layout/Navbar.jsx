@@ -15,14 +15,14 @@ const styles = {
   },
   logoImg: { height: 40, width: 'auto' },
   logoText: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2,
     color: 'var(--text)',
   },
   links: {
     display: 'flex', alignItems: 'center', gap: 32,
   },
   link: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'var(--text-sec)', textDecoration: 'none',
     transition: 'color var(--motion-fast) var(--ease-standard)',
   },
@@ -31,7 +31,7 @@ const styles = {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     padding: '10px 24px',
     background: 'var(--accent-fill)', border: 'none', borderRadius: 6,
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'white', cursor: 'pointer', textDecoration: 'none',
     transition: 'background var(--motion-fast) var(--ease-standard), transform var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard)',
     boxShadow: '0 2px 10px var(--accent-glow2)',
@@ -47,7 +47,7 @@ const styles = {
     justifyContent: 'center', gap: 32, zIndex: 49,
   },
   mobileLink: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: 3,
     color: 'var(--text)', textDecoration: 'none',
   },
 };

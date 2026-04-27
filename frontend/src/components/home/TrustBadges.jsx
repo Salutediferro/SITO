@@ -45,7 +45,7 @@ const s = {
     textAlign: 'center',
   },
   label: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 32,
   },
   grid: {
@@ -62,7 +62,7 @@ const s = {
   },
   icon: { marginBottom: 14 },
   badgeLabel: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 6,
   },
   badgeDesc: {

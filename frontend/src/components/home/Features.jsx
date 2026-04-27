@@ -16,7 +16,7 @@ const s = {
     height: '100%', display: 'flex', flexDirection: 'column',
   },
   title: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 28,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 28,
     letterSpacing: 2, color: 'var(--text)', marginBottom: 12,
   },
   desc: {

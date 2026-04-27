@@ -11,11 +11,11 @@ const s = {
     maxWidth: 800, margin: '0 auto', textAlign: 'center',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12,
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 20,
   },
   desc: {
@@ -27,7 +27,7 @@ const s = {
     padding: '16px 36px',
     background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
   },

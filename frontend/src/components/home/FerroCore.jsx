@@ -8,11 +8,11 @@ const s = {
     padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12,
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 16,
   },
   desc: {
@@ -25,7 +25,7 @@ const s = {
   hl: {
     display: 'inline-flex', padding: '6px 16px',
     background: 'rgba(236,71,87,0.08)', border: '1px solid var(--accent)',
-    borderRadius: 20, fontFamily: "'Bebas Neue', sans-serif",
+    borderRadius: 20, fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     fontSize: 13, letterSpacing: 2, color: 'var(--accent)',
   },
   layout: {
@@ -37,7 +37,7 @@ const s = {
     borderRadius: 12, padding: 32,
   },
   cardTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 24, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 4,
   },
   cardSub: {
@@ -60,7 +60,7 @@ const s = {
     padding: '14px 28px', marginTop: 24,
     background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
   },

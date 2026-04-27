@@ -7,11 +7,11 @@ const s = {
     padding: '80px 40px', maxWidth: 800, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', textAlign: 'center', marginBottom: 8,
   },
   sub: {

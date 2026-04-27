@@ -26,11 +26,11 @@ const s = {
     padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 48, textAlign: 'center',
   },
   grid: {
@@ -52,7 +52,7 @@ const s = {
     display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
   },
   name: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16,
     color: 'var(--text)', letterSpacing: 1,
   },
   badge: {

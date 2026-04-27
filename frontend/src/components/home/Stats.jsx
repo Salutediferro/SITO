@@ -66,7 +66,7 @@ const s = {
     padding: '20px 0',
   },
   number: {
-    fontFamily: "'Bebas Neue', sans-serif",
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     fontSize: 'clamp(36px, 5vw, 56px)',
     color: 'var(--text)',
     lineHeight: 1,
@@ -77,7 +77,7 @@ const s = {
     color: 'var(--accent)',
   },
   label: {
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
     fontSize: 13,
     color: 'var(--text-sec)',
     letterSpacing: 1,

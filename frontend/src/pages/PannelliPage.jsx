@@ -80,11 +80,11 @@ const s = {
     background: 'linear-gradient(180deg, rgba(236,71,87,0.04) 0%, transparent 60%)',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12,
   },
   h1: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 7vw, 72px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 7vw, 72px)',
     letterSpacing: 2, color: 'var(--text)', opacity: 0.9, marginBottom: 20,
   },
   sub: {
@@ -96,18 +96,18 @@ const s = {
     padding: '14px 28px',
     background: 'transparent', border: '1.5px solid var(--border)',
     borderRadius: 6, color: 'var(--text)',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
   },
   content: {
     padding: '0 40px 80px', maxWidth: 1000, margin: '0 auto',
   },
   sectionTag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 8,
   },
   sectionTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 4vw, 44px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 4vw, 44px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 12,
   },
   sectionDesc: {
@@ -138,7 +138,7 @@ const s = {
     display: 'flex', alignItems: 'center', gap: 10,
   },
   moduleName: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 2,
     color: 'var(--text)',
   },
   moduleMeta: {
@@ -171,13 +171,13 @@ const s = {
     color: 'var(--accent)', marginRight: 6,
   },
   inclusoBadge: {
-    display: 'inline-block', fontSize: 10, fontFamily: "'Bebas Neue', sans-serif",
+    display: 'inline-block', fontSize: 10, fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     letterSpacing: 2, padding: '3px 10px', borderRadius: 4,
     background: 'rgba(40,167,69,0.12)', border: '1px solid rgba(40,167,69,0.3)',
     color: '#28a745',
   },
   priceTag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1,
     color: 'var(--accent)',
   },
   ctaBtn: {
@@ -185,7 +185,7 @@ const s = {
     padding: '8px 16px', marginTop: 16,
     background: 'transparent', border: '1px solid var(--accent)',
     borderRadius: 4, color: 'var(--accent)',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 2,
     textDecoration: 'none', cursor: 'pointer',
     transition: 'background 0.2s, color 0.2s',
   },

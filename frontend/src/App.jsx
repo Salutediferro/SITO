@@ -8,6 +8,7 @@ import ChiSiamoPage from './pages/ChiSiamoPage';
 import MembershipPage from './pages/MembershipPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TestPage from './pages/TestPage';
+import useFerroHighlight from './hooks/useFerroHighlight';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -18,6 +19,9 @@ function ScrollToTop() {
 export default function App() {
   const { pathname } = useLocation();
   const isTest = pathname === '/test';
+
+  // Highlight runtime: wrappa "ferro" in rosso accent SOLO sui testi bianchi
+  useFerroHighlight();
 
   return (
     <>

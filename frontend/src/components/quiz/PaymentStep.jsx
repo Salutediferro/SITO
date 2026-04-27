@@ -61,8 +61,8 @@ export default function PaymentStep({ quiz }) {
 
       <div style={{ margin: '28px 0', padding: 24, background: 'var(--bg-card)', borderRadius: 8, border: '1.5px solid var(--border)', textAlign: 'left' }}>
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4, color: 'var(--accent)', marginBottom: 12 }}>COSA INCLUDE LA CALL</div>
-          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(22px, 4vw, 32px)', color: 'var(--text)', lineHeight: 1.2 }}>
+          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4, color: 'var(--accent)', marginBottom: 12 }}>COSA INCLUDE LA CALL</div>
+          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(22px, 4vw, 32px)', color: 'var(--text)', lineHeight: 1.2 }}>
             IL TUO PIANO DI ANALISI<br />PERSONALIZZATO
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function PaymentStep({ quiz }) {
             'Guida passo-passo su come procedere, senza sbatti',
           ].map((text, i) => (
             <div key={i} style={{ display: 'flex', gap: 13, alignItems: 'flex-start', marginBottom: 11 }}>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 17, color: 'var(--accent)', minWidth: 22, lineHeight: 1.4 }}>
+              <span style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 17, color: 'var(--accent)', minWidth: 22, lineHeight: 1.4 }}>
                 0{i + 1}
               </span>
               <span style={{ fontSize: 14, color: 'var(--text-sec)', lineHeight: 1.5 }}>{text}</span>
@@ -132,7 +132,7 @@ export default function PaymentStep({ quiz }) {
 
         {/* Price */}
         <div style={{ textAlign: 'center', margin: '16px 0 8px' }}>
-          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, color: 'var(--text)', lineHeight: 1 }}>
+          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 42, color: 'var(--text)', lineHeight: 1 }}>
             {valid && <span style={{ textDecoration: 'line-through', color: 'var(--text-sec)', fontSize: 28 }}>27€</span>}
 
             {' '}{price}<span style={{ fontSize: 22, color: 'var(--text-sec)' }}> €</span>
@@ -167,7 +167,7 @@ export default function PaymentStep({ quiz }) {
           { n: '100%', l: 'Personalizzato' },
         ].map(s => (
           <div key={s.n} style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 24, color: 'var(--accent)' }}>{s.n}</div>
+            <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 24, color: 'var(--accent)' }}>{s.n}</div>
             <div style={{ fontSize: 12, color: 'var(--text-sec)' }}>{s.l}</div>
           </div>
         ))}

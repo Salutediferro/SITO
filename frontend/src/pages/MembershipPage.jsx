@@ -113,11 +113,11 @@ const s = {
     background: 'linear-gradient(180deg, rgba(236,71,87,0.04) 0%, transparent 60%)',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12,
   },
   h1: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 7vw, 72px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 7vw, 72px)',
     letterSpacing: 2, color: 'var(--text)', opacity: 0.9, marginBottom: 20,
   },
   sub: {
@@ -128,11 +128,11 @@ const s = {
     padding: '0 40px 80px', maxWidth: 1000, margin: '0 auto',
   },
   sectionTag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 8,
   },
   sectionTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 4vw, 44px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(28px, 4vw, 44px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 12,
   },
   sectionDesc: {
@@ -157,7 +157,7 @@ const s = {
   },
   cardIcon: { marginBottom: 16 },
   cardTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 10,
   },
   cardDesc: {
@@ -178,7 +178,7 @@ const s = {
   },
   serviceIcon: { marginBottom: 16 },
   serviceTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 10,
   },
   serviceDesc: {
@@ -194,7 +194,7 @@ const s = {
     padding: '16px 36px',
     background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
   },

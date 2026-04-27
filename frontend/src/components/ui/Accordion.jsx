@@ -9,7 +9,7 @@ const s = {
     padding: '20px 0', display: 'flex', alignItems: 'center',
     justifyContent: 'space-between', cursor: 'pointer',
     color: 'var(--text)', fontSize: 16, fontWeight: 500,
-    textAlign: 'left', fontFamily: "'DM Sans', sans-serif",
+    textAlign: 'left', fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
     transition: 'color var(--motion-fast) var(--ease-standard)',
   },
   arrow: {

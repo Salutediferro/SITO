@@ -11,11 +11,11 @@ const s = {
     padding: '60px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', textAlign: 'center', marginBottom: 48,
   },
   gridWrapper: {
@@ -53,11 +53,11 @@ const s = {
     marginBottom: 16,
   },
   numText: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 28,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 28,
     color: 'var(--accent)', lineHeight: 1,
   },
   title: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 12,
   },
   desc: {

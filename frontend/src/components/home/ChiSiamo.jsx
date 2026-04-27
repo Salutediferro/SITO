@@ -71,11 +71,11 @@ const s = {
     padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', textAlign: 'center', marginBottom: 16,
   },
   sub: {
@@ -94,7 +94,7 @@ const s = {
     marginBottom: 16,
   },
   pillarTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 2,
     color: 'var(--text)', marginBottom: 10,
   },
   pillarDesc: {
@@ -131,7 +131,7 @@ const s = {
     display: 'flex', alignItems: 'center', gap: 8, marginTop: 'auto',
   },
   name: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16,
     color: 'var(--text)', letterSpacing: 1,
   },
   badge: {
@@ -149,7 +149,7 @@ const s = {
     padding: '16px 36px',
     background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
   },

@@ -4,14 +4,14 @@ const s = {
     position: 'relative', zIndex: 1,
   },
   h1: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 48px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 48px)',
     letterSpacing: 2, color: 'var(--text)', marginBottom: 8,
   },
   sub: {
     fontSize: 13, color: 'var(--text-sec)', marginBottom: 40,
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 1,
     color: 'var(--text)', marginTop: 32, marginBottom: 12,
   },
   p: {

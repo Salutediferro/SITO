@@ -16,7 +16,7 @@ const s = {
     textAlign: 'center', minWidth: 140,
   },
   number: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(36px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(36px, 5vw, 52px)',
     color: 'var(--accent)', letterSpacing: 2, lineHeight: 1,
   },
   label: {

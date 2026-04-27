@@ -77,11 +77,11 @@ const s = {
     padding: '80px 40px', maxWidth: 1200, margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
     letterSpacing: 2, color: 'var(--text)', textAlign: 'center', marginBottom: 12,
   },
   sub: {
@@ -102,7 +102,7 @@ const s = {
     display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10,
   },
   name: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 20, letterSpacing: 2,
     color: 'var(--text)',
   },
   tags: {
@@ -126,12 +126,12 @@ const s = {
     fontSize: 12, color: 'var(--text-sec)', fontWeight: 500,
   },
   gender: {
-    fontSize: 10, letterSpacing: 2, fontFamily: "'Bebas Neue', sans-serif",
+    fontSize: 10, letterSpacing: 2, fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     padding: '3px 10px', borderRadius: 4,
     background: 'rgba(236,71,87,0.1)', color: 'var(--accent)',
   },
   price: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 1,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 18, letterSpacing: 1,
     color: 'var(--text)', fontWeight: 700,
   },
 };

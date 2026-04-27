@@ -10,11 +10,11 @@ const s = {
     display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center',
   },
   tag: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
     color: 'var(--accent)', marginBottom: 12,
   },
   h2: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 48px)',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 48px)',
     letterSpacing: 2, color: 'var(--text)', lineHeight: 1.1, marginBottom: 20,
   },
   accent: { color: 'var(--accent)' },
@@ -27,7 +27,7 @@ const s = {
     padding: '14px 28px', marginTop: 8,
     background: 'linear-gradient(135deg, var(--accent) 0%, #7A0815 100%)',
     border: 'none', borderRadius: 6, color: 'white',
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 3,
     cursor: 'pointer', textDecoration: 'none',
     boxShadow: '0 3px 14px var(--accent-glow)',
   },
@@ -46,7 +46,7 @@ const s = {
     borderRadius: 8, padding: '12px 16px',
   },
   badgeTitle: {
-    fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'var(--accent)', marginBottom: 4,
   },
   badgeText: {
