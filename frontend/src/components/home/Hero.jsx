@@ -16,6 +16,7 @@ const ROTATING_PHRASES = [
   'La potenza \u00e8 nulla senza controllo\u2026Di Ferro',
   'Valori strani? Rendili di Ferro',
   'Non sai che esami fare? Noi s\u00ec',
+  'Solo. Medici. Grossi.',
   'I nostri medici spingono il Ferro. Il tuo no',
   'Hai preso sostanze? Benvenuto',
   'Enorme e in salute fino a 100 anni? Si pu\u00f2',
@@ -125,7 +126,7 @@ export default function Hero() {
           </span>
         </h1>
         <p style={s.sub} className="hero-sub">
-          Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero sbatti.
+          Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero problemi.
         </p>
 
         {/* Promo lancio: 2 prodotti distinti, layout simmetrico (stesso pattern card). */}
