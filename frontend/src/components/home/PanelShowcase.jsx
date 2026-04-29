@@ -146,7 +146,7 @@ const s = {
   },
   img: {
     width: '100%', height: '100%', objectFit: 'cover',
-    opacity: 0.6,
+    opacity: 0.85,
     transition: 'opacity 0.6s ease',
   },
   badge: {
@@ -268,7 +268,7 @@ export default function PanelShowcase() {
               alt={slide.imgAlt}
               style={{
                 ...s.img,
-                opacity: fade ? 0.6 : 0,
+                opacity: fade ? 0.85 : 0,
               }}
               loading="lazy"
             />

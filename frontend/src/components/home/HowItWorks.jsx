@@ -245,6 +245,18 @@ export default function HowItWorks() {
           .hiw-pattern { display: none; }
         }
 
+        /* Mobile fix: watermark numero centrato + dimensioni ridotte per non eccedere card */
+        @media (max-width: 600px) {
+          .hiw-watermark {
+            font-size: clamp(80px, 22vw, 110px) !important;
+            top: 8px !important;
+            right: auto !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            opacity: 0.18 !important;
+          }
+        }
+
         .sr-only {
           position: absolute;
           width: 1px;

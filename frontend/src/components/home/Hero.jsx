@@ -188,11 +188,18 @@ export default function Hero() {
           .hero-h1 {
             min-height: auto !important;
             margin-bottom: 16px !important;
+            font-size: clamp(22px, 7vw, 30px) !important;
+            letter-spacing: 1px !important;
+            line-height: 1.15 !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
+            padding: 0 4px !important;
           }
           .hero-sub {
-            font-size: 15px !important;
-            line-height: 1.6 !important;
-            margin-bottom: 28px !important;
+            font-size: 14px !important;
+            line-height: 1.55 !important;
+            margin-bottom: 24px !important;
+            padding: 0 8px !important;
           }
           .hero-btn-primary,
           .hero-btn-secondary {
