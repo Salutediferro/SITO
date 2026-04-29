@@ -200,7 +200,7 @@ export default function ChiSiamoPage() {
         </FadeUp>
       </section>
 
-      <div style={s.content}>
+      <div style={s.content} className="cs-content">
         {/* PROBLEMI CHE RISOLVIAMO */}
         <FadeUp>
           <div style={s.sectionTag}>I PROBLEMI CHE RISOLVIAMO</div>
@@ -222,10 +222,10 @@ export default function ChiSiamoPage() {
             Salute di Ferro si basa su analisi corrette, specialisti che comprendono il mondo performance e coordinamento completo del percorso sanitario.
           </p>
         </FadeUp>
-        <div style={s.pillarsGrid}>
+        <div style={s.pillarsGrid} className="cs-grid">
           {PILLARS.map((p, i) => (
             <FadeUp key={i} delay={i * 0.1}>
-              <div style={s.pillarCard} className="card-hover">
+              <div style={s.pillarCard} className="card-hover cs-card">
                 <div style={s.pillarIcon}>{p.icon}</div>
                 <div style={s.pillarTitle}>{p.title}</div>
                 <p style={s.pillarDesc}>{p.desc}</p>
@@ -245,7 +245,7 @@ export default function ChiSiamoPage() {
           </p>
         </FadeUp>
         <FadeUp delay={0.1}>
-          <div style={s.coachCard}>
+          <div style={s.coachCard} className="cs-card">
             <div style={s.coachTitle}>COSA FA IL COACH DI FERRO</div>
             <ul style={s.coachList}>
               {['Contatto diretto con te', 'Coordinamento dei professionisti', 'Monitoraggio del percorso', 'Supporto decisionale'].map(item => (
@@ -280,10 +280,10 @@ export default function ChiSiamoPage() {
           <div style={s.sectionTag}>COSA OFFRIAMO</div>
           <div style={s.sectionTitle}>I NOSTRI SERVIZI</div>
         </FadeUp>
-        <div style={s.servicesGrid}>
+        <div style={s.servicesGrid} className="cs-grid">
           {SERVICES.map((svc, i) => (
             <FadeUp key={i} delay={i * 0.1}>
-              <div style={s.serviceCard} className="card-hover">
+              <div style={s.serviceCard} className="card-hover cs-card">
                 <div style={s.serviceTitle}>{svc.title}</div>
                 <p style={s.serviceDesc}>{svc.desc}</p>
               </div>
@@ -313,6 +313,23 @@ export default function ChiSiamoPage() {
           .cs-badge {
             font-size: 12px !important;
             padding: 6px 12px !important;
+          }
+          /* Content container: padding ridotto + width 100% */
+          .cs-content {
+            padding: 0 16px 60px !important;
+          }
+          /* Tutti i grid card centrati e single column piena */
+          .cs-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            max-width: 100% !important;
+          }
+          /* Card: padding ridotto + width auto */
+          .cs-card {
+            padding: 24px 20px !important;
+            width: auto !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
           }
         }
       `}</style>

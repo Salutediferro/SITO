@@ -61,7 +61,8 @@ const s = {
   },
   h1: {
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
-    fontSize: 'clamp(32px, 6vw, 64px)', lineHeight: 1.08,
+    /* fontSize gestito da .hero-h1-len-{s|m|l|xl} per auto-shrink in base a length frase */
+    lineHeight: 1.08,
     letterSpacing: 2, color: 'var(--text)', marginBottom: 24,
     minHeight: 'clamp(80px, 14vw, 150px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -110,7 +111,15 @@ export default function Hero() {
       <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
         <div style={s.tag} className="hero-tag">LA PALESTRA DELLA SALUTE</div>
-        <h1 style={s.h1} className="hero-h1">
+        {/* Auto-shrink dinamico: classe in base a length della frase corrente per CSS adattivo. */}
+        <h1
+          style={s.h1}
+          className={`hero-h1 hero-h1-len-${
+            ROTATING_PHRASES[phraseIdx].length > 50 ? 'xl' :
+            ROTATING_PHRASES[phraseIdx].length > 35 ? 'l' :
+            ROTATING_PHRASES[phraseIdx].length > 25 ? 'm' : 's'
+          }`}
+        >
           <span className="gradient-text">
             {ROTATING_PHRASES[phraseIdx]}
           </span>
@@ -174,6 +183,12 @@ export default function Hero() {
           .hero-mesh { animation: gradientMesh 18s ease-in-out infinite; }
           .hero-cta { animation: glowPulse 2.4s ease-in-out infinite; }
         }
+
+        /* Default font-size H1 hero (desktop): differenziato per length frase */
+        .hero-h1-len-s  { font-size: clamp(36px, 6vw, 64px); }
+        .hero-h1-len-m  { font-size: clamp(32px, 5.5vw, 60px); }
+        .hero-h1-len-l  { font-size: clamp(28px, 5vw, 56px); }
+        .hero-h1-len-xl { font-size: clamp(24px, 4.5vw, 48px); }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
         }
@@ -188,7 +203,6 @@ export default function Hero() {
           .hero-h1 {
             min-height: auto !important;
             margin-bottom: 16px !important;
-            font-size: clamp(20px, 6.2vw, 28px) !important;
             letter-spacing: 0.5px !important;
             line-height: 1.18 !important;
             word-break: break-word !important;
@@ -204,6 +218,11 @@ export default function Hero() {
             word-break: break-word !important;
             overflow-wrap: anywhere !important;
           }
+          /* Auto-shrink in base a lunghezza frase (mobile only) */
+          .hero-h1-len-s { font-size: clamp(24px, 7vw, 32px) !important; }
+          .hero-h1-len-m { font-size: clamp(20px, 6vw, 28px) !important; }
+          .hero-h1-len-l { font-size: clamp(17px, 5vw, 24px) !important; letter-spacing: 0.3px !important; }
+          .hero-h1-len-xl { font-size: clamp(15px, 4.4vw, 20px) !important; letter-spacing: 0.2px !important; line-height: 1.22 !important; }
           .hero-sub {
             font-size: 14px !important;
             line-height: 1.55 !important;
