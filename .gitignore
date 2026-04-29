@@ -3,3 +3,8 @@ dist/
 .DS_Store
 .wrangler/
 .claude/
+
+# Build artifacts
+sdf-deploy-*.zip
+frontend/dist/
+
