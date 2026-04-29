@@ -19,11 +19,11 @@ const COMMON_START = [
   { t: 'single', k: 'age', label: 'STEP 2',
     q: 'QUAL \u00c8 LA TUA FASCIA D\u2019ET\u00c0?',
     hint: 'Non \u00e8 mai troppo tardi per spostare il FERRO.',
-    opts: [{ k:'u30', v:'- 30' }, { k:'30-39', v:'30 - 39' }, { k:'40-49', v:'40 - 49' }, { k:'50+', v:'50 +' }] },
+    opts: [{ k:'u30', v:'under 30' }, { k:'30-39', v:'30 - 39' }, { k:'40-49', v:'40 - 49' }, { k:'50+', v:'over 50' }] },
   { t: 'single', k: 'training', label: 'STEP 3',
     q: 'QUANTO TI ALLENI ATTUALMENTE?',
     hint: 'Se fai gambe sulla spin bike chiudi subito.',
-    opts: [{ k:'none', v:'Non mi alleno' }, { k:'2-3', v:'2-3 allenamenti a settimana' }, { k:'4+', v:'>4 a settimana' }, { k:'agonista', v:'Sono un atleta agonista' }] },
+    opts: [{ k:'none', v:'Non mi alleno' }, { k:'2-3', v:'2-3 allenamenti a settimana' }, { k:'4+', v:'4 o più a settimana' }, { k:'agonista', v:'Sono un atleta agonista' }] },
 ];
 
 /* ── 2. Classificazione utilizzo sostanze (Q4) ── */
