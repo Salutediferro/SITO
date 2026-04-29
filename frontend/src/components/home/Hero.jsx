@@ -188,12 +188,21 @@ export default function Hero() {
           .hero-h1 {
             min-height: auto !important;
             margin-bottom: 16px !important;
-            font-size: clamp(22px, 7vw, 30px) !important;
-            letter-spacing: 1px !important;
-            line-height: 1.15 !important;
+            font-size: clamp(20px, 6.2vw, 28px) !important;
+            letter-spacing: 0.5px !important;
+            line-height: 1.18 !important;
             word-break: break-word !important;
             overflow-wrap: anywhere !important;
-            padding: 0 4px !important;
+            hyphens: auto !important;
+            padding: 0 12px !important;
+            display: block !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+          }
+          .hero-h1 .gradient-text {
+            display: inline !important;
+            word-break: break-word !important;
+            overflow-wrap: anywhere !important;
           }
           .hero-sub {
             font-size: 14px !important;

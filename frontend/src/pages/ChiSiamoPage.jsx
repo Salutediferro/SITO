@@ -207,9 +207,9 @@ export default function ChiSiamoPage() {
           <div style={s.sectionTitle}>SE TI RICONOSCI, SEI NEL POSTO GIUSTO</div>
         </FadeUp>
         <FadeUp delay={0.1}>
-          <div style={s.problemsWrap}>
+          <div style={s.problemsWrap} className="cs-badges-wrap">
             {PROBLEMS.map((p, i) => (
-              <span key={i} style={s.problemBadge}>{p}</span>
+              <span key={i} style={s.problemBadge} className="cs-badge">{p}</span>
             ))}
           </div>
         </FadeUp>
@@ -266,9 +266,9 @@ export default function ChiSiamoPage() {
           </p>
         </FadeUp>
         <FadeUp delay={0.1}>
-          <div style={s.specialistsWrap}>
+          <div style={s.specialistsWrap} className="cs-badges-wrap">
             {SPECIALISTS.map(sp => (
-              <span key={sp} style={s.specBadge}>{sp}</span>
+              <span key={sp} style={s.specBadge} className="cs-badge">{sp}</span>
             ))}
           </div>
         </FadeUp>
@@ -303,6 +303,19 @@ export default function ChiSiamoPage() {
           </div>
         </FadeUp>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          .cs-badges-wrap {
+            justify-content: center !important;
+            gap: 8px !important;
+          }
+          .cs-badge {
+            font-size: 12px !important;
+            padding: 6px 12px !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
