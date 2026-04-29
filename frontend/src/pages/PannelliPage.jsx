@@ -287,7 +287,7 @@ export default function PannelliPage() {
             <div style={s.sectionTag}>EVIDENCE-BASED</div>
             <h2 style={{...s.sectionTitle, textAlign: 'center'}}>OGNI MARKER HA<br />UNA FONTE VERIFICABILE</h2>
             <p style={s.scienceText}>
-              Non costruiamo pannelli per vendere il massimo numero di esami. Ogni marker è selezionato per rispondere a una domanda clinica reale, basata su linee guida internazionali: EAU 2024, ESC/EAS 2025, KDIGO 2024, AASLD 2024, ATA/AACE, ESHRE, ACOG, ASRM.
+              Non costruiamo pannelli per vendere il massimo numero di esami. Ogni marker è selezionato per rispondere a un obiettivo di salute concreto, basato su linee guida internazionali: EAU 2024, ESC/EAS 2025, KDIGO 2024, AASLD 2024, ATA/AACE, ESHRE, ACOG, ASRM.
             </p>
           </div>
         </FadeUp>

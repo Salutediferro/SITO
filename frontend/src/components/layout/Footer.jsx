@@ -33,7 +33,7 @@ export default function Footer() {
             <span style={s.logoText}>SALUTE DI FERRO</span>
           </div>
           <p style={s.desc}>
-            Performance Health System. Coordinamento diagnostico per atleti e appassionati di fitness in Italia.
+            Performance Health System. Coordinamento analisi del sangue per atleti e appassionati di fitness in Italia.
           </p>
         </div>
 

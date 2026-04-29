@@ -1,7 +1,7 @@
 export const FAQ_ITEMS = [
   {
     q: 'Salute di Ferro è una clinica?',
-    a: 'No. Salute di Ferro è un Performance Health System: coordiniamo l\'accesso a esami diagnostici e professionisti sanitari qualificati. Non eroghiamo direttamente prestazioni sanitarie.',
+    a: 'No. Salute di Ferro è un Performance Health System: coordiniamo l\'accesso a esami del sangue e professionisti sanitari qualificati. Non eroghiamo direttamente prestazioni sanitarie.',
   },
   {
     q: 'Come funziona il prelievo?',

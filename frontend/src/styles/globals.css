@@ -160,12 +160,43 @@ button { font-family: inherit; }
 }
 
 /* ───── Gradient text utility ───── */
-/* Tutto rossi puri cremisi (B ≥ G sempre, no orange shift). Bello acceso, niente chrome. */
+/* Blood metallic sweep: base #E13B4C (3.21:1 AA Large) + highlight specular sweep. */
+/* Effetto metallico = riflesso luminoso che attraversa il testo right→left. */
 .gradient-text {
-  background: linear-gradient(135deg, #FF4555 0%, var(--accent) 45%, #9A0E1F 100%);
+  background: linear-gradient(
+    90deg,
+    #E13B4C 0%,
+    #E13B4C 30%,
+    #F87080 42%,
+    #FFCAD0 50%,
+    #F87080 58%,
+    #E13B4C 70%,
+    #E13B4C 100%
+  );
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-text {
+    animation: blood-sweep 6s linear infinite;
+  }
+}
+
+@keyframes blood-sweep {
+  0%   { background-position: 200% 50%; }
+  65%  { background-position: -50% 50%; }
+  100% { background-position: -50% 50%; }
+}
+
+@media (forced-colors: active) {
+  .gradient-text {
+    -webkit-text-fill-color: revert;
+    background: none;
+    color: CanvasText;
+  }
 }
 
 /* ───── Scrollbar ───── */

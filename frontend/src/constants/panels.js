@@ -108,14 +108,3 @@ export const MODULES = [
     biomarkers: ['FSH', 'Estradiolo', 'Progesterone', 'Prolattina', 'DHEA-S', 'LH'],
   },
 ];
-
-export const FEATURES = [
-  {
-    title: 'TESTOSTERONE',
-    desc: 'Incluso nel FERRO CORE, non come "extra". Perché se ti alleni seriamente, il testosterone non è un lusso, è un dato che devi conoscere. Nessun competitor lo mette nel pannello base.',
-  },
-  {
-    title: 'VITAMINA D',
-    desc: 'Il 70% di chi si allena indoor è carente e non lo sa. Ossa, muscoli, immunità, umore: tutto passa da qui. Nel FERRO CORE di default, perché non ha senso scoprirlo dopo.',
-  },
-];

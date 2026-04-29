@@ -22,6 +22,10 @@ zone_name = "salutediferro.com"
 pattern = "form.salutediferro.com/calendly-webhook"
 zone_name = "salutediferro.com"
 
+[[routes]]
+pattern = "form.salutediferro.com/stripe-webhook"
+zone_name = "salutediferro.com"
+
 [triggers]
 crons = ["*/30 * * * *"]
 
@@ -29,3 +33,6 @@ crons = ["*/30 * * * *"]
 GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzotnzD1Uq5pSBQ4fRScmhVj6afxOpTUJvqdZwCkXuf_5T0nMNZLEQlBIYhqRf2Ew0PzA/exec"
 # RESEND_API_KEY è ora in Cloudflare Secrets (wrangler secret put RESEND_API_KEY)
 # STRIPE_SECRET_KEY è già in Cloudflare Secrets
+# STRIPE_WEBHOOK_SECRET da aggiungere: wrangler secret put STRIPE_WEBHOOK_SECRET
+#   → ottenere il valore dal Dashboard Stripe → Developers → Webhooks → endpoint
+#     form.salutediferro.com/stripe-webhook → "Signing secret" (whsec_...)

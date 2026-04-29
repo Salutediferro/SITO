@@ -37,6 +37,61 @@
   filter: blur(0);
 }
 
+/* ───── Scroll-driven enhancement (browser moderni: Chrome 115+, Firefox 137+, Safari 26+) ─────
+   Sostituisce la transition Intersection Observer con animation scrubbing legato al timeline view().
+   Effetto: opacity/transform/blur scrubbano fluidamente al ritmo dello scroll dell'elemento nel viewport.
+   In reduced-motion, contenuto immediatamente visibile (no animation, no blur).
+*/
+@supports (animation-timeline: view()) {
+  .fade-up {
+    animation: fade-up-scrub linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+    transition: none;
+  }
+  @keyframes fade-up-scrub {
+    from { opacity: 0; transform: translateY(30px); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ───── Scroll progress bar (right edge, blood-red, scroll-driven) ───── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--accent), var(--accent-fill));
+  transform-origin: top;
+  transform: scaleY(0);
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 0 12px rgba(236,71,87,0.35);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-progress-fill linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes scroll-progress-fill {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { display: none; }
+}
+
 /* ───── Quiz card animations (Jakub: blur "materializing" su enter, exit subtler) ───── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); filter: blur(4px); }

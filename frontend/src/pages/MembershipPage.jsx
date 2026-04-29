@@ -235,16 +235,18 @@ export default function MembershipPage() {
               currency="€"
               label="Annulla quando vuoi"
               badge="OFFERTA LANCIO MEMBERSHIP"
-              savings="2 MESI GRATIS"
+              savings="Risparmi €100"
+              href="/coming-soon"
+              ariaLabel="Membership annuale a 197 euro: disponibile a breve, vai alla pagina informativa"
             />
-            <a
-              href={PAYMENT_LINKS.membershipAnnuale}
+            <Link
+              to="/coming-soon"
               className="q-btn-primary"
               style={{ textDecoration: 'none', maxWidth: 380, width: '100%' }}
-              aria-label="Inizia membership annuale a 197 euro all'anno"
+              aria-label="Membership annuale: disponibile a breve, vai alla pagina informativa"
             >
-              INIZIA ORA · 197€/ANNO
-            </a>
+              SCOPRI DI PI&Ugrave;
+            </Link>
           </div>
         </FadeUp>
       </section>
@@ -309,6 +311,48 @@ export default function MembershipPage() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
           </div>
+        </FadeUp>
+
+        {/* DOWNSELL — consulenza singola per chi non si committa annuale */}
+        <FadeUp>
+          <section
+            aria-labelledby="downsell-heading"
+            style={{
+              padding: '32px 24px',
+              borderTop: '1px solid #2A2A2E',
+              textAlign: 'center',
+              maxWidth: 560,
+              margin: '64px auto 0',
+            }}
+          >
+            <h2
+              id="downsell-heading"
+              style={{ fontSize: 14, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9A9AA0', margin: '0 0 12px', fontWeight: 600 }}
+            >
+              Non sei ancora pronto?
+            </h2>
+            <p style={{ fontSize: 16, color: '#B8B8BC', lineHeight: 1.5, margin: '0 0 20px' }}>
+              Inizia da una <strong style={{ color: '#F2F2F4' }}>consulenza singola da 30 minuti</strong>. €27 una tantum, nessun impegno.
+            </p>
+            <a
+              href={PAYMENT_LINKS.consulenza}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '14px 24px',
+                border: '1px solid #2A2A2E',
+                borderRadius: 8,
+                color: '#F2F2F4',
+                textDecoration: 'none',
+                fontSize: 14,
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+              }}
+            >
+              PRENOTA CONSULENZA · €27
+            </a>
+          </section>
         </FadeUp>
       </div>
     </main>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PricePromo from '../ui/PricePromo';
+import { PAYMENT_LINKS } from '../../constants/payments';
 
 const FORM_URL = 'https://form.salutediferro.com';
 
@@ -138,6 +139,8 @@ export default function Hero() {
             label="Consulenza 30 minuti"
             badge="CONSULENZA"
             savings="Risparmi €20 (-43%)"
+            href={PAYMENT_LINKS.consulenza}
+            ariaLabel="Acquista la consulenza Salute di Ferro: da 47 euro scontata a 27 euro"
           />
           <PricePromo
             fullPrice={297}
@@ -146,7 +149,9 @@ export default function Hero() {
             currency="€"
             label="Annulla quando vuoi"
             badge="MEMBERSHIP"
-            savings="2 MESI GRATIS (-34%)"
+            savings="Risparmi €100 (-34%)"
+            href="/coming-soon"
+            ariaLabel="Membership annuale a 197 euro: disponibile a breve, vai alla pagina informativa"
           />
         </div>
 

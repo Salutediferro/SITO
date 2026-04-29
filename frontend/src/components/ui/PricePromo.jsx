@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 /**
  * PricePromo — visualizzazione prezzo "OFFERTA LANCIO" drammatica (Iron Forge poster style).
  *
@@ -181,6 +183,25 @@ const ANIMATION_KEYFRAMES = `
   }
   @media (prefers-reduced-motion: reduce) {
     .price-promo-badge-anim { animation: none !important; }
+    .price-promo-link { transition: none !important; }
+    .price-promo-link:hover { transform: none !important; }
+  }
+  .price-promo-link {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 240ms var(--ease-standard, cubic-bezier(0.4,0,0.2,1)),
+                box-shadow 240ms,
+                border-color 240ms;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .price-promo-link:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 0 4px rgba(236,71,87,0.18), 0 24px 60px rgba(236,71,87,0.28);
+    }
+  }
+  .price-promo-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
   }
 `;
 
@@ -193,6 +214,8 @@ export default function PricePromo({
   badge = 'OFFERTA LANCIO',
   savings,
   variant = 'prominent', // 'prominent' | 'compact'
+  href,                  // opzionale: rende la card un link cliccabile
+  ariaLabel,             // opzionale: accessible name per il link (override priceAriaLabel)
 }) {
   // Calcolo savings auto se non fornito (per consulenza: 47-27=20, scondo % 43%)
   const autoSavings = (fullPrice && promoPrice && !period && !savings)
@@ -226,13 +249,14 @@ export default function PricePromo({
     ? `Da ${currency}${fullPrice} scontato a ${currency}${promoPrice}${period || ''}`
     : `${currency}${promoPrice}${period || ''}`;
 
-  return (
-    <div style={s.wrapProminent}>
+  const cardContent = (
+    <>
       <style>{ANIMATION_KEYFRAMES}</style>
       {badge && <span style={s.badgeProminent} className="price-promo-badge-anim">{badge}</span>}
 
       <div style={s.bodyProminent}>
-        <div style={s.amountsProminent} aria-label={priceAriaLabel}>
+        {/* Quando href presente, l'aria-label è sul link wrapper esterno: il div interno non deve duplicarlo */}
+        <div style={s.amountsProminent} aria-label={href ? undefined : priceAriaLabel}>
           {fullPrice != null && (
             <s style={s.originalProminent} aria-hidden="true">
               {currency}{fullPrice}
@@ -250,6 +274,29 @@ export default function PricePromo({
         {autoSavings && <span style={s.savingsProminent}>{autoSavings}</span>}
         {label && <span style={s.labelProminent}>{label}</span>}
       </div>
-    </div>
+    </>
   );
+
+  // ── Card cliccabile (wrapper <a> esterno o <Link> interno) ──
+  if (href) {
+    const computedAriaLabel = ariaLabel || `${badge || 'Offerta'}: ${priceAriaLabel}${label ? '. ' + label : ''}`;
+    const linkStyle = { ...s.wrapProminent, cursor: 'pointer' };
+    const isInternal = href.startsWith('/');
+
+    if (isInternal) {
+      return (
+        <Link to={href} style={linkStyle} className="price-promo-link" aria-label={computedAriaLabel}>
+          {cardContent}
+        </Link>
+      );
+    }
+    return (
+      <a href={href} style={linkStyle} className="price-promo-link" aria-label={computedAriaLabel}>
+        {cardContent}
+      </a>
+    );
+  }
+
+  // ── Card decorativa (no link) ──
+  return <div style={s.wrapProminent}>{cardContent}</div>;
 }

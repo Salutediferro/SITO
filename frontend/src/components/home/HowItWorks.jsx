@@ -1,97 +1,260 @@
 import FadeUp from '../ui/FadeUp';
 
+/* ──────────────────────────────────────────────────────────────────────
+   Pattern "high-tech medical": onde sinuose orizzontali tipo ECG/topo,
+   stroke 0.5px @ 5% opacity, mask radial pulisce il centro card.
+   3 varianti distinte per variety visiva tra le 3 card.
+   ────────────────────────────────────────────────────────────────────── */
+function generateWaves(variant) {
+  const waves = [];
+  for (let i = 0; i < 10; i++) {
+    const y = 30 + i * 40;
+    let d;
+    if (variant === 0) {
+      // Onde dolci uniformi (ECG calmo)
+      d = `M -20 ${y} C 80 ${y - 15}, 160 ${y + 15}, 240 ${y - 10} S 380 ${y + 8}, 440 ${y}`;
+    } else if (variant === 1) {
+      // Onde frequenza alta (tech bioelettrico)
+      d = `M -20 ${y} Q 50 ${y - 20}, 100 ${y} T 200 ${y} T 300 ${y} T 400 ${y} T 500 ${y}`;
+    } else {
+      // Onde irregolari (topografia organica)
+      d = `M -20 ${y} C 60 ${y + 12}, 130 ${y - 18}, 220 ${y + 8} C 290 ${y + 22}, 360 ${y - 14}, 440 ${y}`;
+    }
+    waves.push(d);
+  }
+  return waves;
+}
+
+function TopoPattern({ variant }) {
+  const waves = generateWaves(variant % 3);
+  return (
+    <div className="hiw-pattern" aria-hidden="true">
+      <svg width="100%" height="100%" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+        <g
+          stroke="var(--accent)"
+          strokeWidth="0.5"
+          strokeOpacity="0.14"
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+        >
+          {waves.map((d, idx) => (
+            <path key={idx} d={d} />
+          ))}
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 const steps = [
-  { num: '01', title: 'FAI IL TEST', desc: '15 domande secche su come ti alleni, cosa senti e cosa hai fatto. Niente giri di parole, ci serve per capire il tuo quadro.' },
-  { num: '02', title: 'RICEVI IL TUO PROTOCOLLO', desc: 'Il FERRO CORE più i moduli specifici per i tuoi problemi reali. Non un pannello generico da medico di base.' },
-  { num: '03', title: 'FAI IL PRELIEVO E AGISCI', desc: 'Vai in laboratorio, fai il prelievo e ricevi i risultati. Zero Sbatti.' },
+  {
+    num: '01',
+    title: 'FAI IL TEST',
+    desc: 'Domande dirette su allenamento, sintomi e storia. In 2 minuti tracciamo il tuo profilo metabolico.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+        <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+        <path d="M9 12h6" />
+        <path d="M9 16h6" />
+      </svg>
+    ),
+  },
+  {
+    num: '02',
+    title: 'RICEVI IL TUO PROTOCOLLO',
+    desc: 'Pannello FERRO CORE più i moduli specifici per i tuoi sintomi. Zero esami a caso: ogni marker ha una ragione.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <path d="M9 13h6" />
+        <path d="M9 17h4" />
+      </svg>
+    ),
+  },
+  {
+    num: '03',
+    title: 'FAI IL PRELIEVO E AGISCI',
+    desc: 'Prelievo nel laboratorio convenzionato. Risultati interpretati con il tuo Coach di Ferro. Zero Sbatti.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M10 2v7.31" />
+        <path d="M14 9.3V1.99" />
+        <path d="M8.5 2h7" />
+        <path d="M14 9.3a6.5 6.5 0 1 1-4 0" />
+        <path d="M5.52 16h12.96" />
+      </svg>
+    ),
+  },
 ];
 
 const s = {
   section: {
-    padding: 'clamp(48px, 7vw, 96px) 40px', maxWidth: 1200, margin: '0 auto',
+    padding: 'clamp(48px, 7vw, 96px) 40px',
+    maxWidth: 1200,
+    margin: '0 auto',
   },
   tag: {
-    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
-    color: 'var(--accent)', marginBottom: 12, textAlign: 'center',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 14,
+    letterSpacing: 4,
+    color: 'var(--accent)',
+    marginBottom: 12,
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
   h2: {
-    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(32px, 5vw, 52px)',
-    letterSpacing: 2, color: 'var(--text)', textAlign: 'center', marginBottom: 48,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'clamp(32px, 5vw, 52px)',
+    letterSpacing: 2,
+    color: 'var(--text)',
+    textAlign: 'center',
+    marginBottom: 56,
   },
-  gridWrapper: {
-    position: 'relative',
-  },
-  connectingLine: {
-    position: 'absolute',
-    top: 56,
-    left: '16.66%',
-    right: '16.66%',
-    height: 2,
-    background: 'linear-gradient(90deg, var(--accent), var(--gold))',
-    zIndex: 0,
-    borderRadius: 1,
-    opacity: 0.4,
-  },
-  grid: {
-    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: 32,
-    position: 'relative',
-    zIndex: 1,
+  list: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: 24,
   },
   card: {
-    background: 'var(--bg-card)', border: '1.5px solid var(--border)',
-    borderRadius: 12, padding: 32, position: 'relative',
-    height: '100%', display: 'flex', flexDirection: 'column',
+    position: 'relative',
+    overflow: 'hidden',
+    background: 'linear-gradient(180deg, var(--bg-card) 0%, #0F0F12 100%)',
+    border: '1px solid var(--border)',
+    borderRadius: 'var(--radius-lg)',
+    padding: '56px 32px 32px',
+    minHeight: 360,
+    flex: 1,
+    transition: 'transform 240ms var(--ease-standard), border-color 240ms, box-shadow 240ms',
+    display: 'flex',
+    flexDirection: 'column',
   },
-  numCircle: {
-    width: 64, height: 64,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    borderRadius: '50%',
-    border: '2px solid var(--accent)',
-    background: 'rgba(236,71,87,0.06)',
-    boxShadow: '0 0 20px rgba(236,71,87,0.12), 0 0 40px rgba(236,71,87,0.04)',
-    marginBottom: 16,
+  watermark: {
+    position: 'absolute',
+    top: -16,
+    right: 8,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'clamp(120px, 14vw, 180px)',
+    fontWeight: 900,
+    lineHeight: 0.85,
+    letterSpacing: -2,
+    pointerEvents: 'none',
+    userSelect: 'none',
   },
-  numText: {
-    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 28,
-    color: 'var(--accent)', lineHeight: 1,
+  content: {
+    position: 'relative',
+    zIndex: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+  },
+  iconWrap: {
+    width: 48,
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 'var(--radius-sm)',
+    background: 'rgba(236,71,87,0.10)',
+    color: 'var(--accent)',
+    border: '1px solid rgba(236,71,87,0.25)',
   },
   title: {
-    fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 22, letterSpacing: 2,
-    color: 'var(--text)', marginBottom: 12,
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'var(--text-h3)',
+    letterSpacing: 1.5,
+    color: 'var(--text)',
+    margin: 0,
   },
   desc: {
-    fontSize: 14, color: 'var(--text-sec)', lineHeight: 1.7, fontWeight: 300,
+    fontSize: 'var(--text-sm)',
+    color: 'var(--text-sec)',
+    lineHeight: 1.65,
+    margin: 0,
   },
 };
 
 export default function HowItWorks() {
   return (
-    <section style={s.section}>
+    <section style={s.section} aria-labelledby="hiw-heading">
       <FadeUp>
         <div style={s.tag}>Tre passi, zero complicazioni</div>
-        <h2 style={s.h2}>COME FUNZIONA</h2>
+        <h2 id="hiw-heading" style={s.h2}>COME FUNZIONA</h2>
       </FadeUp>
-      <div style={s.gridWrapper}>
-        <div style={s.connectingLine} className="hiw-line" />
-        <div style={s.grid}>
-          {steps.map((step, i) => (
-            <FadeUp key={i} delay={i * 0.15} style={{ height: '100%' }}>
-              <div style={s.card} className="card-hover">
-                <div style={s.numCircle}>
-                  <span style={s.numText}>{step.num}</span>
+      <ol style={s.list}>
+        {steps.map((step, i) => (
+          <FadeUp key={i} delay={i * 0.15} style={{ height: '100%' }}>
+            <li style={{ listStyle: 'none', height: '100%', display: 'flex' }}>
+              <article style={s.card} className="hiw-card">
+                <TopoPattern variant={i} />
+                <span style={s.watermark} className="hiw-watermark" aria-hidden="true">{step.num}</span>
+                <div style={s.content}>
+                  <div style={s.iconWrap}>{step.icon}</div>
+                  <h3 style={s.title}>
+                    <span className="sr-only">Passo {i + 1}: </span>
+                    {step.title}
+                  </h3>
+                  <p style={s.desc}>{step.desc}</p>
                 </div>
-                <h3 style={s.title}>{step.title}</h3>
-                <p style={s.desc}>{step.desc}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </div>
+              </article>
+            </li>
+          </FadeUp>
+        ))}
+      </ol>
 
       <style>{`
-        @media (max-width: 768px) {
-          .hiw-line { display: none !important; }
+        .hiw-pattern {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          -webkit-mask-image: radial-gradient(ellipse 65% 55% at center, transparent 10%, black 100%);
+          mask-image: radial-gradient(ellipse 65% 55% at center, transparent 10%, black 100%);
+        }
+
+        .hiw-watermark {
+          color: var(--accent-fill);
+          opacity: 0.22;
+          z-index: 1;
+          transition: opacity 320ms var(--ease-standard), color 320ms, text-shadow 320ms;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+          .hiw-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lift);
+          }
+          .hiw-card:hover .hiw-watermark {
+            color: var(--accent);
+            opacity: 0.55;
+            text-shadow: 0 0 60px rgba(236,71,87,0.45);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hiw-card { transition: none; }
+          .hiw-watermark { transition: none; }
+        }
+
+        @media (forced-colors: active) {
+          .hiw-pattern { display: none; }
+        }
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
         }
       `}</style>
     </section>

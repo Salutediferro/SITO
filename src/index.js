@@ -51,6 +51,65 @@ function sanitize(val) {
   return s.substring(0, 500);
 }
 
+// ── HTML escape (per inserimento sicuro in email/HTML output) ──
+// Previene XSS quando input utente viene interpolato in template HTML.
+function escapeHtml(val) {
+  if (val === null || val === undefined) return '';
+  return String(val)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/\//g, '&#x2F;');
+}
+
+// ── Mask PII per logging sicuro (privacy: no email/dati sensibili in chiaro nei log) ──
+function maskEmail(email) {
+  if (!email || typeof email !== 'string') return '';
+  const [local, domain] = email.split('@');
+  if (!domain) return '***';
+  const maskedLocal = local.length <= 2 ? '*'.repeat(local.length) : local[0] + '***' + local[local.length - 1];
+  return `${maskedLocal}@${domain}`;
+}
+
+// ── Verifica firma webhook Stripe (HMAC SHA256) usando Web Crypto API ──
+async function verifyStripeSignature(payload, signatureHeader, secret) {
+  if (!signatureHeader || !secret) return false;
+  const parts = signatureHeader.split(',').reduce((acc, part) => {
+    const [k, v] = part.split('=');
+    if (k && v) acc[k.trim()] = v.trim();
+    return acc;
+  }, {});
+  const timestamp = parts.t;
+  const sig = parts.v1;
+  if (!timestamp || !sig) return false;
+  // Tolerance: 5 minutes (default Stripe)
+  const now = Math.floor(Date.now() / 1000);
+  if (Math.abs(now - parseInt(timestamp, 10)) > 300) return false;
+
+  const signedPayload = `${timestamp}.${payload}`;
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const signed = await crypto.subtle.sign('HMAC', key, enc.encode(signedPayload));
+  const expectedHex = Array.from(new Uint8Array(signed))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+  // Constant-time compare
+  if (sig.length !== expectedHex.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < sig.length; i++) {
+    mismatch |= sig.charCodeAt(i) ^ expectedHex.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
 function sanitizeObject(obj) {
   const clean = {};
   for (const [k, v] of Object.entries(obj)) {
@@ -189,24 +248,26 @@ export default {
           const sheetRes = await fetch(GOOGLE_SHEET_URL + '?data=' + encodeURIComponent(b64));
           const sheetText = await sheetRes.text();
           if (!sheetRes.ok) {
-            console.error('Sheet webhook HTTP error:', sheetRes.status, sheetText);
+            // Privacy: log solo lo status, NO body (può contenere echo del payload con email/dati)
+            console.error('Sheet webhook HTTP error status:', sheetRes.status);
           } else {
             try {
               const sheetJson = JSON.parse(sheetText);
-              if (!sheetJson.ok) console.error('Sheet webhook app error:', sheetText);
+              if (!sheetJson.ok) console.error('Sheet webhook app error code:', sheetJson.error || 'no-code');
             } catch (e) {
-              console.error('Sheet webhook non-JSON response:', sheetText.substring(0, 200));
+              console.error('Sheet webhook non-JSON response (parse error)');
             }
           }
         } catch (err) {
-          console.error('Sheet webhook error:', err);
+          // Privacy: log solo .message (no err object intero che può includere payload)
+          console.error('Sheet webhook error:', err.message || 'unknown');
         }
       }
 
       // ── Email di follow-up al lead ──
       const RESEND_API_KEY = env.RESEND_API_KEY;
       if (RESEND_API_KEY && data.email) {
-        const firstName = (data.name || '').split(' ')[0] || 'Ciao';
+        const firstName = escapeHtml((data.name || '').split(' ')[0] || 'Ciao');
         const TAG_DISPLAY = {
           CUORE: '#CUORE', FEGATO: '#FEGATO', TIROIDE: '#TIROIDE', ORMONI: '#PROFILO ORMONALE',
           METABOLISMO: '#METABOLISMO', RENI: '#RENI', CORTISOLO: '#CORTISOLO', SANGUE: '#EMOCROMO',
@@ -214,7 +275,7 @@ export default {
           FERTILITA: '#FERTILITÀ', CICLO: '#CICLO', MENOPAUSA: '#MENOPAUSA'
         };
         const tags = data.tags || [];
-        const tagsBadges = tags.map(t => `<span style="display:inline-block;padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600;color:#C82020;background:rgba(200,32,32,0.1);margin:2px;">${TAG_DISPLAY[t] || t}</span>`).join(' ');
+        const tagsBadges = tags.map(t => `<span style="display:inline-block;padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600;color:#C82020;background:rgba(200,32,32,0.1);margin:2px;">${escapeHtml(TAG_DISPLAY[t] || t)}</span>`).join(' ');
 
         const followUpHtml = `<!DOCTYPE html>
 <html lang="it">
@@ -280,31 +341,31 @@ export default {
   </div>
   <div style="padding:28px;">
     <div style="background:#242424;border-radius:6px;padding:16px;margin-bottom:16px;">
-      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Nome:</strong> <span style="color:#CCC;">${data.name || '-'}</span></p>
-      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Email:</strong> <span style="color:#CCC;">${data.email || '-'}</span></p>
-      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Telefono:</strong> <span style="color:#CCC;">${data.phone || '-'}</span></p>
-      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Segmento:</strong> <span style="color:#CCC;">${SEGMENT_LABEL[seg] || seg}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Nome:</strong> <span style="color:#CCC;">${escapeHtml(data.name) || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Email:</strong> <span style="color:#CCC;">${escapeHtml(data.email) || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Telefono:</strong> <span style="color:#CCC;">${escapeHtml(data.phone) || '-'}</span></p>
+      <p style="font-size:14px;margin:6px 0;"><strong style="color:#F5F5F5;">Segmento:</strong> <span style="color:#CCC;">${escapeHtml(SEGMENT_LABEL[seg] || seg)}</span></p>
     </div>
     <div style="background:#242424;border-radius:6px;padding:16px;margin-bottom:16px;">
       <div style="font-size:11px;letter-spacing:2px;color:#1B4FBF;font-weight:bold;margin-bottom:10px;">RISPOSTE</div>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sesso: ${r(SEX, data.sex)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Et\u00e0: ${r(AGE, data.age)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Allenamento: ${r(TRAINING, data.training)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Farmaci: ${r(PHARMA, data.pharma)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Energia: ${r(ENERGIA, data.energia)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sonno: ${r(SONNO, data.sonno)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Libido: ${r(LIBIDO, data.libido)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Ciclo: ${r(CICLO, data.ciclo)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Grasso: ${r(GRASSO, data.grasso)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Pressione: ${r(PRESSIONE, data.pressione)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Assunzione: ${mapArray(data.assunzione, ASSUNZIONE)}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Analisi: ${r(ANALISI, data.analisi)}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sesso: ${escapeHtml(r(SEX, data.sex))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Et\u00e0: ${escapeHtml(r(AGE, data.age))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Allenamento: ${escapeHtml(r(TRAINING, data.training))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Farmaci: ${escapeHtml(r(PHARMA, data.pharma))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Energia: ${escapeHtml(r(ENERGIA, data.energia))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Sonno: ${escapeHtml(r(SONNO, data.sonno))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Libido: ${escapeHtml(r(LIBIDO, data.libido))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Ciclo: ${escapeHtml(r(CICLO, data.ciclo))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Grasso: ${escapeHtml(r(GRASSO, data.grasso))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Pressione: ${escapeHtml(r(PRESSIONE, data.pressione))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Assunzione: ${escapeHtml(mapArray(data.assunzione, ASSUNZIONE))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Analisi: ${escapeHtml(r(ANALISI, data.analisi))}</p>
     </div>
     <div style="background:#242424;border-radius:6px;padding:16px;">
       <div style="font-size:11px;letter-spacing:2px;color:#1B4FBF;font-weight:bold;margin-bottom:10px;">RISULTATO</div>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Score: ${data.score ?? ''}/5 \u2014 ${data.score_name || ''}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Tag: ${Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags || '')}</p>
-      <p style="font-size:13px;color:#CCC;margin:4px 0;">Referral: ${data.referral || 'nessuno'}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Score: ${escapeHtml(String(data.score ?? ''))}/5 \u2014 ${escapeHtml(data.score_name || '')}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Tag: ${escapeHtml(Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags || ''))}</p>
+      <p style="font-size:13px;color:#CCC;margin:4px 0;">Referral: ${escapeHtml(data.referral || 'nessuno')}</p>
     </div>
   </div>
 </div>
@@ -319,7 +380,7 @@ export default {
             body: JSON.stringify({
               from: 'Salute di Ferro <noreply@salutediferro.com>',
               to: ['info@salutediferro.com'],
-              subject: `Nuovo lead: ${data.name || 'Anonimo'} \u2014 ${SEGMENT_LABEL[seg] || seg}`,
+              subject: `Nuovo lead: ${(data.name || 'Anonimo').substring(0, 60).replace(/[\r\n]/g, ' ')} \u2014 ${SEGMENT_LABEL[seg] || seg}`,
               html: teamNotifyHtml,
             }),
           });
@@ -386,7 +447,7 @@ export default {
           const b64 = safeB64(updateData);
           await fetch(GOOGLE_SHEET_URL + '?data=' + encodeURIComponent(b64));
         } catch (e) {
-          console.error('Referral update error:', e);
+          console.error('Referral update error:', e.message || 'unknown');
         }
       }
 
@@ -423,7 +484,9 @@ export default {
         const session = await stripeRes.json();
 
         if (!stripeRes.ok) {
-          console.error('Stripe error:', JSON.stringify(session));
+          // Privacy: NO log dell'intero session object (contiene customer_details, payment info).
+          // Logghiamo solo il messaggio + tipo dell'errore Stripe.
+          console.error('Stripe checkout error:', session?.error?.type || 'unknown', session?.error?.message || 'no message');
           return new Response(JSON.stringify({ error: 'Stripe session failed' }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -435,7 +498,7 @@ export default {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       } catch (err) {
-        console.error('Stripe fetch error:', err);
+        console.error('Stripe fetch error:', err.message || 'unknown');
         return new Response(JSON.stringify({ error: 'Internal error' }), {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -490,6 +553,10 @@ export default {
 
       // Invia email di conferma pagamento
       if (RESEND_API_KEY && customerEmail) {
+        const safeFirstName = escapeHtml(firstName);
+        const safeAmountPaid = escapeHtml(String(amountPaid));
+        const safePaidAt = escapeHtml(String(paidAt));
+        const safeCalendlyUrl = escapeHtml(String(calendlyUrl));
         const payEmailHtml = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"></head>
 <body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
 <div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
@@ -498,7 +565,7 @@ export default {
     <div style="color:rgba(255,255,255,0.8);font-size:12px;margin-top:2px;">Conferma pagamento</div>
   </div>
   <div style="padding:28px;">
-    <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${firstName ? firstName + ', il' : 'Il'} tuo pagamento \u00e8 confermato!</p>
+    <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${safeFirstName ? safeFirstName + ', il' : 'Il'} tuo pagamento \u00e8 confermato!</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:16px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#28a745;font-weight:bold;margin-bottom:12px;">RIEPILOGO</div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
@@ -506,16 +573,16 @@ export default {
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
         <span style="font-size:13px;color:#888;">Importo pagato</span>
-        <span style="font-size:15px;font-weight:bold;color:#F5F5F5;">\u20ac${amountPaid}</span>
+        <span style="font-size:15px;font-weight:bold;color:#F5F5F5;">\u20ac${safeAmountPaid}</span>
       </div>
       <div style="display:flex;justify-content:space-between;">
         <span style="font-size:13px;color:#888;">Data</span>
-        <span style="font-size:13px;color:#CCCCCC;">${paidAt}</span>
+        <span style="font-size:13px;color:#CCCCCC;">${safePaidAt}</span>
       </div>
     </div>
     <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Ora non ti resta che prenotare la tua call con il team di Salute di Ferro. Scegli il giorno e l'orario che preferisci:</p>
     <div style="text-align:center;margin:24px 0;">
-      <a href="${calendlyUrl}" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL SU CALENDLY</a>
+      <a href="${safeCalendlyUrl}" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL SU CALENDLY</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">Se hai bisogno di assistenza, rispondi a questa email.</p>
   </div>
@@ -596,6 +663,137 @@ export default {
       return new Response(successHtml, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
     }
 
+    // ── Stripe webhook (checkout.session.completed) ──
+    // Garantisce registrazione pagamento server-side anche se utente chiude browser
+    // prima del redirect a /payment-success. Idempotente: Apps Script mark_paid
+    // ignora chiamate duplicate sullo stesso session_id.
+    if (path === '/stripe-webhook' && request.method === 'POST') {
+      const STRIPE_WEBHOOK_SECRET = env.STRIPE_WEBHOOK_SECRET;
+      const STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY;
+      const GOOGLE_SHEET_URL = env.GOOGLE_SHEET_URL;
+      const RESEND_API_KEY = env.RESEND_API_KEY;
+
+      if (!STRIPE_WEBHOOK_SECRET) {
+        console.error('Stripe webhook: missing STRIPE_WEBHOOK_SECRET');
+        return new Response('Webhook not configured', { status: 500 });
+      }
+
+      const signature = request.headers.get('Stripe-Signature') || '';
+      const rawBody = await request.text();
+
+      const valid = await verifyStripeSignature(rawBody, signature, STRIPE_WEBHOOK_SECRET);
+      if (!valid) {
+        console.error('Stripe webhook: invalid signature');
+        return new Response('Invalid signature', { status: 400 });
+      }
+
+      let event;
+      try {
+        event = JSON.parse(rawBody);
+      } catch (e) {
+        return new Response('Invalid JSON', { status: 400 });
+      }
+
+      // Solo eventi pagamento completato
+      if (event.type !== 'checkout.session.completed') {
+        // Acknowledge ma ignora altri eventi
+        return new Response(JSON.stringify({ received: true }), {
+          status: 200, headers: { 'Content-Type': 'application/json' },
+        });
+      }
+
+      const session = event.data?.object;
+      if (!session) {
+        return new Response('Missing session', { status: 400 });
+      }
+
+      const customerEmail = session.customer_details?.email || session.customer_email || '';
+      const customerName = session.customer_details?.name || '';
+      const amountPaid = session.amount_total ? (session.amount_total / 100).toFixed(2) : '27.00';
+      const referralUsed = session.metadata?.referral || '';
+      const sessionId = session.id || '';
+      const paidAt = new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' });
+
+      // 1. Mark paid in Sheet (idempotente lato Apps Script via session_id)
+      if (GOOGLE_SHEET_URL && customerEmail) {
+        try {
+          const paidData = {
+            action: 'mark_paid',
+            email: customerEmail,
+            session_id: sessionId,
+            amount_paid: amountPaid,
+            paid_at: paidAt,
+            referral_used: referralUsed,
+            source: 'stripe_webhook',
+          };
+          const b64 = safeB64(paidData);
+          await fetch(GOOGLE_SHEET_URL + '?data=' + encodeURIComponent(b64));
+        } catch (e) {
+          console.error('Stripe webhook Sheet update error:', e.message || 'unknown');
+        }
+      }
+
+      // 2. Email confirm (idempotente: Resend tracking dedupe per Idempotency-Key se serve)
+      if (RESEND_API_KEY && customerEmail) {
+        const safeFirstName = escapeHtml((customerName || '').split(' ')[0] || 'Ciao');
+        const safeAmountPaid = escapeHtml(String(amountPaid));
+        const safePaidAt = escapeHtml(String(paidAt));
+        const safeCalendlyUrl = 'https://calendly.com/salutediferro-info/30min';
+        const payEmailHtml = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"></head>
+<body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
+<div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
+  <div style="background:#28a745;padding:24px 28px;">
+    <div style="color:white;font-size:18px;letter-spacing:3px;font-weight:bold;">SALUTE DI FERRO</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:12px;margin-top:2px;">Conferma pagamento</div>
+  </div>
+  <div style="padding:28px;">
+    <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${safeFirstName}, il tuo pagamento è confermato!</p>
+    <div style="background:#242424;border-radius:6px;padding:16px;margin:16px 0;">
+      <div style="font-size:11px;letter-spacing:2px;color:#28a745;font-weight:bold;margin-bottom:12px;">RIEPILOGO</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:13px;color:#888;">Importo pagato</span>
+        <span style="font-size:15px;font-weight:bold;color:#F5F5F5;">€${safeAmountPaid}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;">
+        <span style="font-size:13px;color:#888;">Data</span>
+        <span style="font-size:13px;color:#CCCCCC;">${safePaidAt}</span>
+      </div>
+    </div>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Prenota la tua call con il team di Salute di Ferro:</p>
+    <div style="text-align:center;margin:24px 0;">
+      <a href="${safeCalendlyUrl}" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL SU CALENDLY</a>
+    </div>
+  </div>
+</div></body></html>`;
+        try {
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${RESEND_API_KEY}`,
+              'Content-Type': 'application/json',
+              // Idempotency: Resend dedupe per Idempotency-Key
+              'Idempotency-Key': `stripe-paid-${sessionId}`,
+            },
+            body: JSON.stringify({
+              from: 'Salute di Ferro <noreply@salutediferro.com>',
+              to: [customerEmail],
+              subject: 'Conferma pagamento — Salute di Ferro',
+              html: payEmailHtml,
+            }),
+          });
+        } catch (e) {
+          console.error('Stripe webhook email error:', e.message || 'unknown');
+        }
+      }
+
+      // Privacy: log solo session_id e email mascherata (no dati pagamento)
+      console.log('Stripe webhook processed:', sessionId, maskEmail(customerEmail));
+
+      return new Response(JSON.stringify({ received: true }), {
+        status: 200, headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     // ── Calendly webhook ──
     if (path === '/calendly-webhook' && request.method === 'POST') {
       const GOOGLE_SHEET_URL = env.GOOGLE_SHEET_URL;
@@ -619,7 +817,7 @@ export default {
           status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       } catch (e) {
-        console.error('Calendly webhook error:', e);
+        console.error('Calendly webhook error:', e.message || 'unknown');
         return new Response(JSON.stringify({ error: 'Webhook failed' }), {
           status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
@@ -667,7 +865,7 @@ export default {
       if (!result.rows || result.rows.length === 0) return;
 
       for (const lead of result.rows) {
-        const firstName = (lead.name || '').split(' ')[0] || 'Ciao';
+        const firstName = escapeHtml((lead.name || '').split(' ')[0] || 'Ciao');
         const reminderHtml = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"></head>
 <body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
 <div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
@@ -720,7 +918,7 @@ export default {
         }
       }
     } catch (e) {
-      console.error('Scheduled task error:', e);
+      console.error('Scheduled task error:', e.message || 'unknown');
     }
   },
 };

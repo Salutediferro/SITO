@@ -44,7 +44,7 @@ export default function PrivacyPage() {
       <h2 style={s.h2}>3. Finalità e base giuridica</h2>
       <p style={s.p}>I tuoi dati vengono trattati per:</p>
       <ul style={s.ul}>
-        <li>Fornitura del servizio di coordinamento diagnostico. Base giuridica: Art. 6(1)(b) GDPR (esecuzione di misure precontrattuali)</li>
+        <li>Fornitura del servizio di coordinamento accesso a esami del sangue. Base giuridica: Art. 6(1)(b) GDPR (esecuzione di misure precontrattuali)</li>
         <li>Trattamento di dati sulla salute. Base giuridica: Art. 9(2)(a) GDPR (consenso esplicito)</li>
         <li>Analisi e miglioramento del servizio. Base giuridica: Art. 6(1)(f) GDPR (legittimo interesse)</li>
       </ul>

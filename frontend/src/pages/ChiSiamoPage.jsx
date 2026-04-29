@@ -191,7 +191,7 @@ export default function ChiSiamoPage() {
           <div style={s.tag}>CHI SIAMO</div>
           <h1 style={s.h1}>LA PALESTRA DELLA SALUTE</h1>
           <p style={s.heroSub}>
-            Salute di Ferro coordina il tuo percorso diagnostico: dai pannelli di analisi mirati agli specialisti che capiscono il mondo palestra e performance. Zero pregiudizi, zero complessità.
+            Salute di Ferro coordina il tuo percorso di analisi: dai pannelli di analisi mirati agli specialisti che capiscono il mondo palestra e performance. Zero pregiudizi, zero complessità.
           </p>
           <a href={FORM_URL} style={s.btn}>
             FAI IL TEST DI FERRO
@@ -219,7 +219,7 @@ export default function ChiSiamoPage() {
           <div style={s.sectionTag}>IL NOSTRO MODELLO</div>
           <div style={s.sectionTitle}>TRE PILASTRI</div>
           <p style={s.sectionDesc}>
-            Salute di Ferro si basa su diagnostica corretta, specialisti che comprendono il mondo performance e coordinamento completo del percorso sanitario.
+            Salute di Ferro si basa su analisi corrette, specialisti che comprendono il mondo performance e coordinamento completo del percorso sanitario.
           </p>
         </FadeUp>
         <div style={s.pillarsGrid}>
