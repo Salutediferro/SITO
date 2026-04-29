@@ -115,9 +115,9 @@ export default function Hero() {
         <h1
           style={s.h1}
           className={`hero-h1 hero-h1-len-${
-            ROTATING_PHRASES[phraseIdx].length > 50 ? 'xl' :
-            ROTATING_PHRASES[phraseIdx].length > 35 ? 'l' :
-            ROTATING_PHRASES[phraseIdx].length > 25 ? 'm' : 's'
+            ROTATING_PHRASES[phraseIdx].length > 45 ? 'xl' :
+            ROTATING_PHRASES[phraseIdx].length > 32 ? 'l' :
+            ROTATING_PHRASES[phraseIdx].length > 22 ? 'm' : 's'
           }`}
         >
           <span className="gradient-text">
@@ -214,15 +214,18 @@ export default function Hero() {
             box-sizing: border-box !important;
           }
           .hero-h1 .gradient-text {
-            display: inline !important;
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
             word-break: break-word !important;
             overflow-wrap: anywhere !important;
+            text-wrap: balance !important;
           }
-          /* Auto-shrink in base a lunghezza frase (mobile only) */
-          .hero-h1-len-s { font-size: clamp(24px, 7vw, 32px) !important; }
-          .hero-h1-len-m { font-size: clamp(20px, 6vw, 28px) !important; }
-          .hero-h1-len-l { font-size: clamp(17px, 5vw, 24px) !important; letter-spacing: 0.3px !important; }
-          .hero-h1-len-xl { font-size: clamp(15px, 4.4vw, 20px) !important; letter-spacing: 0.2px !important; line-height: 1.22 !important; }
+          /* Auto-shrink aggressivo in base a lunghezza frase (mobile ≤600px) */
+          .hero-h1-len-s  { font-size: clamp(22px, 6.4vw, 30px) !important; }
+          .hero-h1-len-m  { font-size: clamp(18px, 5.4vw, 26px) !important; letter-spacing: 0.4px !important; }
+          .hero-h1-len-l  { font-size: clamp(15px, 4.4vw, 22px) !important; letter-spacing: 0.2px !important; line-height: 1.2 !important; }
+          .hero-h1-len-xl { font-size: clamp(13px, 3.6vw, 18px) !important; letter-spacing: 0px !important; line-height: 1.25 !important; }
           .hero-sub {
             font-size: 14px !important;
             line-height: 1.55 !important;
