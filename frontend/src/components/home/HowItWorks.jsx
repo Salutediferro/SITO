@@ -115,10 +115,12 @@ const s = {
   list: {
     listStyle: 'none',
     padding: 0,
-    margin: 0,
+    margin: '0 auto',
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
     gap: 24,
+    justifyContent: 'center',
+    maxWidth: 1100,
   },
   card: {
     position: 'relative',
@@ -245,7 +247,7 @@ export default function HowItWorks() {
           .hiw-pattern { display: none; }
         }
 
-        /* Mobile fix: watermark numero centrato + dimensioni ridotte per non eccedere card */
+        /* Mobile fix: watermark numero centrato + dimensioni ridotte + card max-width 90% e centrate */
         @media (max-width: 600px) {
           .hiw-watermark {
             font-size: clamp(80px, 22vw, 110px) !important;
@@ -254,6 +256,10 @@ export default function HowItWorks() {
             left: 50% !important;
             transform: translateX(-50%) !important;
             opacity: 0.18 !important;
+          }
+          .hiw-card {
+            max-width: 90% !important;
+            margin: 0 auto !important;
           }
         }
 

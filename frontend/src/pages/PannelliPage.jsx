@@ -252,13 +252,13 @@ export default function PannelliPage() {
 
         {MODULES.map((mod, i) => (
           <FadeUp key={mod.id} delay={i * 0.05}>
-            <div className="card-hover" style={s.card}>
-              <div style={s.moduleHeader}>
-                <div style={s.moduleHeaderLeft}>
+            <div className="card-hover panel-card" style={s.card}>
+              <div className="panel-header" style={s.moduleHeader}>
+                <div className="panel-header-left" style={s.moduleHeaderLeft}>
                   {mod.icon && getIcon(mod.icon)}
                   <h3 style={s.moduleName}>{mod.name}</h3>
                 </div>
-                <div style={{display:'flex', alignItems:'center', gap:12}}>
+                <div className="panel-header-right" style={{display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', justifyContent:'flex-end'}}>
                   <span style={s.moduleMeta}>{mod.tests} esami{mod.gender ? ` \u00b7 ${mod.gender}` : ''}</span>
                   {mod.price && <span style={s.priceTag}>{mod.price}&euro;</span>}
                 </div>
@@ -292,6 +292,19 @@ export default function PannelliPage() {
           </div>
         </FadeUp>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          .panel-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .panel-header-right {
+            justify-content: flex-start !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }

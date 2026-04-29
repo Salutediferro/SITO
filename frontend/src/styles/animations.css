@@ -21,20 +21,17 @@
   }
 }
 
-/* ───── FadeUp on scroll (Jakub: aggiunto blur "materializing" + ease-out-quint, durata ridotta) ───── */
+/* ───── FadeUp on scroll (no blur su mobile per evitare stuck-blur Safari iOS) ───── */
 .fade-up {
   opacity: 0;
   transform: translateY(30px);
-  filter: blur(4px);
   transition:
     opacity var(--motion-slow) var(--ease-out-quint),
-    transform var(--motion-slow) var(--ease-out-quint),
-    filter var(--motion-slow) var(--ease-out-quint);
+    transform var(--motion-slow) var(--ease-out-quint);
 }
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
-  filter: blur(0);
 }
 
 /* ───── Scroll-driven enhancement (browser moderni: Chrome 115+, Firefox 137+, Safari 26+) ─────
@@ -50,8 +47,8 @@
     transition: none;
   }
   @keyframes fade-up-scrub {
-    from { opacity: 0; transform: translateY(30px); filter: blur(4px); }
-    to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -60,7 +57,6 @@
     transition: none;
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 

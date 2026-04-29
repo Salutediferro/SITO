@@ -199,7 +199,9 @@ export default function Hero() {
             font-size: 14px !important;
             line-height: 1.55 !important;
             margin-bottom: 24px !important;
-            padding: 0 8px !important;
+            padding: 0 12px !important;
+            max-width: calc(100vw - 48px) !important;
+            box-sizing: border-box !important;
           }
           .hero-btn-primary,
           .hero-btn-secondary {
