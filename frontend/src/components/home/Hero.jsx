@@ -27,7 +27,7 @@ const s = {
   section: {
     position: 'relative', minHeight: 'calc(100vh - 72px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    padding: 'clamp(64px, 9vw, 120px) 40px', overflow: 'hidden',
+    padding: 'clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px)', overflow: 'hidden',
   },
   bg: {
     position: 'absolute', inset: 0,
@@ -109,21 +109,22 @@ export default function Hero() {
       <div style={s.bg} />
       <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
-        <div style={s.tag}>LA PALESTRA DELLA SALUTE</div>
-        <h1 style={s.h1}>
+        <div style={s.tag} className="hero-tag">LA PALESTRA DELLA SALUTE</div>
+        <h1 style={s.h1} className="hero-h1">
           <span className="gradient-text">
             {ROTATING_PHRASES[phraseIdx]}
           </span>
         </h1>
-        <p style={s.sub}>
+        <p style={s.sub} className="hero-sub">
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero sbatti.
         </p>
 
         {/* Promo lancio: 2 prodotti distinti, layout simmetrico (stesso pattern card). */}
+        {/* Mobile-safe: minmax con min(280px, 100%) evita overflow su viewport stretti */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: 24,
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
+          gap: 'clamp(16px, 3vw, 24px)',
           marginTop: 24,
           marginBottom: 40,
           maxWidth: 820,
@@ -131,6 +132,7 @@ export default function Hero() {
           marginRight: 'auto',
           alignItems: 'stretch',
           padding: '0 8px', // spazio per badge fluttuante non clippato
+          width: '100%',
         }}>
           <PricePromo
             fullPrice={47}
@@ -156,11 +158,11 @@ export default function Hero() {
         </div>
 
         <div style={s.buttons}>
-          <a href={FORM_URL} style={s.btnPrimary} className="hero-cta">
+          <a href={FORM_URL} style={s.btnPrimary} className="hero-cta hero-btn-primary">
             FAI IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <Link to="/pannelli" style={s.btnSecondary} className="btn-lift">
+          <Link to="/pannelli" style={s.btnSecondary} className="btn-lift hero-btn-secondary">
             SCOPRI I PANNELLI
           </Link>
         </div>
@@ -174,6 +176,33 @@ export default function Hero() {
         }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
+        }
+
+        /* Mobile fix Hero: tag letterSpacing ridotto + h1 più compatto + buttons full-width */
+        @media (max-width: 600px) {
+          .hero-tag {
+            letter-spacing: 2px !important;
+            font-size: 12px !important;
+            padding: 6px 14px !important;
+          }
+          .hero-h1 {
+            min-height: auto !important;
+            margin-bottom: 16px !important;
+          }
+          .hero-sub {
+            font-size: 15px !important;
+            line-height: 1.6 !important;
+            margin-bottom: 28px !important;
+          }
+          .hero-btn-primary,
+          .hero-btn-secondary {
+            width: 100% !important;
+            max-width: 320px !important;
+            justify-content: center !important;
+            padding: 14px 24px !important;
+            font-size: 14px !important;
+            letter-spacing: 2px !important;
+          }
         }
       `}</style>
     </section>
