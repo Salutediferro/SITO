@@ -25,11 +25,11 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Quanto costa?',
-    a: 'Il Test di Ferro costa 27€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
+    a: 'La consulenza costa 27€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
   },
   {
     q: 'Ogni quanto dovrei rifare gli esami?',
-    a: 'Dipende dal tuo profilo. In generale, ogni 6-12 mesi. Salute di Ferro ti indicherà la frequenza ideale per il tuo caso specifico.',
+    a: 'Dipende dal tuo profilo. In generale, ogni 6-12 mesi. Salute di Ferro ti guiderà verso lo specialista migliore per te, che valuterà la frequenza ideale per il tuo caso specifico.',
   },
   {
     q: 'I risultati del Test di Ferro sono una diagnosi?',
