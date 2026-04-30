@@ -236,17 +236,17 @@ export default function MembershipPage() {
               label="Annulla quando vuoi"
               badge="OFFERTA LANCIO MEMBERSHIP"
               savings="Risparmi €100"
-              href="/coming-soon"
-              ariaLabel="Membership annuale a 197 euro: disponibile a breve, vai alla pagina informativa"
+              href={PAYMENT_LINKS.membershipAnnuale}
+              ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno"
             />
-            <Link
-              to="/coming-soon"
+            <a
+              href={PAYMENT_LINKS.membershipAnnuale}
               className="q-btn-primary"
               style={{ textDecoration: 'none', maxWidth: 380, width: '100%' }}
-              aria-label="Membership annuale: disponibile a breve, vai alla pagina informativa"
+              aria-label="Inizia ora la Membership annuale a 197 euro all'anno"
             >
-              SCOPRI DI PI&Ugrave;
-            </Link>
+              INIZIA ORA &middot; 197&euro;/ANNO
+            </a>
           </div>
         </FadeUp>
       </section>

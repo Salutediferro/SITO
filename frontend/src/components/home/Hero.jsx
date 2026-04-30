@@ -162,8 +162,8 @@ export default function Hero() {
             label="Annulla quando vuoi"
             badge="MEMBERSHIP"
             savings="Risparmi €100 (-34%)"
-            href="/coming-soon"
-            ariaLabel="Membership annuale a 197 euro: disponibile a breve, vai alla pagina informativa"
+            href={PAYMENT_LINKS.membershipAnnuale}
+            ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno"
           />
         </div>
 

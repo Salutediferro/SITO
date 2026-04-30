@@ -27,9 +27,9 @@ export const PAYMENT_LINKS = {
   /**
    * Membership annuale.
    * Prezzo full €297 → promo lancio €197/anno.
-   * TODO: sostituire URL quando Antonio ha creato il prodotto.
+   * Subscription recurring yearly. Success URL: form.salutediferro.com/payment-success
    */
-  membershipAnnuale: 'https://buy.stripe.com/TODO_REPLACE_WITH_YEARLY_LINK',
+  membershipAnnuale: 'https://buy.stripe.com/3cIbJ12GU3oIgy18aw14401',
 };
 
 /**
