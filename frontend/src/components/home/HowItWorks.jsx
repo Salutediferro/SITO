@@ -50,7 +50,7 @@ const steps = [
   {
     num: '01',
     title: 'FAI IL TEST',
-    desc: 'Domande dirette su allenamento, sintomi e storia. In 2 minuti tracciamo cosa ti può aiutare.',
+    desc: 'Domande dirette su allenamento, sintomi e storia. In 2 minuti capiamo come aiutarti.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
@@ -63,7 +63,7 @@ const steps = [
   {
     num: '02',
     title: 'RICEVI IL TUO PROTOCOLLO',
-    desc: 'Pannello FERRO CORE. In più, fino a 7 moduli specifici per i tuoi sintomi. Zero esami a caso: ogni marker ha una ragione.',
+    desc: 'Pannello FERRO CORE + 8 moduli specifici per i tuoi sintomi. Zero esami a caso: ogni marker ha una ragione.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -76,7 +76,7 @@ const steps = [
   {
     num: '03',
     title: 'FAI IL PRELIEVO E AGISCI',
-    desc: 'Prelievo nel laboratorio convenzionato. Risultati subito e percorso condiviso con il tuo Coach di Ferro. Zero Sbatti.',
+    desc: 'Prelievo nel laboratorio convenzionato. Risultati subito, percorso condiviso con il tuo Coach di Ferro. Zero Sbatti.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M10 2v7.31" />
