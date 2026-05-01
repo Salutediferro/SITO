@@ -11,6 +11,7 @@ import PrivacyPage from './pages/PrivacyPage';
 import TestPage from './pages/TestPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import ComingSoonPage from './pages/ComingSoonPage';
+import AgenteTestPage from './pages/AgenteTestPage';
 import useFerroHighlight from './hooks/useFerroHighlight';
 
 function ScrollToTop() {
@@ -22,6 +23,8 @@ function ScrollToTop() {
 export default function App() {
   const { pathname } = useLocation();
   const isTest = pathname === '/test';
+  const isAgenteTest = pathname === '/agente-test';
+  const hideChrome = isTest || isAgenteTest;
 
   // Highlight runtime: wrappa "ferro" in rosso accent SOLO sui testi bianchi
   useFerroHighlight();
@@ -29,8 +32,8 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
-      {!isTest && <ScrollProgress />}
-      {!isTest && <Navbar />}
+      {!hideChrome && <ScrollProgress />}
+      {!hideChrome && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/pannelli" element={<PannelliPage />} />
@@ -40,8 +43,9 @@ export default function App() {
         <Route path="/test" element={<TestPage />} />
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/coming-soon" element={<ComingSoonPage />} />
+        <Route path="/agente-test" element={<AgenteTestPage />} />
       </Routes>
-      {!isTest && <Footer />}
+      {!hideChrome && <Footer />}
     </>
   );
 }

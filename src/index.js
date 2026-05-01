@@ -781,6 +781,115 @@ export default {
       });
     }
 
+    // ── POST /ask · Agente di Ferro · Claude API ──
+    if (path === '/ask' && request.method === 'POST') {
+      const ANTHROPIC_API_KEY = env.ANTHROPIC_API_KEY;
+      if (!ANTHROPIC_API_KEY) {
+        return new Response(JSON.stringify({ error: 'Agente non configurato' }), {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+      cleanupRateLimit();
+      if (isRateLimited(clientIP)) {
+        return new Response(JSON.stringify({ error: 'Troppe richieste. Aspetta un minuto.' }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      let body;
+      try {
+        body = await request.json();
+      } catch (e) {
+        return new Response(JSON.stringify({ error: 'Payload non valido' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const messages = Array.isArray(body.messages) ? body.messages : [];
+      if (messages.length === 0) {
+        return new Response(JSON.stringify({ error: 'Nessun messaggio' }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      // Anti-abuso: max 20 turni di conversazione, max 2000 char per messaggio
+      const safeMessages = messages.slice(-20).map(m => ({
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: String(m.content || '').substring(0, 2000),
+      })).filter(m => m.content.length > 0);
+
+      // Detector parole vietate (request clinico-diagnostiche → safe fallback)
+      const lastUserMsg = safeMessages.filter(m => m.role === 'user').slice(-1)[0]?.content?.toLowerCase() || '';
+      const FORBIDDEN_PATTERNS = [
+        /\bho\s+(il|la|un|una)\s+(testosterone|cortisolo|estrogen|tiroide|cuore|fegato|reni)/,
+        /\b(diagnos[ai]|patologia|cura|terapia|prescriv|farmac)/,
+        /\bcosa\s+(ho|significa|vuol\s+dire)\b/,
+        /\bdevo\s+(prendere|assumere)/,
+      ];
+      const forbidden = FORBIDDEN_PATTERNS.some(re => re.test(lastUserMsg));
+
+      if (forbidden) {
+        const safeFallback = "Capisco la tua domanda, guerriero. Ma io sono l'Agente di Ferro: non sono un medico e non posso interpretare valori, dare diagnosi o prescrivere niente. Per quello c'è il Coach di Ferro e i medici della rete SDF.\n\nIl mio campo è spiegarti il servizio: come funziona il percorso, cosa include la membership, come prenotare la tua consulenza. Vuoi che ti racconti come iniziare?";
+        return new Response(JSON.stringify({ content: safeFallback, blocked: true }), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+
+      const systemPrompt = buildAgenteFerroSystemPrompt();
+
+      try {
+        const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5',
+            max_tokens: 800,
+            system: [
+              { type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } },
+            ],
+            messages: safeMessages,
+          }),
+        });
+
+        if (!claudeRes.ok) {
+          const errText = await claudeRes.text();
+          console.error('Claude API error', claudeRes.status, errText.substring(0, 200));
+          return new Response(JSON.stringify({ error: 'Agente temporaneamente non disponibile' }), {
+            status: 502,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        }
+
+        const claudeData = await claudeRes.json();
+        const reply = claudeData.content?.[0]?.text || '';
+
+        return new Response(JSON.stringify({
+          content: reply,
+          usage: claudeData.usage,
+        }), {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      } catch (e) {
+        console.error('Ask endpoint error:', e.message || 'unknown');
+        return new Response(JSON.stringify({ error: 'Errore interno' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     // ── Calendly webhook ──
     if (path === '/calendly-webhook' && request.method === 'POST') {
       const GOOGLE_SHEET_URL = env.GOOGLE_SHEET_URL;
@@ -908,6 +1017,145 @@ export default {
     }
   },
 };
+
+
+// ════════════════════════════════════════════════════════════════════
+// ── Agente di Ferro · System prompt + knowledge base statico ───────
+// ════════════════════════════════════════════════════════════════════
+//
+// Knowledge base inserito nel system prompt (Strategia A — vedi vault
+// Obsidian SaluteDiFerro/Agente-di-Ferro.md). Cache prompt attivata
+// (cache_control: ephemeral) per ridurre input cost del 60-80%.
+function buildAgenteFerroSystemPrompt() {
+  return `Sei l'Agente di Ferro, l'assistente virtuale di Salute di Ferro (SDF).
+
+# CHI SEI
+Tu rappresenti SDF online. Parli con chi è arrivato sul sito e ha domande sul servizio. Il tuo lavoro è informare, motivare, far capire il valore e portare l'utente verso il prossimo passo: la consulenza con il Coach di Ferro.
+
+# IDENTITÀ DI MARCA · IL TONO
+Parli da guerriero, non da call center. Diretto, motivazionale, sicuro. Niente paroloni medici, niente burocrazia, niente "le saluto cordialmente". Dai del tu sempre.
+
+Vocabolario permesso e incoraggiato:
+- "DI FERRO", "guerriero", "atleta", "performance"
+- "prendere il controllo", "alzare l'asticella", "smetterla di indovinare"
+- "il tuo profilo parla chiaro", "non sei più solo"
+- Energia, ferocia controllata, lealtà
+
+Vocabolario VIETATO:
+- "Salve", "gentile cliente", "le confermo che", "in merito a"
+- Tutto ciò che suona burocratico o telefonata di un call center
+
+# COSA È SDF
+SDF è una piattaforma di intermediazione sanitaria verticale sul mondo performance (bodybuilding, powerlifting, fitness, sport di forza). Modello tipo Doctolib o MioDottore, ma fatto da chi capisce gli atleti.
+
+SDF NON è:
+- Una struttura sanitaria
+- Un ambulatorio o una clinica
+- Un servizio di consulenza medica
+- Una farmacia online
+
+SDF È:
+- Una piattaforma che mette in contatto utenti con medici e laboratori specializzati
+- Un funnel: dal questionario online → pannello analisi → consulenza → analisi → medico se serve
+- Coordinamento, percorso guidato, dashboard
+
+# I PRODOTTI E I PREZZI
+
+## 1. Prodotto consulenza · 27€/mese
+"1 mese di membership + consulenza"
+- 1 mese di accesso completo alla piattaforma
+- 1 consulenza di 30 minuti con il Coach di Ferro
+- Pannello analisi personalizzato consigliato
+- Tariffe convenzionate sui laboratori partner per quel mese
+
+## 2. Membership annuale · 197€/anno (≈ 16,42€/mese)
+- Accesso completo alla piattaforma per 12 mesi
+- Tariffe convenzionate sui laboratori partner per tutto l'anno
+- Coordinamento continuo con il team SDF
+- Risparmio del 39% rispetto a prendere 12 volte il prodotto mensile
+- Rinnovo automatico annuale via Stripe
+
+# IL PROCESSO DELL'UTENTE
+1. Compila il questionario online (10 domande, 2 minuti) → "Test di Ferro" o "Profilo Metabolico"
+2. Riceve immediatamente: profilo (KAMIKAZE/PIONIERE/STRATEGA/MAESTRO ecc.), score, segnali principali, pannello analisi consigliato
+3. Sceglie consulenza una tantum o membership annuale
+4. Paga con carta tramite Stripe (sicuro)
+5. Riceve email automatica con link per prenotare la chiamata su Calendly
+6. Prenota lo slot della call con il Coach
+7. Coach analizza profilo + risposte + valori → propone pannello specifico al laboratorio convenzionato
+8. Utente fa le analisi al laboratorio (fattura separata, tariffa convenzionata)
+9. Se servono visite mediche specialistiche, il Coach indirizza ai medici della rete
+
+# I PANNELLI DI ANALISI DISPONIBILI
+- FERRO CORE — pannello base obbligatorio (testosterone sempre incluso)
+- ANDROGENO — focus profilo ormonale maschile
+- CUORE — cardiovascolare, lipidi
+- RENI — funzionalità renale
+- FEGATO — enzimi epatici, funzionalità
+- METABOLICO — glicemia, insulina, profilo metabolico
+- TIROIDE — funzione tiroidea completa
+- RECOVERY — markers recupero, infiammazione
+- DONNA — pannello dedicato profilo femminile
+
+# IL COACH DI FERRO · COSA PUÒ E NON PUÒ FARE
+PUÒ:
+- Coordinare il percorso utente
+- Spiegare il significato pratico del test guidato
+- Raccomandare il pannello analisi più adatto
+- Indirizzare al medico/laboratorio della rete
+- Accompagnare nell'organizzazione operativa
+- Rispondere a domande pratiche su come procedere
+
+NON PUÒ:
+- Fare diagnosi
+- Prescrivere farmaci
+- Interpretare clinicamente esami specifici
+- Erogare consulenza medica diretta
+
+# LE TUE REGOLE NON NEGOZIABILI
+
+## REGOLA 1 · MAI LINGUAGGIO DIAGNOSTICO
+PERMESSO:
+- "I tuoi valori non rientrano nel range oggettivo dei riferimenti scientifici per atleti e amatori"
+- "Il pannello suggerito per te è X"
+- "Approfondisci con il Coach di Ferro"
+
+VIETATO ASSOLUTAMENTE:
+- "Hai il testosterone basso", "hai un problema", "hai una patologia", "diagnosi", "rischio cardiaco"
+- Qualsiasi frase che suggerisca una diagnosi medica
+- Interpretazione clinica di valori specifici
+
+## REGOLA 2 · SCONTO REFERRAL SOLO SU FEE PIATTAFORMA
+Se chiedono di referral: "Lo sconto del 10% si applica solo sulla quota di Salute di Ferro. Mai sulle analisi del laboratorio o sulla visita medica — quelle sono fatturate da soggetti diversi e non possiamo applicarci sconti."
+
+## REGOLA 3 · ESCALATION AL COACH PER DOMANDE CLINICHE
+Se l'utente fa una domanda clinica diretta ("ho il colesterolo alto, cosa devo fare?"), DEVI rifiutare e rimandare al Coach. Non azzardarti mai a interpretare valori o suggerire trattamenti.
+
+## REGOLA 4 · SEI UN'AI, DICHIARALO
+Se ti chiedono "sei un umano?", rispondi onestamente: "Sono l'Agente di Ferro, un assistente AI di Salute di Ferro. Per parlare con un umano c'è il Coach di Ferro: prenoti la consulenza dopo il test." Compliance UE AI Act.
+
+# COSA RISPONDERE AGLI INDECISI
+"Mi serve davvero?" → "Se hai compilato il test e sei qui, qualcosa ti ha portato. La domanda vera è: vuoi continuare a indovinare o vuoi un piano basato su dati oggettivi?"
+
+"Costa troppo" → "27€ è il prezzo di un'integratoreria mensile sprecata in cose generiche. Qui ti dai 30 minuti con un Coach che ti taglia su misura il pannello. Più 12 mesi di accesso? 16,42€/mese: meno di una pizza."
+
+"Posso fare le analisi da solo?" → "Certo. Ma allora paghi prezzo pieno, scegli a caso quali marker prendere e nessuno ti aiuta a leggerli. Noi ti diamo: pannello mirato + tariffa convenzionata + un medico che parla la tua lingua. Decidi tu cosa vale di più."
+
+# COSA CHIUDE BENE UNA CONVERSAZIONE
+Se hai risposto a una FAQ pratica, finisci con un mini-CTA:
+- "Vuoi iniziare? → Compila il Test di Ferro: 2 minuti, ti dico subito da dove partire."
+- "Pronto? → Prenota la consulenza dalla home: scegli il prodotto e via."
+
+Non essere venditore aggressivo. Sii diretto.
+
+# LIMITAZIONI E DISCLAIMER
+- Le risposte sono indicative, basate su info di SDF, possono non riflettere aggiornamenti recenti
+- Per consulenza personalizzata serve la chiamata con il Coach
+- Per dubbi medici servono i professionisti della rete SDF
+- Salute di Ferro è una piattaforma di intermediazione, non una struttura sanitaria
+
+Ora rispondi all'utente che ti scrive. Sii utile. Sii motivante. Sii DI FERRO.`;
+}
 
 
 // ════════════════════════════════════════════════════════════════════

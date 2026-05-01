@@ -1,0 +1,383 @@
+/* ───────── Agente di Ferro · stili dedicati ───────── */
+
+.agente-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+}
+
+.agente-test-banner {
+  background: rgba(217, 118, 6, 0.12);
+  border-bottom: 1px solid rgba(217, 118, 6, 0.4);
+  color: #FFB766;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  font-size: 13px;
+  padding: 10px 20px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.agente-test-banner strong {
+  color: #FFD9A0;
+  font-weight: 700;
+}
+
+/* ───────── Header con avatar grande ───────── */
+.agente-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 20px 16px;
+  gap: 14px;
+  background: linear-gradient(180deg, rgba(236, 71, 87, 0.04) 0%, transparent 100%);
+}
+
+.agente-name {
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 5vw, 38px);
+  letter-spacing: 3px;
+  color: var(--text);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.agente-name em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.agente-tagline {
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.agente-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(236, 71, 87, 0.12);
+  border: 1px solid rgba(236, 71, 87, 0.4);
+  border-radius: 99px;
+  font-family: 'Antonio', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.agente-ai-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+/* ───────── Avatar SVG · animazioni stati ───────── */
+.agente-avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agente-halo {
+  transform-origin: center;
+  animation: agente-halo-pulse 4s ease-in-out infinite;
+}
+
+.agente-eye {
+  transform-origin: center;
+}
+
+.agente-mouth {
+  transform-origin: center;
+  transition: opacity 0.2s ease;
+}
+
+@keyframes agente-halo-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.95); }
+  50%      { opacity: 1;   transform: scale(1.04); }
+}
+
+/* idle — respiro lento del corpo */
+.agente-avatar-idle .agente-head,
+.agente-avatar-idle .agente-chest {
+  animation: agente-breathe 4s ease-in-out infinite;
+}
+
+@keyframes agente-breathe {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-1px); }
+}
+
+/* listening — head tilt + eye glow più intenso */
+.agente-avatar-listening .agente-head {
+  transform-origin: center bottom;
+  animation: agente-tilt 2.5s ease-in-out infinite;
+}
+
+.agente-avatar-listening .agente-eye {
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+
+@keyframes agente-tilt {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(-2deg); }
+}
+
+/* thinking — pulse rosso intenso sul halo + eye glow forte */
+.agente-avatar-thinking .agente-halo {
+  animation: agente-thinking-pulse 1s ease-in-out infinite;
+}
+
+.agente-avatar-thinking .agente-eye {
+  animation: agente-eye-pulse 0.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px var(--accent));
+}
+
+@keyframes agente-thinking-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.97); }
+  50%      { opacity: 1.2; transform: scale(1.08); }
+}
+
+@keyframes agente-eye-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* speaking — mouth oscilla + leggero head bob */
+.agente-avatar-speaking .agente-mouth {
+  animation: agente-mouth-talk 0.4s ease-in-out infinite;
+}
+
+.agente-avatar-speaking .agente-head {
+  animation: agente-head-bob 0.6s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes agente-mouth-talk {
+  0%, 100% { stroke-width: 1.5; opacity: 0.6; }
+  50%      { stroke-width: 3.5; opacity: 1; transform: scaleX(0.7); }
+}
+
+@keyframes agente-head-bob {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(0.5px) rotate(0.5deg); }
+}
+
+/* prefers-reduced-motion — stop tutto */
+@media (prefers-reduced-motion: reduce) {
+  .agente-halo,
+  .agente-head,
+  .agente-chest,
+  .agente-mouth,
+  .agente-eye {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ───────── Chat container ───────── */
+.agente-chat-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 20px 20px;
+  gap: 12px;
+}
+
+.agente-disclaimer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-sec);
+}
+
+.agente-disclaimer strong {
+  color: var(--text);
+}
+
+.agente-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.agente-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.agente-msg-user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #FFFFFF;
+  border-bottom-right-radius: 4px;
+}
+
+.agente-msg-assistant {
+  align-self: flex-start;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+
+.agente-msg-error {
+  align-self: stretch;
+  background: rgba(248, 215, 218, 0.08);
+  color: #F5C2C7;
+  border: 1px solid rgba(248, 215, 218, 0.3);
+  font-size: 13px;
+  text-align: center;
+}
+
+.agente-thinking-dots {
+  display: inline-flex;
+  gap: 4px;
+  padding: 0 4px;
+}
+
+.agente-thinking-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: agente-dot-bounce 1.2s ease-in-out infinite;
+}
+
+.agente-thinking-dots span:nth-child(2) { animation-delay: 0.15s; }
+.agente-thinking-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes agente-dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+  40%           { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ───────── Input area ───────── */
+.agente-input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  position: sticky;
+  bottom: 12px;
+}
+
+.agente-input-area:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(236, 71, 87, 0.18);
+}
+
+.agente-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  font-size: 15px;
+  resize: none;
+  min-height: 24px;
+  max-height: 120px;
+  line-height: 1.4;
+}
+
+.agente-input:focus {
+  outline: none;
+}
+
+.agente-input:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.agente-input::placeholder {
+  color: var(--text-muted);
+}
+
+.agente-send {
+  background: var(--accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-family: 'Antonio', sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.15s, transform 0.15s;
+  align-self: flex-end;
+  min-height: 38px;
+  min-width: 70px;
+}
+
+.agente-send:hover:not(:disabled) {
+  background: #FF5566;
+}
+
+.agente-send:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.agente-send:disabled {
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* ───────── Suggested questions chips ───────── */
+.agente-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.agente-suggestion-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  color: var(--text-sec);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.agente-suggestion-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
+@media (max-width: 640px) {
+  .agente-msg { max-width: 92%; font-size: 14px; }
+  .agente-name { font-size: 26px; }
+}

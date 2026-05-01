@@ -26,6 +26,10 @@ zone_name = "salutediferro.com"
 pattern = "form.salutediferro.com/stripe-webhook"
 zone_name = "salutediferro.com"
 
+[[routes]]
+pattern = "form.salutediferro.com/ask"
+zone_name = "salutediferro.com"
+
 [triggers]
 crons = ["*/30 * * * *"]
 
