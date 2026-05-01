@@ -296,7 +296,6 @@ export default {
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
-      <p style="font-size:13px;color:#888;margin:8px 0 0;">Garanzia soddisfatti o rimborsati.</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
       <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL \u2014 27\u20ac</a>
@@ -733,51 +732,39 @@ export default {
         }
       }
 
-      // 2. Email confirm (idempotente: Resend tracking dedupe per Idempotency-Key se serve)
+      // 2. Email confirm — distinta per mode (payment=consulenza, subscription=membership)
       if (RESEND_API_KEY && customerEmail) {
         const safeFirstName = escapeHtml((customerName || '').split(' ')[0] || 'Ciao');
         const safeAmountPaid = escapeHtml(String(amountPaid));
         const safePaidAt = escapeHtml(String(paidAt));
-        const safeCalendlyUrl = 'https://calendly.com/salutediferro-info/30min';
-        const payEmailHtml = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"></head>
-<body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
-<div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
-  <div style="background:#28a745;padding:24px 28px;">
-    <div style="color:white;font-size:18px;letter-spacing:3px;font-weight:bold;">SALUTE DI FERRO</div>
-    <div style="color:rgba(255,255,255,0.8);font-size:12px;margin-top:2px;">Conferma pagamento</div>
-  </div>
-  <div style="padding:28px;">
-    <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${safeFirstName}, il tuo pagamento è confermato!</p>
-    <div style="background:#242424;border-radius:6px;padding:16px;margin:16px 0;">
-      <div style="font-size:11px;letter-spacing:2px;color:#28a745;font-weight:bold;margin-bottom:12px;">RIEPILOGO</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:13px;color:#888;">Importo pagato</span>
-        <span style="font-size:15px;font-weight:bold;color:#F5F5F5;">€${safeAmountPaid}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;">
-        <span style="font-size:13px;color:#888;">Data</span>
-        <span style="font-size:13px;color:#CCCCCC;">${safePaidAt}</span>
-      </div>
-    </div>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Prenota la tua call con il team di Salute di Ferro:</p>
-    <div style="text-align:center;margin:24px 0;">
-      <a href="${safeCalendlyUrl}" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL SU CALENDLY</a>
-    </div>
-  </div>
-</div></body></html>`;
+        const isSubscription = session.mode === 'subscription';
+        const calendlyUrl = 'https://calendly.com/salutediferro-info/30min';
+
+        const subject = isSubscription
+          ? `${safeFirstName}, sei dentro. Ecco cosa succede prima della consulenza.`
+          : `${safeFirstName}, il tuo pagamento è confermato — prenota la consulenza`;
+
+        const payEmailHtml = buildMail2Html(isSubscription, {
+          firstName: safeFirstName,
+          amountPaid: safeAmountPaid,
+          paidAt: safePaidAt,
+          calendlyUrl,
+          customerEmail,
+        });
+
+        const idempPrefix = isSubscription ? 'stripe-sub-' : 'stripe-pay-';
         try {
           await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
               Authorization: `Bearer ${RESEND_API_KEY}`,
               'Content-Type': 'application/json',
-              // Idempotency: Resend dedupe per Idempotency-Key
-              'Idempotency-Key': `stripe-paid-${sessionId}`,
+              'Idempotency-Key': `${idempPrefix}${sessionId}`,
             },
             body: JSON.stringify({
               from: 'Salute di Ferro <noreply@salutediferro.com>',
               to: [customerEmail],
-              subject: 'Conferma pagamento — Salute di Ferro',
+              subject,
               html: payEmailHtml,
             }),
           });
@@ -881,7 +868,6 @@ export default {
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
-      <p style="font-size:13px;color:#888;margin:8px 0 0;">Garanzia soddisfatti o rimborsati.</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
       <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 27\u20ac</a>
@@ -922,3 +908,119 @@ export default {
     }
   },
 };
+
+
+// ════════════════════════════════════════════════════════════════════
+// ── Mail #2 template builder · post-pagamento ──────────────────────
+// ════════════════════════════════════════════════════════════════════
+//
+// Genera HTML diverso per:
+//   - mode=payment      → consulenza one-shot, focus prenotazione Calendly
+//   - mode=subscription → membership annuale, focus benvenuto + bonus + accesso
+function buildMail2Html(isSubscription, data) {
+  const { firstName, amountPaid, paidAt, calendlyUrl, customerEmail } = data;
+  const productLabel = isSubscription ? 'MEMBERSHIP ATTIVA' : 'PAGAMENTO CONFERMATO';
+  const heroTitle = isSubscription
+    ? `${firstName}, sei dentro.`
+    : `${firstName}, il tuo pagamento è confermato.`;
+  const heroSub = isSubscription
+    ? 'Da qui in poi non sei più solo.'
+    : 'Manca solo un passo: prenota la tua consulenza.';
+
+  const recapBlock = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#242424;border-radius:8px;margin-bottom:24px;">
+      <tr><td style="padding:18px 20px;">
+        <div style="font-size:12px;letter-spacing:2px;color:#28A745;font-weight:bold;margin-bottom:10px;">RIEPILOGO ORDINE</div>
+        <p style="margin:0 0 6px 0;font-size:14px;color:#CCCCCC;"><span style="color:#888;">Importo:</span> <strong style="color:#F5F5F5;">€${amountPaid}${isSubscription ? ' / anno' : ''}</strong></p>
+        <p style="margin:0;font-size:14px;color:#CCCCCC;"><span style="color:#888;">Data:</span> <strong style="color:#F5F5F5;">${paidAt}</strong></p>
+      </td></tr>
+    </table>`;
+
+  const bookingBlock = `
+    <h2 style="margin:24px 0 12px 0;font-size:18px;color:#F5F5F5;">Prenota la tua consulenza</h2>
+    <p style="margin:0 0 16px 0;font-size:15px;line-height:1.5;color:#CCCCCC;">Una call di 30 minuti con il Coach assegnato. Scegli lo slot che preferisci.</p>
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;"><tr>
+      <td style="background:#C82020;border-radius:6px;">
+        <a href="${calendlyUrl}" style="display:inline-block;padding:16px 32px;color:#FFFFFF;font-weight:bold;font-size:15px;text-decoration:none;letter-spacing:1px;">PRENOTA SU CALENDLY →</a>
+      </td>
+    </tr></table>`;
+
+  const stepsBlock = isSubscription ? `
+    <h2 style="margin:24px 0 12px 0;font-size:18px;color:#F5F5F5;">Cosa aspettarti dalla consulenza</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+      <tr><td style="padding:8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;"><strong style="color:#C82020;">1. Storia.</strong> Il Coach ascolta il tuo percorso, allenamento, obiettivi.</td></tr>
+      <tr><td style="padding:8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;"><strong style="color:#C82020;">2. Lettura.</strong> Analizza eventuali esami precedenti, farmaci, integratori.</td></tr>
+      <tr><td style="padding:8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;"><strong style="color:#C82020;">3. Piano.</strong> Definisce il pannello analisi più adatto al tuo profilo.</td></tr>
+      <tr><td style="padding:8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;"><strong style="color:#C82020;">4. Connessione.</strong> Ti collega al laboratorio convenzionato e, se serve, al medico di rete.</td></tr>
+    </table>` : '';
+
+  const checklistBlock = isSubscription ? `
+    <h2 style="margin:24px 0 12px 0;font-size:18px;color:#F5F5F5;">Come prepararti in 5 minuti</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1F1614;border-left:3px solid #C82020;border-radius:4px;margin-bottom:24px;">
+      <tr><td style="padding:16px 20px;">
+        <p style="margin:0 0 8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;">— Recupera analisi del sangue degli ultimi 12-24 mesi (se disponibili)</p>
+        <p style="margin:0 0 8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;">— Lista farmaci, integratori e sostanze attualmente in uso</p>
+        <p style="margin:0 0 8px 0;font-size:14px;color:#CCCCCC;line-height:1.5;">— Obiettivi concreti che vorresti raggiungere nei prossimi 6 mesi</p>
+        <p style="margin:0;font-size:14px;color:#CCCCCC;line-height:1.5;">— Eventuali sintomi o segnali che ti hanno spinto a contattarci</p>
+      </td></tr>
+    </table>` : '';
+
+  const bonusBlock = isSubscription ? `
+    <h2 style="margin:24px 0 12px 0;font-size:18px;color:#F5F5F5;">Tre cose sbloccate oggi</h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+      <tr><td style="padding:12px 0;border-bottom:1px solid #2A2A2A;">
+        <div style="font-size:12px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:4px;">BONUS 01</div>
+        <div style="font-size:15px;color:#F5F5F5;font-weight:bold;margin-bottom:4px;">Guida pre-prelievo</div>
+        <div style="font-size:13px;color:#999;line-height:1.5;">Le 48 ore prima del prelievo: cosa mangiare, cosa evitare, cosa fa saltare i risultati.</div>
+      </td></tr>
+      <tr><td style="padding:12px 0;border-bottom:1px solid #2A2A2A;">
+        <div style="font-size:12px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:4px;">BONUS 02</div>
+        <div style="font-size:15px;color:#F5F5F5;font-weight:bold;margin-bottom:4px;">Tariffe convenzionate laboratori</div>
+        <div style="font-size:13px;color:#999;line-height:1.5;">Sconto fino al 30% sui pannelli, attivato automaticamente con la membership.</div>
+      </td></tr>
+      <tr><td style="padding:12px 0;">
+        <div style="font-size:12px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:4px;">BONUS 03</div>
+        <div style="font-size:15px;color:#F5F5F5;font-weight:bold;margin-bottom:4px;">Contatto diretto del Coach</div>
+        <div style="font-size:13px;color:#999;line-height:1.5;">Il tuo Coach ti contatterà via WhatsApp entro 24h dal pagamento per coordinare la consulenza.</div>
+      </td></tr>
+    </table>` : '';
+
+  const disclaimerBlock = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#141414;border-radius:4px;margin-bottom:16px;">
+      <tr><td style="padding:14px 16px;">
+        <p style="margin:0;font-size:12px;line-height:1.5;color:#888;">
+          <strong style="color:#AAA;">Importante:</strong> Salute di Ferro è una piattaforma di intermediazione tra utenti e professionisti sanitari. Il Coach coordina il percorso e legge il test guidato, ma non eroga diagnosi né prescrizioni mediche. Le visite mediche e le analisi di laboratorio sono erogate da soggetti terzi convenzionati con fattura separata.
+        </p>
+      </td></tr>
+    </table>`;
+
+  return `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${productLabel} — Salute di Ferro</title></head>
+<body style="margin:0;padding:0;background:#0D0D0D;font-family:Helvetica,Arial,sans-serif;color:#F5F5F5;">
+<div style="display:none;max-height:0;overflow:hidden;">${heroSub}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0D0D0D;">
+<tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
+<tr><td style="background:#28A745;padding:24px 28px;">
+<div style="color:#FFFFFF;font-size:20px;letter-spacing:3px;font-weight:bold;">SALUTE DI FERRO</div>
+<div style="color:rgba(255,255,255,0.85);font-size:14px;margin-top:4px;">${productLabel}</div>
+</td></tr>
+<tr><td style="padding:32px 28px 20px 28px;">
+<h1 style="margin:0 0 12px 0;font-size:24px;line-height:1.3;color:#F5F5F5;font-weight:bold;">${heroTitle}</h1>
+<p style="margin:0 0 24px 0;font-size:16px;line-height:1.5;color:#CCCCCC;">${heroSub}</p>
+${recapBlock}
+${bookingBlock}
+${stepsBlock}
+${checklistBlock}
+${bonusBlock}
+${disclaimerBlock}
+</td></tr>
+<tr><td style="background:#0D0D0D;padding:16px 28px;font-size:11px;color:#666;border-top:1px solid #2A2A2A;">
+Salute di Ferro — <a href="https://salutediferro.com" style="color:#C82020;text-decoration:none;">salutediferro.com</a><br>
+${customerEmail ? `Hai ricevuto questa email perché hai effettuato un acquisto su salutediferro.com (${escapeHtml(customerEmail)}).` : ''}
+</td></tr>
+</table>
+</td></tr></table>
+</body></html>`;
+}

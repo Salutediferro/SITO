@@ -56,12 +56,12 @@ export default function QuizContainer() {
         <div className="quiz-bar-fill" style={{ transform: `scaleX(${progressPct / 100})` }} />
       </div>
       {showCounter && (
-        <div className="quiz-counter">
+        <div className="quiz-counter" aria-hidden="true">
           STEP <b>{stepNum}</b> / <b>11</b>
         </div>
       )}
       <div className="quiz-center">
-        <div className="quiz-card" key={state.step}>
+        <div className="quiz-card" key={state.step} aria-live="polite" aria-atomic="false">
           {content}
         </div>
       </div>

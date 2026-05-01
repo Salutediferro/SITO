@@ -13,7 +13,7 @@
 .quiz-bar-fill {
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, var(--accent) 0%, #7A0815 100%);
+  background: var(--accent);
   transform-origin: left center;
   transform: scaleX(0);
   transition: transform var(--motion-medium) var(--ease-out-quint);
@@ -78,12 +78,12 @@
   border-radius: 6px; width: 100%;
   text-align: left; cursor: pointer;
   position: relative; overflow: hidden;
-  outline: none;
   -webkit-tap-highlight-color: transparent;
   transition: border-color .15s, background .15s;
   font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
   color: var(--text);
 }
+.q-opt:focus:not(:focus-visible) { outline: none; }
 
 .q-opt::before {
   content: ''; position: absolute;
@@ -134,16 +134,17 @@
   transform: rotate(-45deg) translateY(-1px);
 }
 
-/* ───── Primary Button (Emil tip 1: scale tactile su :active) ───── */
+/* ───── Primary Button (solid Iron Blood, tactile :active) ───── */
 .q-btn-primary {
   display: flex; align-items: center; justify-content: center;
   width: 100%; padding: 18px 32px;
-  background: linear-gradient(135deg, var(--accent) 0%, #7A0815 100%);
+  background: var(--accent);
   border: none; border-radius: 6px; color: white;
   font-family: 'Antonio', 'Bebas Neue', sans-serif;
   font-size: 18px; letter-spacing: 3px;
   cursor: pointer; position: relative; overflow: hidden;
   box-shadow: 0 3px 14px var(--accent-glow);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.18);
   transition:
     transform var(--motion-base) var(--ease-spring),
     box-shadow var(--motion-base) var(--ease-standard),
@@ -151,18 +152,22 @@
 }
 .q-btn-primary::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 55%);
+  background: linear-gradient(180deg, rgba(255,255,255,.10) 0%, transparent 60%);
+  pointer-events: none;
 }
 .q-btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+  background: #FF5566;
   transform: translateY(-1px);
-  box-shadow: 0 7px 20px var(--accent-glow);
+  box-shadow: 0 7px 22px var(--accent-glow);
 }
 .q-btn-primary:active:not(:disabled) {
   transform: scale(0.97) translateY(0);
 }
 .q-btn-primary:disabled {
-  opacity: .35; cursor: not-allowed;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  text-shadow: none;
   transform: none !important; box-shadow: none;
 }
 .q-btn-primary.loading { pointer-events: none; opacity: 0.7; }
@@ -192,9 +197,9 @@
   background: var(--input-bg); border: 1.5px solid var(--border);
   border-radius: 6px; color: var(--text);
   font-family: 'Manrope', 'DM Sans', system-ui, sans-serif; font-size: 15px;
-  outline: none;
   transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
 }
+.q-field-input:focus:not(:focus-visible) { outline: none; }
 .q-field-input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
@@ -342,7 +347,7 @@
 /* ───── Payment ───── */
 .q-ty-icon {
   width: 68px; height: 68px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent) 0%, #7A0815 100%);
+  background: var(--accent);
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 24px;
   box-shadow: 0 8px 24px var(--accent-glow);
@@ -390,4 +395,30 @@
   border-top-color: white; border-radius: 50%;
   animation: spin .6s linear infinite;
   vertical-align: middle; margin-right: 8px;
+}
+
+/* ───── Reduced motion (vestibolare-safe) ───── */
+@media (prefers-reduced-motion: reduce) {
+  .quiz-bar-fill,
+  .quiz-card,
+  .q-btn-primary,
+  .q-opt,
+  .q-opt::before,
+  .q-esito-label,
+  .q-esito-heading,
+  .q-score-gauge,
+  .q-score-number,
+  .q-score-dot,
+  .q-tag-badge,
+  .q-tag-dot,
+  .q-spinner,
+  .q-field-input,
+  .q-privacy {
+    animation: none !important;
+    transition: none !important;
+  }
+  .quiz-card { filter: none; opacity: 1; transform: none; }
+  .q-esito-label,
+  .q-esito-heading,
+  .q-score-gauge { opacity: 1 !important; }
 }

@@ -232,12 +232,12 @@ export default function MembershipPage() {
               fullPrice={297}
               promoPrice={197}
               period="/anno"
+              monthlyEquivalent="16,42"
               currency="€"
-              label="Annulla quando vuoi"
               badge="OFFERTA LANCIO MEMBERSHIP"
               savings="Risparmi €100"
               href={PAYMENT_LINKS.membershipAnnuale}
-              ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno"
+              ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
             />
             <a
               href={PAYMENT_LINKS.membershipAnnuale}

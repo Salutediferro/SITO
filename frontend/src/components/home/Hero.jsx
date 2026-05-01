@@ -32,22 +32,22 @@ const s = {
   },
   bg: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(135deg, rgba(10,10,12,0.95) 0%, rgba(10,10,12,0.7) 50%, rgba(10,10,12,0.85) 100%)',
+    background: 'linear-gradient(135deg, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0.55) 50%, rgba(10,10,12,0.82) 100%)',
     zIndex: 1,
   },
   meshBg: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(-45deg, rgba(236,71,87,0.06), rgba(122,8,21,0.04), rgba(10,10,12,0.9), rgba(236,71,87,0.05))',
+    background: 'linear-gradient(-45deg, rgba(236,71,87,0.06), rgba(122,8,21,0.04), rgba(10,10,12,0.85), rgba(236,71,87,0.05))',
     backgroundSize: '400% 400%',
     backgroundPosition: '0% 50%',
     zIndex: 1,
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    backgroundImage: 'url("/hero-bg.jpg")',
-    backgroundSize: 'cover', backgroundPosition: 'center top',
-    opacity: 0.35,
-    filter: 'brightness(1.2) contrast(1.1)',
+    backgroundImage: 'url("/mammoli-sdf.jpg")',
+    backgroundSize: 'cover', backgroundPosition: 'center 12%',
+    opacity: 0.55,
+    filter: 'brightness(1.05) contrast(1.18) saturate(0.92)',
   },
   content: {
     position: 'relative', zIndex: 2,
@@ -147,23 +147,24 @@ export default function Hero() {
           <PricePromo
             fullPrice={47}
             promoPrice={27}
+            period="/mese"
             currency="€"
-            label="Consulenza 30 minuti"
-            badge="CONSULENZA"
+            label="1 mese di membership + consulenza"
+            badge="MEMBERSHIP + CONSULENZA"
             savings="Risparmi €20 (-43%)"
             href={PAYMENT_LINKS.consulenza}
-            ariaLabel="Acquista la consulenza Salute di Ferro: da 47 euro scontata a 27 euro"
+            ariaLabel="Acquista 1 mese di membership più consulenza Salute di Ferro: da 47 euro scontato a 27 euro al mese"
           />
           <PricePromo
             fullPrice={297}
             promoPrice={197}
             period="/anno"
+            monthlyEquivalent="16,42"
             currency="€"
-            label="Annulla quando vuoi"
             badge="MEMBERSHIP"
             savings="Risparmi €100 (-34%)"
             href={PAYMENT_LINKS.membershipAnnuale}
-            ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno"
+            ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
           />
         </div>
 

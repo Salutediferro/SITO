@@ -97,6 +97,14 @@ const s = {
     fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
     marginLeft: 4,
   },
+  monthlyEquivProminent: {
+    fontSize: 14,
+    color: 'var(--text-muted)',
+    fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
+    fontWeight: 400,
+    marginTop: 6,
+    letterSpacing: 0.2,
+  },
   // ───── FOOTER: savings + label (min-height fissa per simmetria) ─────
   footerProminent: {
     display: 'flex',
@@ -210,6 +218,7 @@ export default function PricePromo({
   promoPrice,
   currency = '€',
   period,
+  monthlyEquivalent, // opzionale: stringa "16,42" — mostrata come sub-line "≈ €16,42/mese"
   label,
   badge = 'OFFERTA LANCIO',
   savings,
@@ -266,6 +275,11 @@ export default function PricePromo({
             {currency}{promoPrice}
             {period && <span style={s.periodProminent}>{period}</span>}
           </span>
+          {monthlyEquivalent && (
+            <span style={s.monthlyEquivProminent} aria-hidden="true">
+              ≈ {currency}{monthlyEquivalent}/mese
+            </span>
+          )}
         </div>
       </div>
 

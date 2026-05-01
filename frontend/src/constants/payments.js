@@ -42,8 +42,9 @@ export const PRICING = {
     promoPrice: 27,
     referralPrice: 22, // se referral valido (sconto fisso, non 10% — vedi audit P2.2)
     currency: '€',
-    label: 'Consulenza 30 minuti',
-    badge: 'OFFERTA LANCIO',
+    period: '/mese',
+    label: '1 mese di membership + consulenza',
+    badge: 'MEMBERSHIP + CONSULENZA',
   },
   membershipMensile: {
     fullPrice: null, // da definire con cliente

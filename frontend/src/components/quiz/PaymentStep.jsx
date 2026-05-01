@@ -129,8 +129,9 @@ export default function PaymentStep({ quiz }) {
             variant="compact"
             fullPrice={47}
             promoPrice={Number(price)}
+            period="/mese"
             currency="€"
-            label="Consulenza 30 minuti"
+            label="1 mese di membership + consulenza"
             badge="OFFERTA LANCIO"
           />
         </div>
@@ -149,15 +150,6 @@ export default function PaymentStep({ quiz }) {
           PRENOTA LA TUA CALL · {price}€
         </a>
 
-        {/* Garanzia */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 14, padding: '10px 16px', background: 'rgba(236,71,87,0.06)', border: '1px solid rgba(236,71,87,0.15)', borderRadius: 6 }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4757" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" />
-          </svg>
-          <span style={{ fontSize: 12, color: 'var(--text-sec)', lineHeight: 1.3 }}>
-            Garanzia soddisfatti o rimborsati. Se la call non ti è utile, ti rimborsiamo.
-          </span>
-        </div>
       </div>
 
       {/* Stats */}
