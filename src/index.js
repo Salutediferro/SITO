@@ -1009,12 +1009,12 @@ export default {
   </div>
   <div style="padding:28px;">
     <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${firstName}, hai dimenticato qualcosa?</p>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo salute \u00e8 pronto, ma non hai ancora prenotato la tua consulenza con il team di Salute di Ferro.</p>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo di Ferro \u00e8 pronto, non hai ancora prenotato la tua consulenza con il team di Salute di Ferro. Per te, noi siamo pronti.</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:20px 0;">
-      <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COSA TI ASPETTA</div>
+      <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COME TI AIUTIAMO</div>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo sul tuo percorso</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
       <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 27\u20ac</a>
