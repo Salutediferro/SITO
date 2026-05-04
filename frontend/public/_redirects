@@ -1,1 +1,10 @@
+# Bug fix · Stripe Payment Links redirigono cliente a salutediferro.com/payment-success
+# (success_url configurato lato Stripe Dashboard) ma il frontend SPA non ha route React
+# per /payment-success → cliente vedeva HOMEPAGE invece della pagina conferma + countdown
+# Calendly. Redirect 301 al Worker (form.salutediferro.com/payment-success) che genera
+# la pagina con bottone Calendly + auto-redirect 10s. Query string preservata di default
+# da Cloudflare Pages.
+/payment-success  https://form.salutediferro.com/payment-success  301
+
+# SPA fallback (catch-all DEVE restare ultimo)
 /*  /index.html  200
