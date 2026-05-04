@@ -35,6 +35,9 @@ crons = ["*/30 * * * *"]
 
 [vars]
 GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbzotnzD1Uq5pSBQ4fRScmhVj6afxOpTUJvqdZwCkXuf_5T0nMNZLEQlBIYhqRf2Ew0PzA/exec"
+# Bridge n8n self-hosted · workflow Stripe paid (ID e1bU7w1I0BvIzEm0) · fire-and-forget via ctx.waitUntil
+# Vuoto / non settato = bridge disabled (Worker continua a funzionare normalmente)
+N8N_STRIPE_WEBHOOK_URL = "https://n8n.salutediferro.com/webhook/stripe-paid"
 # RESEND_API_KEY è ora in Cloudflare Secrets (wrangler secret put RESEND_API_KEY)
 # STRIPE_SECRET_KEY è già in Cloudflare Secrets
 # STRIPE_WEBHOOK_SECRET da aggiungere: wrangler secret put STRIPE_WEBHOOK_SECRET

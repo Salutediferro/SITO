@@ -146,7 +146,7 @@ function safeB64(obj) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
     const corsHeaders = getCorsHeaders(request);
@@ -770,6 +770,44 @@ export default {
           });
         } catch (e) {
           console.error('Stripe webhook email error:', e.message || 'unknown');
+        }
+      }
+
+      // 3. Bridge a n8n · fire-and-forget per follow-up sequence (NON blocca risposta a Stripe)
+      // n8n riceve dati pagamento e schedula sequenza email follow-up indipendente dalla mail immediata sopra.
+      // Workflow n8n: https://n8n.salutediferro.com/webhook/stripe-paid (workflow ID e1bU7w1I0BvIzEm0)
+      // Branch interno workflow su `mode`:
+      //   - mode=subscription (€197 membership) → email T+1g, T+3g, T+7g
+      //   - mode=payment (€27 consulenza) → email T+2g, T+5g
+      // Errori vengono loggati ma NON propagati (idempotency + best-effort).
+      const N8N_STRIPE_WEBHOOK_URL = env.N8N_STRIPE_WEBHOOK_URL;
+      if (N8N_STRIPE_WEBHOOK_URL && customerEmail) {
+        try {
+          const n8nPayload = {
+            customerEmail,
+            customerName,
+            amountPaid,
+            sessionId,
+            mode: session.mode || (session.subscription ? 'subscription' : 'payment'),
+            paidAt,
+            referralUsed,
+          };
+          // ctx.waitUntil per fire-and-forget: non blocca risposta 200 a Stripe se n8n è lento o down
+          const n8nReq = fetch(N8N_STRIPE_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Idempotency-Key': `stripe-paid-${sessionId}`,
+            },
+            body: JSON.stringify(n8nPayload),
+          }).catch(e => console.error('n8n bridge error:', e.message || 'unknown'));
+          if (typeof ctx?.waitUntil === 'function') {
+            ctx.waitUntil(n8nReq);
+          } else {
+            await n8nReq;
+          }
+        } catch (e) {
+          console.error('n8n bridge setup error:', e.message || 'unknown');
         }
       }
 
