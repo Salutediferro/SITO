@@ -155,6 +155,46 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // ── GET /api/founder-slots-remaining ──
+    // Founder Pass · counter posti rimasti, letto dal frontend (FounderPassCard + useFounderSlots).
+    // Source of truth: tabella D1 `founder_slots` (200 righe pre-seed, decrementate dal webhook
+    // Stripe quando arriva un checkout.session.completed con metadata.tier === 'founder').
+    //
+    // Cache edge: 10s (riduce hit DB sotto carico, accettabile per UX scarcity counter).
+    // Errori: se D1 unreachable o non bound, ritorna 503 → il frontend in produzione nasconde la card
+    // (slotsRemaining=null), in dev mostra fallback 200 slot pieni (gated da import.meta.env.DEV).
+    if (path === '/api/founder-slots-remaining' && request.method === 'GET') {
+      if (!env.DB) {
+        console.error('founder-slots-remaining: D1 binding `DB` non configurato');
+        return new Response(JSON.stringify({ error: 'database not configured' }), {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      try {
+        const row = await env.DB.prepare(
+          'SELECT COUNT(*) AS remaining FROM founder_slots WHERE sold_at IS NULL'
+        ).first();
+        const slotsRemaining = Number(row?.remaining ?? 200);
+        const slotsTotal = 200;
+
+        return new Response(JSON.stringify({ slotsRemaining, slotsTotal }), {
+          status: 200,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+            'Cache-Control': 'public, max-age=10', // edge cache 10s
+          },
+        });
+      } catch (e) {
+        console.error('founder-slots-remaining DB error:', e?.message || 'unknown');
+        return new Response(JSON.stringify({ error: 'database error' }), {
+          status: 503,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     // ── POST /send-lead ──
     if (path === '/send-lead' && request.method === 'POST') {
       // Rate limit check
@@ -515,12 +555,14 @@ export default {
 
       let customerEmail = '';
       let customerName = '';
-      let amountPaid = '27.00';
+      let amountPaid = '0.00';
+      let productName = 'Acquisto Salute di Ferro';
       let referralUsed = '';
 
       if (sessionId && STRIPE_SECRET_KEY) {
         try {
-          const stripeRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
+          // expand=line_items per ottenere nome prodotto reale (Founder Pass / Membership / Consulenza)
+          const stripeRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}?expand[]=line_items&expand[]=line_items.data.price.product`, {
             headers: { Authorization: `Basic ${btoa(STRIPE_SECRET_KEY + ':')}` },
           });
           const session = await stripeRes.json();
@@ -528,6 +570,14 @@ export default {
           customerName = session.customer_details?.name || '';
           if (session.amount_total) amountPaid = (session.amount_total / 100).toFixed(2);
           referralUsed = session.metadata?.referral || '';
+          // Estrai nome prodotto reale dal primo line_item · fallback graceful
+          const li = session.line_items?.data?.[0];
+          if (li) {
+            productName =
+              li.price?.product?.name ||
+              li.description ||
+              productName;
+          }
         } catch (e) {
           console.error('Stripe session retrieve error:', e.message);
         }
@@ -556,6 +606,7 @@ export default {
         const safeAmountPaid = escapeHtml(String(amountPaid));
         const safePaidAt = escapeHtml(String(paidAt));
         const safeCalendlyUrl = escapeHtml(String(calendlyUrl));
+        const safeProductName = escapeHtml(String(productName));
         const payEmailHtml = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"></head>
 <body style="font-family:Arial,sans-serif;background:#0D0D0D;margin:0;padding:0;color:#F5F5F5;">
 <div style="max-width:520px;margin:32px auto;background:#1A1A1A;border-radius:8px;overflow:hidden;border:1px solid #2A2A2A;">
@@ -568,7 +619,7 @@ export default {
     <div style="background:#242424;border-radius:6px;padding:16px;margin:16px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#28a745;font-weight:bold;margin-bottom:12px;">RIEPILOGO</div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:13px;color:#CCCCCC;">Consulenza Salute di Ferro \u2014 30 min</span>
+        <span style="font-size:13px;color:#CCCCCC;">${safeProductName}</span>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
         <span style="font-size:13px;color:#888;">Importo pagato</span>
@@ -605,57 +656,70 @@ export default {
         }
       }
 
-      // Pagina di conferma con GTM tracking e countdown a Calendly
+      // Pagina di conferma \u00b7 accessibile (h1, main landmark, focus management)
+      // Countdown auto-redirect rimosso (WCAG 2.2.1) \u00b7 cliente sceglie quando andare avanti.
+      // Riepilogo dinamico da Stripe (productName + amountPaid reali).
       const safeSessionId = (sessionId || '').replace(/[^a-zA-Z0-9_-]/g, '');
       const safeReferral = referralUsed.replace(/[^a-zA-Z0-9_-]/g, '');
+      const escFirstName = escapeHtml(firstName);
+      const escProductName = escapeHtml(productName);
+      const escAmount = escapeHtml(amountPaid);
+      const escPaidAt = escapeHtml(paidAt);
+      const escCalendlyUrl = escapeHtml(calendlyUrl);
+
       const successHtml = `<!DOCTYPE html><html lang="it">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Pagamento Confermato - Salute di Ferro</title>
+  <title>Pagamento confermato \u2014 Salute di Ferro</title>
+  <meta name="robots" content="noindex,nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-NDGGVVFF');</script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     body{background:#0D0D0D;color:#F5F5F5;font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-    .wrap{max-width:480px;width:100%;padding:32px 20px;text-align:center;}
+    main{max-width:480px;width:100%;padding:32px 20px;text-align:center;}
     .logo-img{height:80px;margin-bottom:24px;}
     .icon{width:64px;height:64px;background:#28a745;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
     .icon svg{width:32px;height:32px;}
-    .h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,40px);line-height:1.1;margin-bottom:8px;}
-    .h1 em{color:#28a745;font-style:normal;}
-    .sub{color:#999;font-size:14px;line-height:1.5;margin-bottom:24px;}
+    h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,40px);line-height:1.1;margin-bottom:8px;font-weight:normal;}
+    h1 em{color:#28a745;font-style:normal;}
+    h1:focus{outline:2px solid #FFB000;outline-offset:4px;}
+    .sub{color:#cfcfcf;font-size:14px;line-height:1.5;margin-bottom:24px;}
     .box{background:#1A1A1A;border:1px solid #2A2A2A;border-radius:8px;padding:20px;margin-bottom:24px;text-align:left;}
     .box-label{font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:4px;color:#28a745;margin-bottom:12px;}
-    .box-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;}
-    .box-row .k{color:#888;} .box-row .v{color:#F5F5F5;font-weight:500;}
-    .btn{display:inline-block;padding:16px 32px;background:#C82020;color:white;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;border-radius:6px;text-decoration:none;transition:background .2s;}
+    .box-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;gap:12px;flex-wrap:wrap;}
+    .box-row .k{color:#a0a0a0;}
+    .box-row .v{color:#F5F5F5;font-weight:500;}
+    .btn{display:inline-block;padding:16px 32px;background:#C82020;color:white;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;border-radius:6px;text-decoration:none;transition:background .2s;min-height:44px;}
     .btn:hover{background:#a01818;}
-    .countdown{color:#666;font-size:13px;margin-top:16px;}
-    .email-note{color:#888;font-size:12px;margin-top:20px;padding:12px 16px;background:rgba(40,167,69,0.06);border:1px solid rgba(40,167,69,0.15);border-radius:6px;}
+    .btn:focus-visible{outline:3px solid #FFB000;outline-offset:3px;}
+    .help{color:#a0a0a0;font-size:13px;margin-top:20px;line-height:1.5;}
+    .email-note{color:#cfcfcf;font-size:12px;margin-top:20px;padding:12px 16px;background:rgba(40,167,69,0.08);border:1px solid rgba(40,167,69,0.20);border-radius:6px;}
   </style>
 </head>
 <body>
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDGGVVFF" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <div class="wrap">
-    <img src="https://form.salutediferro.com/LOGO.png" alt="Salute di Ferro" class="logo-img">
-    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-    <div class="h1">PAGAMENTO<br><em>CONFERMATO!</em></div>
-    <p class="sub">${firstName ? firstName + ', il' : 'Il'} tuo pagamento \u00e8 andato a buon fine.<br>Ora prenota la tua consulenza.</p>
-    <div class="box">
-      <div class="box-label">RIEPILOGO ORDINE</div>
-      <div class="box-row"><span class="k">Servizio</span><span class="v">Consulenza 30 min</span></div>
-      <div class="box-row"><span class="k">Importo</span><span class="v">\u20ac${amountPaid}</span></div>
-      <div class="box-row"><span class="k">Data</span><span class="v">${paidAt}</span></div>
-    </div>
-    <a href="${calendlyUrl}" class="btn" id="cta">PRENOTA LA TUA CALL SU CALENDLY</a>
-    <p class="countdown">Verrai reindirizzato automaticamente tra <strong id="cd">10</strong> secondi...</p>
-    <p class="email-note">\u2709 Ti abbiamo inviato un'email di conferma con tutti i dettagli.</p>
-  </div>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDGGVVFF" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+  <main id="main-content">
+    <img src="https://form.salutediferro.com/LOGO.png" alt="Salute di Ferro" class="logo-img" width="80" height="80">
+    <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+    <h1 tabindex="-1">Pagamento<br><em>confermato</em></h1>
+    <p class="sub">${escFirstName ? escFirstName + ', il' : 'Il'} tuo pagamento \u00e8 andato a buon fine.<br>Ora prenota la tua call con il team Salute di Ferro.</p>
+    <section class="box" aria-labelledby="riepilogo-label">
+      <h2 class="box-label" id="riepilogo-label">Riepilogo ordine</h2>
+      <div class="box-row"><span class="k">Servizio</span><span class="v">${escProductName}</span></div>
+      <div class="box-row"><span class="k">Importo pagato</span><span class="v">\u20ac${escAmount}</span></div>
+      <div class="box-row"><span class="k">Data</span><span class="v">${escPaidAt}</span></div>
+    </section>
+    <a href="${escCalendlyUrl}" class="btn" target="_blank" rel="noopener noreferrer">Prenota la tua call su Calendly</a>
+    <p class="help">Si apre in una nuova scheda. Se preferisci, puoi prenotare anche pi\u00f9 tardi: la tua iscrizione \u00e8 gi\u00e0 attiva.</p>
+    <p class="email-note">Ti abbiamo inviato anche un'email di conferma con tutti i dettagli del tuo acquisto.</p>
+  </main>
   <script>
+    // Focus su h1 al load per screen reader (WCAG 2.4.3)
+    window.addEventListener('DOMContentLoaded',function(){var h=document.querySelector('h1');if(h)h.focus();});
+    // GTM event tracking conversione (NO redirect automatico, cliente sceglie quando)
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({event:'payment_success',payment_amount:${amountPaid},payment_currency:'EUR',referral:'${safeReferral}',stripe_session_id:'${safeSessionId}'});
-    var sec=10,el=document.getElementById('cd');
-    var t=setInterval(function(){sec--;if(el)el.textContent=sec;if(sec<=0){clearInterval(t);window.location.href='${calendlyUrl}';}},1000);
   </script>
 </body></html>`;
 
@@ -712,6 +776,57 @@ export default {
       const referralUsed = session.metadata?.referral || '';
       const sessionId = session.id || '';
       const paidAt = new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' });
+
+      // ── Founder Pass discriminator + decremento atomico D1 ──
+      // Se metadata.tier === 'founder' (Payment Link Founder Pass €119/anno), assegniamo uno slot
+      // dei 200 disponibili. UPDATE atomico in singolo statement: D1 garantisce esecuzione
+      // sequenziale all'interno di un Worker isolate, evitando race fra invocazioni concorrenti.
+      // Race condition residua (utente N°201): pagamento già passato, slot esauriti → loggiamo
+      // per refund manuale via Stripe Dashboard (decisione business, vedi ADR-005 in handover).
+      const tier = session.metadata?.tier || '';
+      const isFounder = tier === 'founder';
+      let founderSlotAssigned = null;
+
+      if (isFounder) {
+        if (!env.DB) {
+          console.error('Founder webhook: D1 binding `DB` non configurato, slot NON decrementato per session', sessionId);
+          // Acknowledge comunque a Stripe (200) per evitare retry. Rimedio manuale necessario.
+        } else {
+          try {
+            const row = await env.DB.prepare(`
+              UPDATE founder_slots
+              SET sold_at = datetime('now'),
+                  stripe_customer_id = ?,
+                  stripe_subscription_id = ?,
+                  stripe_session_id = ?,
+                  email = ?
+              WHERE slot_number = (
+                SELECT slot_number FROM founder_slots
+                WHERE sold_at IS NULL
+                ORDER BY slot_number ASC
+                LIMIT 1
+              )
+              RETURNING slot_number
+            `).bind(
+              session.customer || '',
+              session.subscription || '',
+              sessionId,
+              customerEmail
+            ).first();
+
+            if (row?.slot_number) {
+              founderSlotAssigned = row.slot_number;
+              console.log(`Founder Pass: slot #${founderSlotAssigned} assegnato a ${maskEmail(customerEmail)} (session ${sessionId})`);
+            } else {
+              // Tutti i 200 slot già venduti: oversell. Pagamento già processato da Stripe.
+              console.warn(`Founder Pass OVERSELL: session ${sessionId} ${maskEmail(customerEmail)} pagato ma 200 posti esauriti. Refund manuale richiesto.`);
+            }
+          } catch (e) {
+            console.error('Founder slot decrement error:', e?.message || 'unknown', 'session:', sessionId);
+            // NON propaghiamo: webhook deve sempre rispondere 200 a Stripe per evitare retry storm.
+          }
+        }
+      }
 
       // 1. Mark paid in Sheet (idempotente lato Apps Script via session_id)
       if (GOOGLE_SHEET_URL && customerEmail) {
@@ -791,6 +906,8 @@ export default {
             mode: session.mode || (session.subscription ? 'subscription' : 'payment'),
             paidAt,
             referralUsed,
+            tier: tier || null,                          // 'founder' se Founder Pass, null altrimenti
+            founderSlotAssigned: founderSlotAssigned,    // 1..200 se Founder, null altrimenti
           };
           // ctx.waitUntil per fire-and-forget: non blocca risposta 200 a Stripe se n8n è lento o down
           const n8nReq = fetch(N8N_STRIPE_WEBHOOK_URL, {

@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /agente-test
+Disallow: /coming-soon
 Sitemap: https://salutediferro.com/sitemap.xml

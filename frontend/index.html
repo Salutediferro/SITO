@@ -127,7 +127,39 @@
   }
   </script>
 
-  <!-- Google Tag Manager -->
+  <!-- Google Consent Mode v2 · Default DENIED finché utente accetta cookie banner -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    // Tutto negato di default · GDPR compliant. Cookie banner aggiorna su accept.
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'analytics_storage': 'denied',
+      'functionality_storage': 'denied',
+      'personalization_storage': 'denied',
+      'security_storage': 'granted',
+      'wait_for_update': 500
+    });
+    // Se utente aveva già accettato in sessione precedente, ripristina consent prima di GTM load
+    try {
+      var savedConsent = localStorage.getItem('sdf_cookie_consent');
+      if (savedConsent === 'accepted') {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted',
+          'functionality_storage': 'granted',
+          'personalization_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+  </script>
+
+  <!-- Google Tag Manager · rispetta Consent Mode default impostato sopra -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
