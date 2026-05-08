@@ -114,25 +114,29 @@ const s = {
     marginTop: 16,
     minHeight: 60, // garantisce simmetria anche se savings o label mancano
   },
-  // Badge savings: allineato a design language SDF (Founder badge + CTA gradient + glow accent).
-  // Pulse + glow attivati solo sotto prefers-reduced-motion: no-preference (gestiti in ANIMATION_KEYFRAMES).
+  // Badge savings: feel "bottone" allineato a CTA Founder (radius-sm 8px, padding generoso, gradient).
+  // Hover-lift propagato dal .price-promo-link:hover parent (vedi ANIMATION_KEYFRAMES).
+  // Pulse glow attivato solo sotto prefers-reduced-motion: no-preference.
   savingsProminent: {
     display: 'inline-flex',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 6,
-    padding: '10px 20px',
-    fontSize: 14,
+    padding: '14px 28px',
+    fontSize: 16,
     color: 'white',
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     fontWeight: 900,
-    letterSpacing: 1.5,
+    letterSpacing: 2,
     textTransform: 'uppercase',
-    // Gradient accent: stesso pattern CTA Founder + bottoni primary (coerenza visiva).
+    // Gradient accent: stesso CTA Founder per coerenza visiva.
     background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #7A0815) 100%)',
-    borderRadius: 'var(--radius-pill, 9999px)',
+    borderRadius: 'var(--radius-sm, 8px)',
     whiteSpace: 'nowrap',
-    boxShadow: '0 4px 14px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.18)',
+    boxShadow: '0 4px 18px var(--accent-glow, rgba(236,71,87,0.40)), inset 0 1px 0 rgba(255,255,255,0.18)',
     border: '1px solid rgba(255,255,255,0.10)',
+    minHeight: 44, // WCAG 2.5.5 target size (anche se decorativo, mantiene proporzione bottone)
+    transition: 'transform 240ms cubic-bezier(0.4,0,0.2,1), box-shadow 240ms',
   },
   labelProminent: {
     display: 'block',
@@ -229,10 +233,16 @@ const ANIMATION_KEYFRAMES = `
       transform: translateY(-4px);
       box-shadow: 0 0 0 4px rgba(236,71,87,0.18), 0 24px 60px rgba(236,71,87,0.28);
     }
-    /* Hover sulla card intensifica il badge savings (solo sotto motion-safe) */
+    /* Hover sulla card alza il badge savings · stesso pattern CTA Founder (translateY -2px + shadow CTA) */
     .price-promo-link:hover .price-promo-savings-anim {
+      transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(236,71,87,0.55), 0 0 0 4px rgba(236,71,87,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
     }
+  }
+  /* Reduced motion: rimuove anche hover lift sul badge */
+  @media (prefers-reduced-motion: reduce) {
+    .price-promo-savings-anim { transition: none !important; }
+    .price-promo-link:hover .price-promo-savings-anim { transform: none !important; }
   }
   .price-promo-link:focus-visible {
     outline: 3px solid var(--accent);
