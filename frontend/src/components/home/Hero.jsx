@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PricePromo from '../ui/PricePromo';
+import FounderPassCard from './FounderPassCard';
+import useFounderSlots from '../../hooks/useFounderSlots';
 import { PAYMENT_LINKS } from '../../constants/payments';
 
-const FORM_URL = 'https://form.salutediferro.com';
+// Quiz interno SPA · route /test → <TestPage> → <QuizContainer>.
+// (in passato puntava a https://form.salutediferro.com che però servito dal Pages legacy
+// `type-form` non aggiornato — issue P2.2 roadmap, fix 6 mag 2026.)
+const TEST_PATH = '/test';
 
 const ROTATING_PHRASES = [
   'Sempre stanco ma non sai perch\u00e9?',
@@ -32,7 +37,9 @@ const s = {
   },
   bg: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(135deg, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0.55) 50%, rgba(10,10,12,0.82) 100%)',
+    // Overlay più trasparente al centro (era 0.55 → 0.42) per far vedere meglio maglietta SDF.
+    // Top + bottom restano densi per garantire contrasto leggibilità heading + sub text.
+    background: 'linear-gradient(180deg, rgba(10,10,12,0.88) 0%, rgba(10,10,12,0.42) 45%, rgba(10,10,12,0.55) 70%, rgba(10,10,12,0.88) 100%)',
     zIndex: 1,
   },
   meshBg: {
@@ -44,11 +51,17 @@ const s = {
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    backgroundImage: 'url("/mammoli-sdf.jpg")',
-    backgroundSize: 'cover', backgroundPosition: 'center 12%',
-    opacity: 0.55,
-    filter: 'brightness(1.05) contrast(1.18) saturate(0.92)',
+    // Foto: maglietta SDF nera vista da dietro, logo centrato sulla schiena.
+    // Posizione 'center 45%' centra il logo SDF nel framing visibile (foto verticale 960x1280, soggetto al 50-60% verticale).
+    backgroundImage: 'url("/hero-sdf-shirt.jpg")',
+    // Zoom controllato (height 140% sezione) per dare overflow verticale sufficiente a spostare il logo SDF
+    // sopra la progress bar Founder. Cover puro lasciava solo ~180px di gioco su sezione 1913px (insufficiente).
+    backgroundSize: 'auto 140%', backgroundPosition: 'center 72%',
+    opacity: 0.78,
+    filter: 'brightness(1.15) contrast(1.2) saturate(1.0)',
   },
+  // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
+  // Lasciate top/bottom scure per leggibilità heading + sub text.
   content: {
     position: 'relative', zIndex: 2,
     maxWidth: 900, textAlign: 'center',
@@ -104,6 +117,10 @@ const s = {
 
 export default function Hero() {
   const [phraseIdx] = useState(() => Math.floor(Math.random() * ROTATING_PHRASES.length));
+  // Card €197 visibile SOLO quando posti Founder esauriti (ritorna come fallback post-200).
+  // Mentre i Founder sono in vendita la card è nascosta (Hero mostra solo Founder Pass + €24,99/mese).
+  const { slotsRemaining } = useFounderSlots();
+  const founderSoldOut = slotsRemaining === 0;
 
   return (
     <section style={s.section}>
@@ -129,6 +146,10 @@ export default function Hero() {
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero problemi.
         </p>
 
+        {/* Hero offer: Founder Pass €119/anno upfront (pagabile a rate), 200 posti, prezzo bloccato anche al rinnovo.
+            Card scompare automaticamente quando i posti sono esauriti (utenti vedono solo il grid sotto). */}
+        <FounderPassCard />
+
         {/* Promo lancio: 2 prodotti distinti, layout simmetrico (stesso pattern card). */}
         {/* Mobile-safe: minmax con min(280px, 100%) evita overflow su viewport stretti */}
         <div style={{
@@ -146,33 +167,37 @@ export default function Hero() {
         }}>
           <PricePromo
             fullPrice={47}
-            promoPrice={27}
+            promoPrice="24,99"
             period="/mese"
             currency="€"
             label="1 mese di membership + consulenza"
             badge="MEMBERSHIP + CONSULENZA"
-            savings="Risparmi €20 (-43%)"
+            savings="Risparmi €22"
             href={PAYMENT_LINKS.consulenza}
-            ariaLabel="Acquista 1 mese di membership più consulenza Salute di Ferro: da 47 euro scontato a 27 euro al mese"
+            ariaLabel="Acquista 1 mese di membership più consulenza Salute di Ferro: prezzo originale 47 euro, scontato a 24 euro e 99 centesimi al mese. Risparmi 22 euro."
           />
-          <PricePromo
-            fullPrice={297}
-            promoPrice={197}
-            period="/anno"
-            monthlyEquivalent="16,42"
-            currency="€"
-            badge="MEMBERSHIP"
-            savings="Risparmi €100 (-34%)"
-            href={PAYMENT_LINKS.membershipAnnuale}
-            ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
-          />
+          {/* Card Membership annuale €297→€197: visibile SOLO post-Founder (slotsRemaining===0).
+              Decisione user 8 mag 2026: durante la vendita Founder la card è nascosta. */}
+          {founderSoldOut && (
+            <PricePromo
+              fullPrice={297}
+              promoPrice={197}
+              period="/anno"
+              monthlyEquivalent="16,42"
+              currency="€"
+              badge="MEMBERSHIP"
+              savings="Risparmi €100 (-34%)"
+              href={PAYMENT_LINKS.membershipAnnuale}
+              ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
+            />
+          )}
         </div>
 
         <div style={s.buttons}>
-          <a href={FORM_URL} style={s.btnPrimary} className="hero-cta hero-btn-primary">
+          <Link to={TEST_PATH} style={s.btnPrimary} className="hero-cta hero-btn-primary">
             FAI IL TEST DI FERRO
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          </Link>
           <Link to="/pannelli" style={s.btnSecondary} className="btn-lift hero-btn-secondary">
             SCOPRI I PANNELLI
           </Link>
