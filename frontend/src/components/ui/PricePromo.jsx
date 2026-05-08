@@ -114,18 +114,25 @@ const s = {
     marginTop: 16,
     minHeight: 60, // garantisce simmetria anche se savings o label mancano
   },
+  // Badge savings: allineato a design language SDF (Founder badge + CTA gradient + glow accent).
+  // Pulse + glow attivati solo sotto prefers-reduced-motion: no-preference (gestiti in ANIMATION_KEYFRAMES).
   savingsProminent: {
-    display: 'inline-block',
-    padding: '8px 16px',
-    fontSize: 13,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 6,
+    padding: '10px 20px',
+    fontSize: 14,
     color: 'white',
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
-    fontWeight: 800,
-    letterSpacing: 1,
+    fontWeight: 900,
+    letterSpacing: 1.5,
     textTransform: 'uppercase',
-    background: 'var(--accent-fill)',
-    borderRadius: 'var(--radius-sm, 8px)',
+    // Gradient accent: stesso pattern CTA Founder + bottoni primary (coerenza visiva).
+    background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #7A0815) 100%)',
+    borderRadius: 'var(--radius-pill, 9999px)',
     whiteSpace: 'nowrap',
+    boxShadow: '0 4px 14px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.18)',
+    border: '1px solid rgba(255,255,255,0.10)',
   },
   labelProminent: {
     display: 'block',
@@ -189,10 +196,27 @@ const ANIMATION_KEYFRAMES = `
     0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 4px 12px rgba(236,71,87,0.4); }
     50%      { transform: translateX(-50%) scale(1.05); box-shadow: 0 6px 20px rgba(236,71,87,0.6); }
   }
+  /* Savings glow pulse · stesso ritmo del Founder badge (2.4s) per coerenza visiva.
+     Translate-free per non interferire con layout flex/grid. */
+  @keyframes pricePromoSavingsGlow {
+    0%, 100% {
+      box-shadow: 0 4px 14px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 6px 22px rgba(236,71,87,0.60), 0 0 0 4px rgba(236,71,87,0.12), inset 0 1px 0 rgba(255,255,255,0.22);
+      transform: scale(1.04);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .price-promo-savings-anim { animation: pricePromoSavingsGlow 2.4s ease-in-out infinite; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .price-promo-badge-anim { animation: none !important; }
+    .price-promo-savings-anim { animation: none !important; }
     .price-promo-link { transition: none !important; }
     .price-promo-link:hover { transform: none !important; }
+    .price-promo-link:hover .price-promo-savings-anim { transform: none !important; }
   }
   .price-promo-link {
     text-decoration: none;
@@ -205,6 +229,10 @@ const ANIMATION_KEYFRAMES = `
     .price-promo-link:hover {
       transform: translateY(-4px);
       box-shadow: 0 0 0 4px rgba(236,71,87,0.18), 0 24px 60px rgba(236,71,87,0.28);
+    }
+    /* Hover sulla card intensifica il badge savings (solo sotto motion-safe) */
+    .price-promo-link:hover .price-promo-savings-anim {
+      box-shadow: 0 8px 28px rgba(236,71,87,0.55), 0 0 0 4px rgba(236,71,87,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
     }
   }
   .price-promo-link:focus-visible {
@@ -285,7 +313,7 @@ export default function PricePromo({
 
       {/* Footer min-height fisso = simmetria visiva anche se savings o label mancano */}
       <div style={s.footerProminent}>
-        {autoSavings && <span style={s.savingsProminent}>{autoSavings}</span>}
+        {autoSavings && <span style={s.savingsProminent} className="price-promo-savings-anim">{autoSavings}</span>}
         {label && <span style={s.labelProminent}>{label}</span>}
       </div>
     </>
