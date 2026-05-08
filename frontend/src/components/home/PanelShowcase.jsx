@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import FadeUp from '../ui/FadeUp';
 import { FERRO_CORE, MODULES } from '../../constants/panels';
 
-const FORM_URL = 'https://form.salutediferro.com';
+// Quiz interno SPA · /test (era https://form.salutediferro.com — Pages legacy non aggiornato).
+const TEST_PATH = '/test';
 
 /* ── slide data: core + all modules ── */
 const SLIDES = [
@@ -15,7 +17,7 @@ const SLIDES = [
     desc: 'Screening metabolico, epatico, renale, tiroideo e marziale. Include Testosterone e Vitamina D. Il pannello base che ogni atleta dovrebbe fare.',
     badge: `${FERRO_CORE.biomarkers.length} biomarcatori. Basato su EAU, ESC/EAS, KDIGO`,
     img: '/panels/panel-core.jpg',
-    imgAlt: 'Bodybuilder in palestra',
+    imgAlt: 'Infermiera in camice bianco esegue un prelievo del sangue al braccio di un paziente in laboratorio',
   },
   {
     name: 'FERRO ANDROGENO',
@@ -239,12 +241,12 @@ export default function PanelShowcase() {
             </h2>
             <p style={s.desc}>{slide.desc}</p>
             <div style={{display:'flex', gap: 12, flexWrap:'wrap'}}>
-              <a href={FORM_URL} style={s.btn}>
+              <Link to={TEST_PATH} style={s.btn}>
                 FAI IL TEST DI FERRO
-              </a>
-              <a href="/pannelli" style={{...s.btn, background:'transparent', border:'1.5px solid var(--border-hover)', boxShadow:'none', color:'var(--text)'}}>
+              </Link>
+              <Link to="/pannelli" style={{...s.btn, background:'transparent', border:'1.5px solid var(--border-hover)', boxShadow:'none', color:'var(--text)'}}>
                 SCOPRI TUTTI I PANNELLI
-              </a>
+              </Link>
             </div>
           </div>
 
