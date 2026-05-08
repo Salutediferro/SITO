@@ -229,20 +229,16 @@ const ANIMATION_KEYFRAMES = `
                 border-color 240ms;
   }
   @media (hover: hover) and (pointer: fine) {
-    .price-promo-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 0 4px rgba(236,71,87,0.18), 0 24px 60px rgba(236,71,87,0.28);
-    }
-    /* Hover sulla card alza il badge savings · stesso pattern CTA Founder (translateY -2px + shadow CTA) */
-    .price-promo-link:hover .price-promo-savings-anim {
+    /* Card resta statica · hover lift SOLO sul tasto savings (precision hover) */
+    .price-promo-savings-anim:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(236,71,87,0.55), 0 0 0 4px rgba(236,71,87,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
     }
   }
-  /* Reduced motion: rimuove anche hover lift sul badge */
+  /* Reduced motion: rimuove hover lift sul badge */
   @media (prefers-reduced-motion: reduce) {
     .price-promo-savings-anim { transition: none !important; }
-    .price-promo-link:hover .price-promo-savings-anim { transform: none !important; }
+    .price-promo-savings-anim:hover { transform: none !important; }
   }
   .price-promo-link:focus-visible {
     outline: 3px solid var(--accent);
