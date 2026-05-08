@@ -196,20 +196,19 @@ const ANIMATION_KEYFRAMES = `
     0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 4px 12px rgba(236,71,87,0.4); }
     50%      { transform: translateX(-50%) scale(1.05); box-shadow: 0 6px 20px rgba(236,71,87,0.6); }
   }
-  /* Savings glow pulse · stesso ritmo del Founder badge (2.4s) per coerenza visiva.
-     Translate-free per non interferire con layout flex/grid. */
+  /* Savings glow pulse · NO transform scale (causava sub-pixel blur sul testo).
+     Solo box-shadow respira morbida. Ciclo rallentato 2.4s → 3.6s per ridurre fatica visiva.
+     Testo statico = leggibile in ogni frame. */
   @keyframes pricePromoSavingsGlow {
     0%, 100% {
       box-shadow: 0 4px 14px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
-      transform: scale(1);
     }
     50% {
-      box-shadow: 0 6px 22px rgba(236,71,87,0.60), 0 0 0 4px rgba(236,71,87,0.12), inset 0 1px 0 rgba(255,255,255,0.22);
-      transform: scale(1.04);
+      box-shadow: 0 5px 18px rgba(236,71,87,0.50), 0 0 0 2px rgba(236,71,87,0.08), inset 0 1px 0 rgba(255,255,255,0.20);
     }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .price-promo-savings-anim { animation: pricePromoSavingsGlow 2.4s ease-in-out infinite; }
+    .price-promo-savings-anim { animation: pricePromoSavingsGlow 3.6s ease-in-out infinite; }
   }
   @media (prefers-reduced-motion: reduce) {
     .price-promo-badge-anim { animation: none !important; }
