@@ -335,6 +335,93 @@ const s = {
     lineHeight: 1.5,
     outline: 'none',
   },
+
+  // ───── REDESIGN MOCKUP V4 (8 mag 2026) ─────
+  // Eyebrow tag superiore (categoria prodotto), aria-hidden — sostituisce badge fluttuante "Prezzo bloccato a vita".
+  eyebrow: {
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'clamp(13px, 1.3vw, 15px)',
+    color: 'var(--accent)',
+    letterSpacing: 4,
+    textTransform: 'uppercase',
+    fontWeight: 700,
+    margin: '0 auto var(--space-3)',
+    opacity: 0.95,
+  },
+  // Badge savings "RISPARMI €180/ANNO · -60%" — pattern coerente con PricePromo (pill + gradient + pulse + glow)
+  savingsBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '10px 22px',
+    fontSize: 'clamp(14px, 1.5vw, 16px)',
+    color: 'white',
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontWeight: 900,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #7A0815) 100%)',
+    borderRadius: 'var(--radius-pill, 9999px)',
+    whiteSpace: 'nowrap',
+    boxShadow: '0 4px 14px rgba(236,71,87,0.40), inset 0 1px 0 rgba(255,255,255,0.18)',
+    border: '1px solid rgba(255,255,255,0.10)',
+    marginTop: 12,
+  },
+  // Note Klarna/Scalapay con italico + bold
+  installmentsNote: {
+    margin: '0 auto var(--space-5)',
+    padding: 0,
+    maxWidth: 520,
+    fontSize: 'clamp(13px, 1.4vw, 15px)',
+    color: 'var(--text)',
+    fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
+    lineHeight: 1.6,
+    textAlign: 'center',
+  },
+  installmentsItalic: {
+    fontStyle: 'italic',
+    color: 'var(--text-sec)',
+    display: 'block',
+    marginBottom: 6,
+  },
+  installmentsStrong: {
+    fontWeight: 700,
+    color: 'var(--text)',
+    display: 'block',
+  },
+  // Lista 6 features con checkmark
+  featuresList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '0 auto var(--space-5)',
+    maxWidth: 520,
+    textAlign: 'left',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+  },
+  featureItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 12,
+    fontSize: 'clamp(14px, 1.5vw, 16px)',
+    color: 'var(--text)',
+    fontFamily: "'Manrope', 'DM Sans', system-ui, sans-serif",
+    lineHeight: 1.5,
+  },
+  // Cerchio pieno accent + check bianco dentro = contrasto WCAG AA garantito
+  featureCheckCircle: {
+    flex: '0 0 auto',
+    width: 22,
+    height: 22,
+    borderRadius: '50%',
+    background: 'var(--accent)',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 1px 6px rgba(236,71,87,0.40)',
+    marginTop: 2, // align with first text line baseline
+  },
+
   // shared
   srOnly: {
     position: 'absolute', width: 1, height: 1,
@@ -359,9 +446,15 @@ const KEYFRAMES = `
     0%, 100% { text-shadow: 0 0 0 rgba(236,71,87,0); }
     50%      { text-shadow: 0 0 16px rgba(236,71,87,0.55); }
   }
+  /* Savings badge pulse glow · stesso ritmo del Founder badge per coerenza visiva */
+  @keyframes founderSavingsBadgeGlow {
+    0%, 100% { box-shadow: 0 4px 14px rgba(236,71,87,0.40), inset 0 1px 0 rgba(255,255,255,0.18); transform: scale(1); }
+    50%      { box-shadow: 0 8px 26px rgba(236,71,87,0.65), 0 0 0 4px rgba(236,71,87,0.14), inset 0 1px 0 rgba(255,255,255,0.22); transform: scale(1.04); }
+  }
 
   @media (prefers-reduced-motion: no-preference) {
     .founder-badge-pulse { animation: founderBadgePulse 2.4s ease-in-out infinite; }
+    .founder-savings-badge-anim { animation: founderSavingsBadgeGlow 2.4s ease-in-out infinite; }
     .founder-cta { transition: transform 240ms cubic-bezier(0.4,0,0.2,1), box-shadow 240ms; }
     .founder-shimmer { animation: founderShimmerSweep 2.6s cubic-bezier(0.4,0,0.2,1) infinite; }
     .founder-counter-remaining-urgent { animation: founderNumberGlow 1.8s ease-in-out infinite; }
@@ -456,6 +549,14 @@ function IconWarning() {
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
       <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
       <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  );
+}
+// Checkmark bianco dentro cerchio rosso accent (contrast WCAG AA garantito · pattern Stripe/Linear)
+function IconCheck() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+      <polyline points="20 6 9 17 4 12"/>
     </svg>
   );
 }
@@ -558,37 +659,70 @@ export default function FounderPassCard({ compact = false } = {}) {
   return (
     <section aria-labelledby="founder-pass-title" style={sx('section')}>
       <style>{KEYFRAMES}</style>
-      <span style={sx('badge')} className="founder-badge-pulse">Prezzo bloccato a vita</span>
+
+      {/* Eyebrow tag superiore (categoria prodotto · decorativo · aria-hidden).
+          Sostituisce ex badge fluttuante "Prezzo bloccato a vita" + scarcity block "SOLO 200 POSTI". */}
+      <p style={sx('eyebrow')} aria-hidden="true">Annuale &middot; Founders Pass</p>
 
       <h2 id="founder-pass-title" style={sx('title')}>Founder Pass</h2>
 
-      {/* Scarcity claim: blocco tipografico forte "SOLO 200 POSTI · Mai più a questo prezzo".
-          Decorativo per video, ma il numero "200" e la frase sono parte del nome accessibile della section. */}
-      <div style={sx('scarcityBlock')} aria-hidden="true">
-        <span style={sx('scarcityNumber')}>Solo 200 posti</span>
-        <span style={sx('scarcitySub')}>Mai più a questo prezzo</span>
-      </div>
-      <span style={s.srOnly}>
-        Solo 200 posti disponibili. Mai più a questo prezzo.
-      </span>
-
-      {/* Sezione prezzo: display mensile equivalente €9,99/mese + asterisco linkato a footnote
-          "*Fatturato annualmente in unica soluzione". Compliance Codice Consumo art. 21-23
-          (transparency pubblicità). Il prezzo annuale reale (€119) si vede solo al checkout Stripe. */}
+      {/* Sezione prezzo: comparison €24,99/mese (standard mensile) → €9,99/mese Founder + badge savings.
+          Il prezzo annuale reale €119,88 ora esplicitato sotto in Klarna note (art. 21-23 Codice Consumo). */}
       <div style={s.priceWrap}>
-        <span aria-hidden="true" style={sx('comparison')}>€16,42/mese</span>
+        <span aria-hidden="true" style={sx('comparison')}>€24,99/mese</span>
         <span aria-hidden="true">
           <span style={sx('price')}>€9,99</span>
           <span style={sx('period')}>/mese</span>
-          <span style={s.priceAsterisk}>*</span>
         </span>
         <span style={s.srOnly}>
-          Founder Pass: da 16 euro e 42 centesimi al mese (piano standard mensilizzato) scontato a 9 euro e 99 centesimi al mese a vita, fatturato annualmente in unica soluzione. Prezzo bloccato anche ai rinnovi successivi. Consulenza inclusa.
+          Founder Pass annuale: prezzo barrato 24 euro e 99 centesimi al mese, scontato a 9 euro e 99 centesimi al mese, prezzo bloccato a vita anche ai rinnovi successivi.
         </span>
-        <span aria-hidden="true" style={s.lifetimeNote}>Prezzo bloccato a vita</span>
-        <span aria-hidden="true" style={s.lifetimeNote}>Consulenza inclusa</span>
-        <span aria-hidden="true" style={s.priceFootnote}>* Fatturato annualmente in unica soluzione</span>
+
+        {/* Badge savings · pulse + gradient · sr-only naturale IT */}
+        <span style={sx('savingsBadge')} className="founder-savings-badge-anim" aria-hidden="true">
+          Risparmi €180/anno &middot; -60%
+        </span>
+        <span style={s.srOnly}>Risparmi 180 euro all&apos;anno, sconto del 60 percento.</span>
       </div>
+
+      {/* Klarna/Scalapay note · italic mascherato + sr-only IT naturale + bold reassurance */}
+      <p style={sx('installmentsNote')}>
+        <span aria-hidden="true" style={sx('installmentsItalic')}>
+          <em>&asymp; &euro;119,88 una tantum &mdash; paga in 3 rate da &euro;39,96 con Klarna o Scalapay.</em>
+        </span>
+        <span style={s.srOnly}>
+          Circa 119 euro e 88 centesimi una tantum, oppure paga in 3 rate da 39 euro e 96 centesimi con Klarna o Scalapay.
+        </span>
+        <strong style={sx('installmentsStrong')}>SDF incassa subito, tu spalmi il pagamento senza interessi.</strong>
+      </p>
+
+      {/* Lista 6 features · checkmark bianco in cerchio accent (contrast WCAG AA garantito) */}
+      <ul style={sx('featuresList')} role="list">
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Consulenza inclusa</span>
+        </li>
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Tutto incluso nel piano Mensile</span>
+        </li>
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Prezzo bloccato <span style={{ textTransform: 'uppercase', fontWeight: 700 }}>a vita</span> al rinnovo</span>
+        </li>
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Pagamento dilazionato 3 rate Klarna/Scalapay</span>
+        </li>
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Notifica 7 giorni prima del rinnovo</span>
+        </li>
+        <li style={s.featureItem}>
+          <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
+          <span>Garanzia 14 giorni rimborso</span>
+        </li>
+      </ul>
 
       {/* Counter posti: <progress> nativo + label collegato + frase urgency in aria-live.
           Shell interattiva: hover/focus-within solleva il blocco e intensifica accent (motion-safe). */}
