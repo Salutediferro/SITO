@@ -2,7 +2,11 @@ node_modules/
 dist/
 .DS_Store
 .wrangler/
-.claude/
+
+# Claude Code · ignore tutto tranne agents/skills (config team-shared)
+.claude/*
+!.claude/agents/
+!.claude/skills/
 
 # Build artifacts
 sdf-deploy-*.zip
