@@ -10,12 +10,14 @@
 
 export const PAYMENT_LINKS = {
   /**
-   * Membership + Consulenza · €24,99/mese (aggiornato 8 mag 2026 sera).
-   * Sostituisce vecchio link €27/mese (5kQfZh3KY5wQ4Pj62o14400) ora archiviato.
+   * Membership + Consulenza · €24,99/mese (link aggiornato 9 mag 2026).
+   * Storia link:
+   *   - 5kQfZh3KY5wQ4Pj62o14400 (€27, archiviato 8 mag)
+   *   - 5kQ14ndlygbugy13Ug14403 (€24,99 v1, archiviato 9 mag)
+   *   - fZu9AT95ibVe0z3cqM14405 (€24,99 v2, ATTIVO)
    * Prezzo full €47 → promo lancio €24,99 (mockup V4 cliente).
-   * Già creato da Antonio · link nuovo configurato 8 mag.
    */
-  consulenza: 'https://buy.stripe.com/5kQ14ndlygbugy13Ug14403',
+  consulenza: 'https://buy.stripe.com/fZu9AT95ibVe0z3cqM14405',
 
   /**
    * Membership mensile.
