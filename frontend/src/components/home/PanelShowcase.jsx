@@ -16,8 +16,8 @@ const SLIDES = [
     headlineAccent: 'OBBLIGATORIO',
     desc: 'Screening metabolico, epatico, renale, tiroideo e marziale. Include Testosterone e Vitamina D. Il pannello base che ogni atleta dovrebbe fare.',
     badge: `${FERRO_CORE.biomarkers.length} biomarcatori. Basato su EAU, ESC/EAS, KDIGO`,
-    img: '/panels/panel-core-v2.jpg',
-    imgAlt: 'Infermiera in camice bianco esegue un prelievo del sangue al braccio di un paziente in laboratorio',
+    img: '/panels/panel-core.jpg',
+    imgAlt: 'Bodybuilder muscoloso in palestra con torso scolpito',
   },
   {
     name: 'FERRO ANDROGENO',
