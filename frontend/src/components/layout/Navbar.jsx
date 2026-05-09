@@ -65,7 +65,9 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  const FORM_URL = 'https://form.salutediferro.com';
+  // Quiz interno SPA · /test (era https://form.salutediferro.com che servito da Pages
+  // legacy `type-form` non aggiornato — issue P2.2 roadmap, fix 6 mag 2026.)
+  const TEST_PATH = '/test';
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/pannelli', label: 'Pannelli' },
@@ -109,9 +111,9 @@ export default function Navbar() {
               {l.label.toUpperCase()}
             </Link>
           ))}
-          <a href={FORM_URL} style={styles.cta} className="btn-lift">
+          <Link to={TEST_PATH} style={styles.cta} className="btn-lift">
             TEST DI FERRO
-          </a>
+          </Link>
         </div>
 
         <button
@@ -151,9 +153,9 @@ export default function Navbar() {
               {l.label.toUpperCase()}
             </Link>
           ))}
-          <a href={FORM_URL} style={{ ...styles.cta, padding: '14px 40px', fontSize: 18 }}>
+          <Link to={TEST_PATH} style={{ ...styles.cta, padding: '14px 40px', fontSize: 18 }}>
             INIZIA IL TEST
-          </a>
+          </Link>
         </div>
       )}
 

@@ -43,7 +43,10 @@
   .fade-up {
     animation: fade-up-scrub linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 30%;
+    /* entry 0% → 100% = animazione completa appena l'elemento è entrato
+       interamente nel viewport. Evita stati intermedi su card alte (es.
+       Ferro Donna 6 esami) che apparivano opache a metà scroll. */
+    animation-range: entry 0% entry 100%;
     transition: none;
   }
   @keyframes fade-up-scrub {

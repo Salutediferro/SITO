@@ -6,5 +6,13 @@
 # da Cloudflare Pages.
 /payment-success  https://form.salutediferro.com/payment-success  301
 
+# Founder Pass + futuri endpoint API · redirect 302 verso Worker form.salutediferro.com.
+# NOTA: CF Pages NON supporta rewrites (status 200) verso URL esterni, solo redirect 301/302.
+# 302 (temporary) preferito a 301 per evitare cache aggressiva browser durante sviluppo.
+# Worker ha CORS allowlist `salutediferro.com` già configurata (vedi src/index.js ALLOWED_ORIGINS),
+# quindi cross-origin fetch dal frontend funziona senza modifiche.
+# Trade-off: 2 round-trip per request (302 → fetch). Accettabile per polling 60s del counter.
+/api/*  https://form.salutediferro.com/api/:splat  302
+
 # SPA fallback (catch-all DEVE restare ultimo)
 /*  /index.html  200

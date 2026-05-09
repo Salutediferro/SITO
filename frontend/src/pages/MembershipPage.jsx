@@ -1,5 +1,7 @@
 import FadeUp from '../components/ui/FadeUp';
 import PricePromo from '../components/ui/PricePromo';
+import FounderPassCard from '../components/home/FounderPassCard';
+import useFounderSlots from '../hooks/useFounderSlots';
 import { Link } from 'react-router-dom';
 import { PAYMENT_LINKS } from '../constants/payments';
 
@@ -107,7 +109,7 @@ const PERCORSO = [
   },
 ];
 
-const FORM_URL = 'https://form.salutediferro.com';
+// FORM_URL legacy rimosso · quiz interno via <Link to="/test"> (fix 6 mag 2026, P2.2 roadmap).
 
 const s = {
   hero: {
@@ -203,6 +205,11 @@ const s = {
 };
 
 export default function MembershipPage() {
+  // Sezione Membership €197/anno visibile SOLO quando posti Founder esauriti.
+  // Decisione user 8 mag 2026: durante vendita Founder, card €197 nascosta su tutto il sito.
+  const { slotsRemaining } = useFounderSlots();
+  const founderSoldOut = slotsRemaining === 0;
+
   return (
     <main>
       <style>{`
@@ -224,32 +231,44 @@ export default function MembershipPage() {
         </FadeUp>
       </section>
 
-      {/* OFFERTA LANCIO MEMBERSHIP — €297 → €197/anno */}
-      <section style={{ padding: 'clamp(48px, 7vw, 96px) 24px', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+      {/* FOUNDER PASS — variant compact, hero offer riservata ai primi 200.
+          Scompare automaticamente via hook quando posti esauriti, lasciando visibile la card €197 sotto. */}
+      <section style={{ padding: 'clamp(40px, 6vw, 80px) 24px 0', maxWidth: 720, margin: '0 auto' }}>
         <FadeUp>
-          <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
-            <PricePromo
-              fullPrice={297}
-              promoPrice={197}
-              period="/anno"
-              monthlyEquivalent="16,42"
-              currency="€"
-              badge="OFFERTA LANCIO MEMBERSHIP"
-              savings="Risparmi €100"
-              href={PAYMENT_LINKS.membershipAnnuale}
-              ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
-            />
-            <a
-              href={PAYMENT_LINKS.membershipAnnuale}
-              className="q-btn-primary"
-              style={{ textDecoration: 'none', maxWidth: 380, width: '100%' }}
-              aria-label="Inizia ora la Membership annuale a 197 euro all'anno"
-            >
-              INIZIA ORA &middot; 197&euro;/ANNO
-            </a>
-          </div>
+          <FounderPassCard compact />
         </FadeUp>
       </section>
+
+      {/* OFFERTA LANCIO MEMBERSHIP — €297 → €197/anno
+          Visibile SOLO post-Founder (slotsRemaining===0). Durante la vendita Founder
+          questa sezione è completamente nascosta da DOM. */}
+      {founderSoldOut && (
+        <section style={{ padding: 'clamp(40px, 6vw, 80px) 24px clamp(48px, 7vw, 96px)', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+          <FadeUp>
+            <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 32 }}>
+              <PricePromo
+                fullPrice={297}
+                promoPrice={197}
+                period="/anno"
+                monthlyEquivalent="16,42"
+                currency="€"
+                badge="OFFERTA LANCIO MEMBERSHIP"
+                savings="Risparmi €100"
+                href={PAYMENT_LINKS.membershipAnnuale}
+                ariaLabel="Sottoscrivi la Membership annuale Salute di Ferro: da 297 euro scontata a 197 euro all'anno, equivalenti a circa 16 euro e 42 centesimi al mese"
+              />
+              <a
+                href={PAYMENT_LINKS.membershipAnnuale}
+                className="q-btn-primary"
+                style={{ textDecoration: 'none', maxWidth: 380, width: '100%' }}
+                aria-label="Inizia ora la Membership annuale a 197 euro all'anno"
+              >
+                INIZIA ORA &middot; 197&euro;/ANNO
+              </a>
+            </div>
+          </FadeUp>
+        </section>
+      )}
 
       <div style={s.content}>
         {/* VANTAGGI */}

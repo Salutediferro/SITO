@@ -114,18 +114,29 @@ const s = {
     marginTop: 16,
     minHeight: 60, // garantisce simmetria anche se savings o label mancano
   },
+  // Badge savings: feel "bottone" allineato a CTA Founder (radius-sm 8px, padding generoso, gradient).
+  // Hover-lift propagato dal .price-promo-link:hover parent (vedi ANIMATION_KEYFRAMES).
+  // Pulse glow attivato solo sotto prefers-reduced-motion: no-preference.
   savingsProminent: {
-    display: 'inline-block',
-    padding: '8px 16px',
-    fontSize: 13,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    padding: '14px 28px',
+    fontSize: 16,
     color: 'white',
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
-    fontWeight: 800,
-    letterSpacing: 1,
+    fontWeight: 900,
+    letterSpacing: 2,
     textTransform: 'uppercase',
-    background: 'var(--accent-fill)',
+    // Gradient accent: stesso CTA Founder per coerenza visiva.
+    background: 'linear-gradient(135deg, var(--accent) 0%, var(--accent-dark, #7A0815) 100%)',
     borderRadius: 'var(--radius-sm, 8px)',
     whiteSpace: 'nowrap',
+    boxShadow: '0 4px 18px var(--accent-glow, rgba(236,71,87,0.40)), inset 0 1px 0 rgba(255,255,255,0.18)',
+    border: '1px solid rgba(255,255,255,0.10)',
+    minHeight: 44, // WCAG 2.5.5 target size (anche se decorativo, mantiene proporzione bottone)
+    transition: 'transform 240ms cubic-bezier(0.4,0,0.2,1), box-shadow 240ms',
   },
   labelProminent: {
     display: 'block',
@@ -189,10 +200,26 @@ const ANIMATION_KEYFRAMES = `
     0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 4px 12px rgba(236,71,87,0.4); }
     50%      { transform: translateX(-50%) scale(1.05); box-shadow: 0 6px 20px rgba(236,71,87,0.6); }
   }
+  /* Savings glow pulse · NO transform scale (causava sub-pixel blur sul testo).
+     Solo box-shadow respira morbida. Ciclo rallentato 2.4s → 3.6s per ridurre fatica visiva.
+     Testo statico = leggibile in ogni frame. */
+  @keyframes pricePromoSavingsGlow {
+    0%, 100% {
+      box-shadow: 0 4px 14px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    50% {
+      box-shadow: 0 5px 18px rgba(236,71,87,0.50), 0 0 0 2px rgba(236,71,87,0.08), inset 0 1px 0 rgba(255,255,255,0.20);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .price-promo-savings-anim { animation: pricePromoSavingsGlow 3.6s ease-in-out infinite; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .price-promo-badge-anim { animation: none !important; }
+    .price-promo-savings-anim { animation: none !important; }
     .price-promo-link { transition: none !important; }
     .price-promo-link:hover { transform: none !important; }
+    .price-promo-link:hover .price-promo-savings-anim { transform: none !important; }
   }
   .price-promo-link {
     text-decoration: none;
@@ -202,10 +229,16 @@ const ANIMATION_KEYFRAMES = `
                 border-color 240ms;
   }
   @media (hover: hover) and (pointer: fine) {
-    .price-promo-link:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 0 4px rgba(236,71,87,0.18), 0 24px 60px rgba(236,71,87,0.28);
+    /* Card resta statica · hover lift SOLO sul tasto savings (precision hover) */
+    .price-promo-savings-anim:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(236,71,87,0.55), 0 0 0 4px rgba(236,71,87,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
     }
+  }
+  /* Reduced motion: rimuove hover lift sul badge */
+  @media (prefers-reduced-motion: reduce) {
+    .price-promo-savings-anim { transition: none !important; }
+    .price-promo-savings-anim:hover { transform: none !important; }
   }
   .price-promo-link:focus-visible {
     outline: 3px solid var(--accent);
@@ -285,7 +318,7 @@ export default function PricePromo({
 
       {/* Footer min-height fisso = simmetria visiva anche se savings o label mancano */}
       <div style={s.footerProminent}>
-        {autoSavings && <span style={s.savingsProminent}>{autoSavings}</span>}
+        {autoSavings && <span style={s.savingsProminent} className="price-promo-savings-anim">{autoSavings}</span>}
         {label && <span style={s.labelProminent}>{label}</span>}
       </div>
     </>
