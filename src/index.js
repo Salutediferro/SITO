@@ -155,6 +155,14 @@ export default {
       return new Response(null, { headers: corsHeaders });
     }
 
+    // ── Redirect 301 QR code vecchi ──
+    // QR code stampati pre-9 mag 2026 linkavano form.salutediferro.com (root + /quiz + /form).
+    // Quiz ora vive su salutediferro.com/test (SPA route React, post fix 6 mag P2.2).
+    // Redirect permanente per backward compat dei QR già distribuiti.
+    if (request.method === 'GET' && (path === '/' || path === '/quiz' || path === '/form')) {
+      return Response.redirect('https://salutediferro.com/test', 301);
+    }
+
     // ── GET /api/founder-slots-remaining ──
     // Founder Pass · counter posti rimasti, letto dal frontend (FounderPassCard + useFounderSlots).
     // Source of truth: tabella D1 `founder_slots` (200 righe pre-seed, decrementate dal webhook

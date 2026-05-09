@@ -37,6 +37,21 @@ zone_name = "salutediferro.com"
 pattern = "form.salutediferro.com/api/founder-slots-remaining"
 zone_name = "salutediferro.com"
 
+# QR code legacy redirect (9 mag 2026).
+# QR stampati pre-9 mag puntavano a form.salutediferro.com/ (root + /quiz + /form).
+# Redirect 301 permanente a salutediferro.com/test (quiz SPA) per backward compat QR distribuiti.
+[[routes]]
+pattern = "form.salutediferro.com/"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/quiz"
+zone_name = "salutediferro.com"
+
+[[routes]]
+pattern = "form.salutediferro.com/form"
+zone_name = "salutediferro.com"
+
 # D1 binding · database EU per founder_slots (e in futuro users + orders + test_results sprint Agente).
 # Bound come `env.DB` nel Worker.
 # Creato 6 mag 2026 da info@salutediferro.com, region EEUR (Europe East · privacy GDPR-friendly).
