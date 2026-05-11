@@ -96,8 +96,8 @@ export function getSteps(answers) {
     ...STATO_GENERALE,
     ...branch,
     ...COMMON_AFTER,
-    { t: 'esito' },
     { t: 'contacts' },
+    { t: 'esito' },
     { t: 'payment' },
   ];
 }

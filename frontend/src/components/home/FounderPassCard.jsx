@@ -685,16 +685,15 @@ export default function FounderPassCard({ compact = false } = {}) {
         <span style={s.srOnly}>Risparmi 180 euro all&apos;anno, sconto del 60 percento.</span>
       </div>
 
-      {/* Klarna/Scalapay note · italic mascherato + sr-only IT naturale + bold reassurance.
-          Rate disponibili: 3 (€39,96/mese) · 6 (€19,98/mese) · 12 (€9,99/mese). */}
+      {/* Klarna note · italic mascherato + sr-only IT naturale.
+          Rate disponibili: 3 (€39,96/mese) · 6 (€19,98/mese). */}
       <p style={sx('installmentsNote')}>
         <span aria-hidden="true" style={sx('installmentsItalic')}>
-          <em>&asymp; &euro;119,88 una tantum &mdash; oppure paga in 3, 6 o 12 rate (da &euro;9,99 al mese) con Klarna o Scalapay.</em>
+          <em>&asymp; &euro;119,88 una tantum &mdash; oppure paga in 3 o 6 rate (da &euro;19,98 al mese) con Klarna.</em>
         </span>
         <span style={s.srOnly}>
-          Circa 119 euro e 88 centesimi una tantum, oppure paga in 3, 6 o 12 rate fino a 9 euro e 99 centesimi al mese con Klarna o Scalapay.
+          Circa 119 euro e 88 centesimi una tantum, oppure paga in 3 o 6 rate fino a 19 euro e 98 centesimi al mese con Klarna.
         </span>
-        <strong style={sx('installmentsStrong')}>SDF incassa subito, tu spalmi il pagamento senza interessi.</strong>
       </p>
 
       {/* Lista 6 features · checkmark bianco in cerchio accent (contrast WCAG AA garantito) */}
@@ -713,7 +712,7 @@ export default function FounderPassCard({ compact = false } = {}) {
         </li>
         <li style={s.featureItem}>
           <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
-          <span>Pagamento dilazionato 3, 6 o 12 rate con Klarna/Scalapay</span>
+          <span>Pagamento dilazionato 3 o 6 rate con Klarna</span>
         </li>
         <li style={s.featureItem}>
           <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
