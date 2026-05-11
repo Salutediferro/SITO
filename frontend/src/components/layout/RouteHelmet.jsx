@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
  * Map title per route. Aggiungere nuove route qui.
  */
 const TITLES = {
-  '/': 'Salute di Ferro — Pannelli ematici per uomini che si allenano',
+  '/': 'Salute di Ferro',
   '/pannelli': 'Pannelli ematici — Salute di Ferro',
   '/chi-siamo': 'Chi siamo — Salute di Ferro',
   '/membership': 'Founder Pass · Membership — Salute di Ferro',
