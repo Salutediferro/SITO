@@ -72,7 +72,6 @@ export default function Navbar() {
     { to: '/', label: 'Home' },
     { to: '/pannelli', label: 'Pannelli' },
     { to: '/chi-siamo', label: 'Chi Siamo' },
-    { to: 'https://wa.me/393759899724', label: 'WhatsApp', external: true },
     { to: '/membership', label: 'Membership' },
   ];
 

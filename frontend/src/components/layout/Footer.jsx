@@ -43,7 +43,6 @@ export default function Footer() {
           <Link to="/pannelli" style={s.link}>Pannelli Ematici</Link>
           <Link to="/chi-siamo" style={s.link}>Chi Siamo</Link>
           <Link to="/membership" style={s.link}>Membership</Link>
-          <a href="https://wa.me/393759899724" target="_blank" rel="noopener noreferrer" style={s.link}>WhatsApp</a>
           <Link to="/privacy" style={s.link}>Privacy Policy</Link>
           <Link to="/test" style={s.link}>Test di Ferro</Link>
         </div>

@@ -1392,7 +1392,7 @@ function buildMail2Html(isSubscription, data) {
       <tr><td style="padding:12px 0;">
         <div style="font-size:12px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:4px;">BONUS 03</div>
         <div style="font-size:15px;color:#F5F5F5;font-weight:bold;margin-bottom:4px;">Contatto diretto del Coach</div>
-        <div style="font-size:13px;color:#999;line-height:1.5;">Il tuo Coach ti contatterà via WhatsApp entro 24h dal pagamento per coordinare la consulenza.</div>
+        <div style="font-size:13px;color:#999;line-height:1.5;">Il tuo Coach ti contatterà telefonicamente al numero indicato entro 24h dal pagamento per coordinare la consulenza.</div>
       </td></tr>
     </table>` : '';
 
