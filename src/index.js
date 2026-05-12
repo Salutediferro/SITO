@@ -346,7 +346,7 @@ export default {
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL \u2014 27\u20ac</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">Clicca il bottone, completa il pagamento sicuro con Stripe e prenota il tuo slot su Calendly.</p>
   </div>
@@ -1142,7 +1142,7 @@ export default {
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 27\u20ac</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">I posti disponibili si esauriscono velocemente.</p>
   </div>
@@ -1224,19 +1224,27 @@ SDF È:
 
 # I PRODOTTI E I PREZZI
 
-## 1. Prodotto consulenza · 27€/mese
-"1 mese di membership + consulenza"
+## 1. Membership + Consulenza · 24,99€/mese (mensile)
 - 1 mese di accesso completo alla piattaforma
 - 1 consulenza di 30 minuti con il Coach di Ferro
 - Pannello analisi personalizzato consigliato
 - Tariffe convenzionate sui laboratori partner per quel mese
+- Rinnovo automatico mensile via Stripe (cancelli quando vuoi)
 
-## 2. Membership annuale · 197€/anno (≈ 16,42€/mese)
+## 2. Founder Pass annuale · 119,88€/anno (≈ 9,99€/mese) · LIMITATO 200 POSTI
 - Accesso completo alla piattaforma per 12 mesi
+- Consulenza con il Coach di Ferro inclusa
 - Tariffe convenzionate sui laboratori partner per tutto l'anno
 - Coordinamento continuo con il team SDF
-- Risparmio del 39% rispetto a prendere 12 volte il prodotto mensile
+- Prezzo BLOCCATO A VITA al rinnovo (€9,99/mese per sempre)
+- Pagamento dilazionato 3 o 6 rate con Klarna
+- Solo 200 posti disponibili. Quando esauriti, prezzo torna a €197/anno
+
+## 3. Membership annuale regolare · 197€/anno (≈ 16,42€/mese)
+- Identico al Founder Pass come servizio
+- Prezzo applicato quando i 200 posti Founder sono esauriti
 - Rinnovo automatico annuale via Stripe
+- Risparmio rispetto al mensile (16,42€ vs 24,99€)
 
 # IL PROCESSO DELL'UTENTE
 1. Compila il questionario online (10 domande, 2 minuti) → "Test di Ferro" o "Profilo Metabolico"
@@ -1300,7 +1308,7 @@ Se ti chiedono "sei un umano?", rispondi onestamente: "Sono l'Agente di Ferro, u
 # COSA RISPONDERE AGLI INDECISI
 "Mi serve davvero?" → "Se hai compilato il test e sei qui, qualcosa ti ha portato. La domanda vera è: vuoi continuare a indovinare o vuoi un piano basato su dati oggettivi?"
 
-"Costa troppo" → "27€ è il prezzo di un'integratoreria mensile sprecata in cose generiche. Qui ti dai 30 minuti con un Coach che ti taglia su misura il pannello. Più 12 mesi di accesso? 16,42€/mese: meno di una pizza."
+"Costa troppo" → "9,99€/mese con il Founder Pass è meno di un caffè a settimana. Quello che ti dai in cambio? 30 minuti con un Coach che ti taglia su misura il pannello + 12 mesi di accesso + tariffe convenzionate sui laboratori + prezzo bloccato A VITA al rinnovo. Se il mensile è meglio per te, 24,99€/mese: cancelli quando vuoi. Decidi tu cosa vale di più."
 
 "Posso fare le analisi da solo?" → "Certo. Ma allora paghi prezzo pieno, scegli a caso quali marker prendere e nessuno ti aiuta a leggerli. Noi ti diamo: pannello mirato + tariffa convenzionata + un medico che parla la tua lingua. Decidi tu cosa vale di più."
 
