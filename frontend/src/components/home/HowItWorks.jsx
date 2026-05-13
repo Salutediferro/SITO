@@ -270,22 +270,32 @@ export default function HowItWorks() {
             grid-template-columns: none !important;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
+            scroll-padding-left: 20px;
             gap: 16px !important;
             padding: 4px 20px 20px;
             margin: 0 -20px !important;
             scrollbar-width: thin;
             -webkit-overflow-scrolling: touch;
             max-width: none !important;
+            align-items: stretch !important;
           }
           .hiw-list > * {
-            flex: 0 0 78%;
-            scroll-snap-align: center;
+            flex: 0 0 80%;
+            scroll-snap-align: start;
             min-width: 0;
+            display: flex !important;
+          }
+          .hiw-list > * > li {
+            width: 100% !important;
+            flex: 1 !important;
+            display: flex !important;
           }
           .hiw-card {
             max-width: 100% !important;
             margin: 0 !important;
-            min-height: 320px !important;
+            min-height: 380px !important;
+            flex: 1 !important;
+            width: 100% !important;
             padding: 44px 20px 24px !important;
           }
         }

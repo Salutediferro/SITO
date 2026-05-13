@@ -228,6 +228,26 @@ export default function ClientProof() {
         }
         @media (max-width: 600px) {
           .proof-divider { display: none !important; }
+          /* 4 stats su 1 riga mobile (era flex-wrap a 1 col). Compact: nowrap + flex 1 + min-width 0
+             + font number ridotto + font label 10px. Validate accessibility-lead (sr-only resta intatto). */
+          .stats-container { padding: 32px 12px !important; }
+          .stats-container dl {
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            justify-content: space-between !important;
+          }
+          .stats-container dl > div {
+            min-width: 0 !important;
+            flex: 1 1 0 !important;
+          }
+          .stats-container dl > div dd {
+            font-size: clamp(20px, 7vw, 28px) !important;
+          }
+          .stats-container dl > div dt {
+            font-size: 10px !important;
+            letter-spacing: 0.3px !important;
+            line-height: 1.3 !important;
+          }
         }
         @media (prefers-reduced-motion: reduce) {
           .stat-impact { animation: none; }

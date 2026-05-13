@@ -82,8 +82,8 @@ export default function TrustBadges() {
           {badges.map((b, i) => (
             <div key={i} style={s.card} className="card-hover">
               <div style={s.icon}>{b.icon}</div>
-              <div style={s.badgeLabel}>{b.label}</div>
-              <div style={s.badgeDesc}>{b.desc}</div>
+              <div style={s.badgeLabel} className="badge-label">{b.label}</div>
+              <div style={s.badgeDesc} className="badge-desc">{b.desc}</div>
             </div>
           ))}
         </div>
@@ -96,14 +96,36 @@ export default function TrustBadges() {
           .trust-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 500px) {
-          /* 2x2 grid mobile (validate accessibility-lead): mantiene tutti i 4 badge visibili
-             contemporaneamente per max trust signal. Padding ridotto + gap compact per fit 360px. */
+          /* 4 cards in 1 row mobile (validate accessibility-lead opzione C):
+             desc nascosta visually ma resta a SR via sr-only clip · max compact. */
           .trust-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 12px !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 6px !important;
+            padding: 0 4px;
           }
           .trust-grid > .card-hover {
-            padding: 20px 14px !important;
+            padding: 12px 4px !important;
+          }
+          .trust-grid > .card-hover svg {
+            width: 24px !important;
+            height: 24px !important;
+          }
+          .trust-grid .badge-label {
+            font-size: 10px !important;
+            letter-spacing: 1px !important;
+            line-height: 1.2 !important;
+            margin-bottom: 0 !important;
+          }
+          .trust-grid .badge-desc {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0,0,0,0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
           }
         }
       `}</style>
