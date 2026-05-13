@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PricePromo from '../ui/PricePromo';
 import FounderPassCard from './FounderPassCard';
+import HeroPricingMobile from './HeroPricingMobile';
 import useFounderSlots from '../../hooks/useFounderSlots';
 import { PAYMENT_LINKS } from '../../constants/payments';
 
@@ -155,8 +156,13 @@ export default function Hero() {
           Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero problemi.
         </p>
 
+        {/* Mobile (≤600px): rimpiazza FounderPassCard + grid sotto con layout compatto 2-col. */}
+        <HeroPricingMobile />
+
         {/* Hero offer: Founder Pass €119/anno upfront (pagabile a rate), 200 posti, prezzo bloccato anche al rinnovo.
-            Card scompare automaticamente quando i posti sono esauriti (utenti vedono solo il grid sotto). */}
+            Card scompare automaticamente quando i posti sono esauriti (utenti vedono solo il grid sotto).
+            Desktop-only: classe hero-pricing-desktop hidden ≤600px (HeroPricingMobile prende il posto). */}
+        <div className="hero-pricing-desktop">
         <FounderPassCard />
 
         {/* Promo lancio: 2 prodotti distinti, layout simmetrico (stesso pattern card). */}
@@ -201,6 +207,7 @@ export default function Hero() {
             />
           )}
         </div>
+        </div>
 
         <div style={s.buttons}>
           <Link to={TEST_PATH} style={s.btnPrimary} className="hero-cta hero-btn-primary">
@@ -225,6 +232,11 @@ export default function Hero() {
         .hero-h1-len-m  { font-size: clamp(32px, 5.5vw, 60px); }
         .hero-h1-len-l  { font-size: clamp(28px, 5vw, 56px); }
         .hero-h1-len-xl { font-size: clamp(24px, 4.5vw, 48px); }
+        @media (max-width: 600px) {
+          /* Mobile pricing: hide desktop cards (FounderPassCard + PricePromo grid).
+             HeroPricingMobile prende il posto con layout 2-col compatto. */
+          .hero-pricing-desktop { display: none !important; }
+        }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
           /* Mobile: crop ampio 1.1:1 quasi-quadrato (1200x1091) + cover.
