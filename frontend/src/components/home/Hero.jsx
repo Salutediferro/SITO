@@ -227,17 +227,14 @@ export default function Hero() {
         .hero-h1-len-xl { font-size: clamp(24px, 4.5vw, 48px); }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
-          /* Mobile: usa stesso file desktop matteo_arnold.jpg + 'contain' per vedere
-             l'intera foto (come desktop) senza crop aggressivo del cover su portrait.
-             Position center top per ancorare l'immagine in alto · sotto dark fill da bg layer.
-             background-color nero garantisce coerenza Iron Blood nelle aree lateral letterbox. */
+          /* Mobile: crop ampio 1.1:1 quasi-quadrato (1200x1091) + cover.
+             Mostra soggetto SDF + statua + tappeto rosso completi senza letterbox.
+             Position 'center 35%' ancora un po' più in alto per evidenziare statua. */
           .hero-bg-image {
-            background-image: url("/matteo_arnold.jpg?v=2") !important;
-            background-size: contain !important;
-            background-position: center top !important;
-            background-repeat: no-repeat !important;
-            background-color: #0A0A0C !important;
-            opacity: 1 !important;
+            background-image: url("/matteo_arnold-mobile.jpg?v=2") !important;
+            background-size: cover !important;
+            background-position: center 35% !important;
+            opacity: 0.95 !important;
           }
         }
 
