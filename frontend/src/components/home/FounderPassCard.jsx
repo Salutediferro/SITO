@@ -461,6 +461,7 @@ const KEYFRAMES = `
   }
   @media (prefers-reduced-motion: reduce) {
     .founder-badge-pulse { animation: none !important; }
+    .founder-savings-badge-anim { animation: none !important; }
     .founder-cta { transition: none !important; }
     .founder-cta:hover { transform: none !important; }
     .founder-shimmer { animation: none !important; opacity: 0 !important; }
@@ -468,6 +469,17 @@ const KEYFRAMES = `
     .founder-counter-wrap { transition: none !important; }
     .founder-counter-wrap:hover .founder-counter-remaining { transform: none !important; }
   }
+  /* Savings badge cliccabile · focus-visible robusto (transform: scale dell'animazione non taglia l'outline)
+     Anima in pausa su focus per non disorientare utenti tastiera + WCAG 2.4.11 + 1.4.11 */
+  .founder-savings-badge-cta:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    animation-play-state: paused;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .founder-savings-badge-cta:hover { animation-play-state: paused; transform: translateY(-1px); }
+  }
+  .founder-savings-badge-cta:active { transform: translateY(0) scale(0.98); }
   @media (hover: hover) and (pointer: fine) {
     .founder-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(236,71,87,0.45); }
 
@@ -678,11 +690,25 @@ export default function FounderPassCard({ compact = false } = {}) {
           Founder Pass annuale: prezzo barrato 24 euro e 99 centesimi al mese, scontato a 9 euro e 99 centesimi al mese, prezzo bloccato a vita anche ai rinnovi successivi.
         </span>
 
-        {/* Badge savings · pulse + gradient · sr-only naturale IT */}
-        <span style={sx('savingsBadge')} className="founder-savings-badge-anim" aria-hidden="true">
-          Risparmi €180/anno &middot; -60%
-        </span>
-        <span style={s.srOnly}>Risparmi 180 euro all&apos;anno, sconto del 60 percento.</span>
+        {/* Badge savings · cliccabile → stesso checkout Stripe del CTA principale (handleCtaClick anti-race) */}
+        {isFounderHrefReady ? (
+          <a
+            href={founderHref}
+            onClick={handleCtaClick}
+            className="founder-savings-badge-anim founder-savings-badge-cta"
+            style={{ ...sx('savingsBadge'), textDecoration: 'none', cursor: 'pointer' }}
+            aria-label="Risparmi 180 euro all'anno, vai al checkout Founder Pass"
+          >
+            Risparmi €180/anno &middot; -60%
+          </a>
+        ) : (
+          <>
+            <span style={sx('savingsBadge')} className="founder-savings-badge-anim" aria-hidden="true">
+              Risparmi €180/anno &middot; -60%
+            </span>
+            <span style={s.srOnly}>Risparmi 180 euro all&apos;anno, sconto del 60 percento.</span>
+          </>
+        )}
       </div>
 
       {/* Klarna note · italic mascherato + sr-only IT naturale.
