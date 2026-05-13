@@ -25,8 +25,8 @@ const badges = [
         <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
       </svg>
     ),
-    label: 'Linee Guida 2025-2026',
-    desc: 'Pannelli basati su evidenze aggiornate',
+    label: 'Linee Guida',
+    desc: 'Pannelli basati su evidenze 2025-2026 aggiornate',
   },
   {
     icon: (
@@ -96,15 +96,22 @@ export default function TrustBadges() {
           .trust-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 500px) {
-          /* 4 cards in 1 row mobile (validate accessibility-lead opzione C):
-             desc nascosta visually ma resta a SR via sr-only clip · max compact. */
+          /* 4 cards in 1 row mobile · simmetria garantita (validate accessibility-lead):
+             - grid stretch · min-height card identica
+             - card flex column con justify-center per vertical center icon+label
+             - desc visually hidden ma SR-accessible (clip-rect)
+             - label "Linee Guida" senza anno (anno spostato in desc) per evitare 3-line wrap */
           .trust-grid {
             grid-template-columns: repeat(4, 1fr) !important;
             gap: 6px !important;
             padding: 0 4px;
+            align-items: stretch !important;
           }
           .trust-grid > .card-hover {
-            padding: 12px 4px !important;
+            padding: 14px 6px !important;
+            min-height: 110px !important;
+            justify-content: center !important;
+            gap: 6px;
           }
           .trust-grid > .card-hover svg {
             width: 24px !important;
@@ -112,7 +119,7 @@ export default function TrustBadges() {
           }
           .trust-grid .badge-label {
             font-size: 10px !important;
-            letter-spacing: 1px !important;
+            letter-spacing: 0.8px !important;
             line-height: 1.2 !important;
             margin-bottom: 0 !important;
           }
