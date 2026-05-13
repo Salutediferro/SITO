@@ -16,7 +16,7 @@ const SLIDES = [
     headlineAccent: 'OBBLIGATORIO',
     desc: 'Screening metabolico, epatico, renale, tiroideo e marziale. Include Testosterone e Vitamina D. Il pannello base che ogni atleta dovrebbe fare.',
     badge: `${FERRO_CORE.biomarkers.length} biomarcatori. Basato su EAU, ESC/EAS, KDIGO`,
-    img: '/panels/panel-core.jpg',
+    img: '/panels/panel-core.jpg?v=2',
     imgAlt: 'Bodybuilder muscoloso in palestra con torso scolpito',
   },
   {
@@ -27,7 +27,7 @@ const SLIDES = [
     headlineAccent: 'SOTTO CONTROLLO',
     desc: 'Asse androgenico completo, coagulazione, omocisteina. Per uomini sintomatici, in TRT o con storia di AAS.',
     badge: '12 biomarcatori. SHBG, Testosterone libero, LH, FSH, Estradiolo, PSA',
-    img: '/panels/panel-androgeno-v2.jpg',
+    img: '/panels/panel-androgeno-v2.jpg?v=2',
     imgAlt: 'Bodybuilder muscolare in allenamento',
   },
   {
@@ -38,7 +38,7 @@ const SLIDES = [
     headlineAccent: 'ATTENZIONE',
     desc: 'Rischio cardiovascolare avanzato. ApoB, Lp(a), VES, Acido urico. Per chi ha familiarità CVD, usa AAS o ha ipertensione.',
     badge: '4 biomarcatori. Basato su ESC/EAS 2025',
-    img: '/panels/panel-cuore.jpg',
+    img: '/panels/panel-cuore.jpg?v=2',
     imgAlt: 'Bodybuilder petto massiccio',
   },
   {
@@ -104,7 +104,7 @@ const SLIDES = [
     headlineAccent: 'SONO I TUOI ORMONI',
     desc: 'Asse ormonale femminile completo. Per peri-menopausa, amenorrea, PCOS, RED-S.',
     badge: '6 biomarcatori. FSH, Estradiolo, Progesterone, Prolattina, DHEA-S',
-    img: '/panels/panel-donna.jpg',
+    img: '/panels/panel-donna.jpg?v=2',
     imgAlt: 'Atleta donna forte',
   },
 ];
