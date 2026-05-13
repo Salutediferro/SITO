@@ -133,7 +133,7 @@ export default function Hero() {
 
   return (
     <section style={s.section}>
-      <div style={s.bgImage} />
+      <div style={s.bgImage} className="hero-bg-image" />
       <div style={s.bg} />
       <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
@@ -227,6 +227,14 @@ export default function Hero() {
         .hero-h1-len-xl { font-size: clamp(24px, 4.5vw, 48px); }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
+          /* Mobile: usa crop portrait dedicato + position center per mostrare soggetto+statua
+             senza zoom eccessivo. File 1000x1323 ratio 0.76:1 = 190KB.
+             backgroundSize cover + 50% center inquadra soggetto SDF al centro. */
+          .hero-bg-image {
+            background-image: url("/matteo_arnold-mobile.jpg?v=1") !important;
+            background-position: 50% center !important;
+            opacity: 0.9 !important;
+          }
         }
 
         /* Mobile fix Hero: tag letterSpacing ridotto + h1 più compatto + buttons full-width */
