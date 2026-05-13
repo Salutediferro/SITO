@@ -96,7 +96,15 @@ export default function TrustBadges() {
           .trust-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 500px) {
-          .trust-grid { grid-template-columns: 1fr !important; }
+          /* 2x2 grid mobile (validate accessibility-lead): mantiene tutti i 4 badge visibili
+             contemporaneamente per max trust signal. Padding ridotto + gap compact per fit 360px. */
+          .trust-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+          }
+          .trust-grid > .card-hover {
+            padding: 20px 14px !important;
+          }
         }
       `}</style>
     </section>

@@ -243,7 +243,7 @@ export default function Hero() {
              Mostra soggetto SDF + statua + tappeto rosso completi senza letterbox.
              Position 'center 35%' ancora un po' più in alto per evidenziare statua. */
           .hero-bg-image {
-            background-image: url("/matteo_arnold-mobile.jpg?v=3") !important;
+            background-image: url("/matteo_arnold-mobile.jpg?v=4") !important;
             background-size: cover !important;
             background-position: center 35% !important;
             opacity: 0.95 !important;

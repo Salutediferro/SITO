@@ -187,7 +187,13 @@ export default function HowItWorks() {
         <div style={s.tag}>Tre passi, zero complicazioni</div>
         <h2 id="hiw-heading" style={s.h2}>COME FUNZIONA</h2>
       </FadeUp>
-      <ol style={s.list}>
+      <ol
+        style={s.list}
+        className="hiw-list"
+        tabIndex={0}
+        role="region"
+        aria-label="Come funziona, 3 passi. Scorri orizzontalmente per esplorare."
+      >
         {steps.map((step, i) => (
           <FadeUp key={i} delay={i * 0.15} style={{ height: '100%' }}>
             <li style={{ listStyle: 'none', height: '100%', display: 'flex' }}>
@@ -247,7 +253,9 @@ export default function HowItWorks() {
           .hiw-pattern { display: none; }
         }
 
-        /* Mobile fix: watermark numero centrato + dimensioni ridotte + card max-width 90% e centrate */
+        /* Mobile fix: watermark numero centrato + dimensioni ridotte.
+           Layout horizontal scroll-snap per affiancare 3 step (era stack vertical = 1100px+).
+           Container <ol> keyboard-operable via tabIndex+role+aria-label (validate accessibility-lead). */
         @media (max-width: 600px) {
           .hiw-watermark {
             font-size: clamp(80px, 22vw, 110px) !important;
@@ -257,10 +265,34 @@ export default function HowItWorks() {
             transform: translateX(-50%) !important;
             opacity: 0.18 !important;
           }
-          .hiw-card {
-            max-width: 90% !important;
-            margin: 0 auto !important;
+          .hiw-list {
+            display: flex !important;
+            grid-template-columns: none !important;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px !important;
+            padding: 4px 20px 20px;
+            margin: 0 -20px !important;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            max-width: none !important;
           }
+          .hiw-list > * {
+            flex: 0 0 78%;
+            scroll-snap-align: center;
+            min-width: 0;
+          }
+          .hiw-card {
+            max-width: 100% !important;
+            margin: 0 !important;
+            min-height: 320px !important;
+            padding: 44px 20px 24px !important;
+          }
+        }
+        .hiw-list:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 4px;
+          border-radius: 8px;
         }
 
         .sr-only {
