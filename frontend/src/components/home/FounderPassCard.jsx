@@ -712,13 +712,13 @@ export default function FounderPassCard({ compact = false } = {}) {
       </div>
 
       {/* Klarna note · italic mascherato + sr-only IT naturale.
-          Rate disponibili: 3 (€39,96/mese) · 6 (€19,98/mese). */}
+          Klarna IT max 3 rate verificate (6/12 non disponibili). */}
       <p style={sx('installmentsNote')}>
         <span aria-hidden="true" style={sx('installmentsItalic')}>
-          <em>&asymp; &euro;119,88 una tantum &mdash; oppure paga in 3 o 6 rate (da &euro;19,98 al mese) con Klarna.</em>
+          <em>&asymp; &euro;119,88 una tantum &mdash; oppure paga in 3 rate da &euro;39,96 al mese con Klarna.</em>
         </span>
         <span style={s.srOnly}>
-          Circa 119 euro e 88 centesimi una tantum, oppure paga in 3 o 6 rate fino a 19 euro e 98 centesimi al mese con Klarna.
+          Circa 119 euro e 88 centesimi una tantum, oppure paga in 3 rate da 39 euro e 96 centesimi al mese con Klarna.
         </span>
       </p>
 
@@ -738,7 +738,7 @@ export default function FounderPassCard({ compact = false } = {}) {
         </li>
         <li style={s.featureItem}>
           <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>
-          <span>Pagamento dilazionato 3 o 6 rate con Klarna</span>
+          <span>Pagamento dilazionato 3 rate con Klarna</span>
         </li>
         <li style={s.featureItem}>
           <span style={s.featureCheckCircle} aria-hidden="true"><IconCheck /></span>

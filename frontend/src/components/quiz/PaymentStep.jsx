@@ -2,7 +2,10 @@ import { useEffect } from 'react';
 import { isValidReferral } from '../../constants/quiz';
 import { track } from '../../hooks/useGTM';
 import { PAYMENT_LINKS, buildPaymentUrl } from '../../constants/payments';
-import PricePromo from '../ui/PricePromo';
+
+// Prezzo reale Stripe link consulenza v2 (Membership + Consulenza mensile)
+// Stripe link: fZu9AT95ibVe0z3cqM14405 · €24,99/mese subscription · cancellabile
+const STRIPE_PRICE = 24.99;
 
 export default function PaymentStep({ quiz }) {
   const { state, setReferral, goBack } = quiz;
@@ -19,6 +22,8 @@ export default function PaymentStep({ quiz }) {
   const email = (state.a.contacts || {}).email || '';
   // URL Stripe Payment Link statico con email pre-compilata + reference id
   // (per tracking lead↔pagamento via webhook quando configurato).
+  // Nota: il referral non altera il prezzo Stripe — è solo tracking attribuzione.
+  // Se in futuro serve sconto referral reale, configurare promo code su Stripe.
   const checkoutUrl = buildPaymentUrl(PAYMENT_LINKS.consulenza, {
     email,
     referenceId: email || undefined,
@@ -26,10 +31,8 @@ export default function PaymentStep({ quiz }) {
 
   // Tracking GTM sincrono prima del redirect (l'<a href> nativo segue dopo)
   const handleCtaClick = () => {
-    track('payment_click', { has_referral: valid, price: valid ? 22 : 27 });
+    track('payment_click', { has_referral: valid, price: STRIPE_PRICE });
   };
-
-  const price = valid ? '22' : '27';
 
   return (
     <div>
@@ -119,21 +122,26 @@ export default function PaymentStep({ quiz }) {
               }
             `}</style>
           </div>
-          {valid && <div style={{ fontSize: 12, color: '#28a745', marginTop: 6 }}>&#10003; Sconto 10% applicato!</div>}
-          {referral && !valid && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>Codice non valido</div>}
+          <div role="status" aria-live="polite" style={{ minHeight: 18 }}>
+            {valid && <div style={{ fontSize: 12, color: '#28a745', marginTop: 6 }}>&#10003; Codice riconosciuto</div>}
+            {referral && !valid && <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>Codice non valido</div>}
+          </div>
         </div>
 
-        {/* Price — Promo €47 → €27 (€22 con referral) */}
+        {/* Price · €24,99/mese · prezzo reale Stripe (subscription cancellabile) */}
         <div style={{ textAlign: 'center', margin: '20px 0 16px' }}>
-          <PricePromo
-            variant="compact"
-            fullPrice={47}
-            promoPrice={Number(price)}
-            period="/mese"
-            currency="€"
-            label="1 mese di membership + consulenza"
-            badge="OFFERTA LANCIO"
-          />
+          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 12, letterSpacing: 3, color: 'var(--accent)', marginBottom: 8 }}>
+            MEMBERSHIP + CONSULENZA
+          </div>
+          <div aria-label="Prezzo: 24 euro e 99 centesimi al mese">
+            <span aria-hidden="true" style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(40px, 7vw, 56px)', color: 'var(--text)', lineHeight: 1, fontWeight: 900 }}>
+              €24,99
+            </span>
+            <span aria-hidden="true" style={{ fontSize: 16, color: 'var(--text-sec)', marginLeft: 6 }}>/mese</span>
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 8 }}>
+            Cancelli quando vuoi &middot; 1 consulenza dedicata inclusa ogni mese
+          </div>
         </div>
 
         {/* CTA: <a> stilizzato come button — semantica corretta per redirect a URL esterno (Stripe Checkout) */}
@@ -145,9 +153,9 @@ export default function PaymentStep({ quiz }) {
             marginTop: 16,
             textDecoration: 'none',
           }}
-          aria-label={`Prenota la tua call e paga ${price} euro`}
+          aria-label="Prenota la tua call, 24 euro e 99 centesimi al mese"
         >
-          PRENOTA LA TUA CALL · {price}€
+          PRENOTA LA TUA CALL &middot; €24,99/MESE
         </a>
 
       </div>

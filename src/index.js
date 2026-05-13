@@ -1237,7 +1237,7 @@ SDF È:
 - Tariffe convenzionate sui laboratori partner per tutto l'anno
 - Coordinamento continuo con il team SDF
 - Prezzo BLOCCATO A VITA al rinnovo (€9,99/mese per sempre)
-- Pagamento dilazionato 3 o 6 rate con Klarna
+- Pagamento dilazionato 3 rate con Klarna (€39,96/mese)
 - Solo 200 posti disponibili. Quando esauriti, prezzo torna a €197/anno
 
 ## 3. Membership annuale regolare · 197€/anno (≈ 16,42€/mese)
