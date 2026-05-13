@@ -166,20 +166,37 @@ const s = {
   },
   /* ── dots navigation ── */
   dots: {
-    display: 'flex', gap: 8, marginTop: 24, alignItems: 'center',
+    display: 'flex', gap: 0, marginTop: 24, alignItems: 'center',
+    flexWrap: 'wrap',
   },
+  /* Touch target ≥44px (WCAG 2.5.5 AAA): button 44x44, dot visivo 10px via background. */
   dot: {
-    width: 8, height: 8, borderRadius: '50%',
-    background: 'var(--border)', border: 'none', cursor: 'pointer',
-    transition: 'background 0.3s, transform 0.3s',
+    width: 44, height: 44, borderRadius: '50%',
+    background: 'transparent',
+    border: 'none', cursor: 'pointer',
     padding: 0,
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    transition: 'background 0.2s ease',
   },
   dotActive: {
+    width: 44, height: 44, borderRadius: '50%',
+    background: 'transparent',
+    border: 'none', cursor: 'pointer',
+    padding: 0,
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+  },
+  dotInner: {
+    display: 'block',
     width: 8, height: 8, borderRadius: '50%',
-    background: 'var(--accent)', border: 'none', cursor: 'pointer',
+    background: 'var(--border)',
+    transition: 'background 0.3s, transform 0.3s',
+  },
+  dotInnerActive: {
+    display: 'block',
+    width: 8, height: 8, borderRadius: '50%',
+    background: 'var(--accent)',
     transform: 'scale(1.3)',
     boxShadow: '0 0 8px var(--accent-glow)',
-    padding: 0,
   },
   /* ── text fade transition ── */
   textWrap: {
@@ -250,15 +267,20 @@ export default function PanelShowcase() {
             </div>
           </div>
 
-          {/* Dots */}
-          <div style={s.dots}>
-            {SLIDES.map((_, i) => (
+          {/* Dots · hit area 44x44 WCAG 2.5.5 AAA · dot visivo 8px centrato */}
+          <div style={s.dots} role="tablist" aria-label="Naviga tra i pannelli">
+            {SLIDES.map((slideData, i) => (
               <button
                 key={i}
                 style={i === active ? s.dotActive : s.dot}
                 onClick={() => goTo(i)}
-                aria-label={`Pannello ${i + 1}`}
-              />
+                aria-label={`Vai al pannello ${slideData.name}`}
+                aria-current={i === active ? 'true' : undefined}
+                role="tab"
+                aria-selected={i === active}
+              >
+                <span style={i === active ? s.dotInnerActive : s.dotInner} aria-hidden="true" />
+              </button>
             ))}
           </div>
         </FadeUp>

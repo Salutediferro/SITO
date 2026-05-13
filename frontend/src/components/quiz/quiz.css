@@ -193,10 +193,12 @@
   text-align: center;
 }
 .q-field-input {
-  width: 100%; padding: 13px 14px;
+  width: 100%; padding: 14px 14px;       /* WCAG 2.5.8 → 14+16+14 = 44px altezza target */
   background: var(--input-bg); border: 1.5px solid var(--border);
   border-radius: 6px; color: var(--text);
-  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif; font-size: 15px;
+  font-family: 'Manrope', 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;                        /* iOS zoom prevention (no zoom al focus) + WCAG 1.4.4 */
+  min-height: 44px;
   transition: border-color var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
 }
 .q-field-input:focus:not(:focus-visible) { outline: none; }
@@ -247,7 +249,7 @@
   transform: rotate(-45deg) translateY(-1px);
 }
 .q-privacy.on .q-pbox::after { display: block; }
-.q-ptxt { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
+.q-ptxt { font-size: 14px; color: var(--text-sec); line-height: 1.5; }
 .q-ptxt a { color: var(--accent); text-decoration: none; }
 
 /* ───── Consensi GDPR · pattern native checkbox (WCAG 4.1.2 Name/Role/Value + 2.1.1 keyboard) ─────

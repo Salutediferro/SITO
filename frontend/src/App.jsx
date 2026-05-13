@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import SkipLink from './components/layout/SkipLink';
 import RouteHelmet from './components/layout/RouteHelmet';
+import StickyCTA from './components/layout/StickyCTA';
 import CookieBanner from './components/cookie/CookieBanner';
 import ScrollProgress from './components/ui/ScrollProgress';
 import HomePage from './pages/HomePage';
@@ -58,6 +59,7 @@ export default function App() {
         </Routes>
       </main>
       {!hideChrome && <Footer />}
+      {!hideChrome && <StickyCTA />}
       <CookieBanner />
     </>
   );

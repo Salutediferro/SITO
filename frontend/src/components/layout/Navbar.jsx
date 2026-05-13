@@ -29,7 +29,8 @@ const styles = {
   linkActive: { color: 'var(--accent)' },
   cta: {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-    padding: '10px 24px',
+    padding: '12px 24px',                  /* WCAG 2.5.8 → min-height 44 garantito */
+    minHeight: 44,
     background: 'var(--accent-fill)', border: 'none', borderRadius: 6,
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 2,
     color: 'white', cursor: 'pointer', textDecoration: 'none',
@@ -38,7 +39,9 @@ const styles = {
   },
   burger: {
     display: 'none', background: 'none', border: 'none',
-    cursor: 'pointer', padding: 4,
+    cursor: 'pointer', padding: 10,        /* WCAG 2.5.8 → 28 (icon) + 10*2 = 48px hit area */
+    minWidth: 48, minHeight: 48,
+    alignItems: 'center', justifyContent: 'center',
   },
   mobileMenu: {
     position: 'fixed', top: 72, left: 0, right: 0, bottom: 0,

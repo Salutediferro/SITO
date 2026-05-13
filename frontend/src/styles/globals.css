@@ -98,6 +98,22 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; height: auto; }
 button { font-family: inherit; }
 
+/* ───── Mobile optimization globale ───── */
+/* iOS Safari zoom prevention: input/select/textarea con font ≥16px non triggera zoom automatico al focus. */
+input, select, textarea {
+  font-size: max(16px, 1em);
+}
+
+/* Riduzione padding orizzontale sezioni su mobile (le sezioni con padding 40px hardcoded restano OK su desktop) */
+@media (max-width: 600px) {
+  /* Riduce padding orizzontale 40 → 16-20px per sfruttare viewport stretto */
+  section[style*="padding: clamp(64px, 9vw, 120px) 40px"],
+  section[style*="padding: clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px)"] {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
 /* ───── Display font defaults to Black weight 900 + UPPERCASE (massimo impatto "ferro") ───── */
 /* Antonio supporta minuscole vere (Bebas no): forziamo uppercase per coerenza brand. */
 [style*="Antonio"], .gradient-text, h1, h2, .q-question, .q-h1 {
@@ -211,12 +227,14 @@ button { font-family: inherit; }
   color: var(--text);
 }
 
-/* ───── CTA Sticky Mobile ───── */
+/* ───── CTA Sticky Mobile · WCAG 2.5.3 Label in Name + 2.4.11 Focus Not Obscured ───── */
 .sticky-cta {
   position: fixed; bottom: 0; left: 0; right: 0;
-  padding: 12px 20px;
-  background: rgba(10,10,12,0.95);
-  backdrop-filter: blur(12px);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  background: rgba(10,10,12,0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--border);
   z-index: 40;
   display: none;
@@ -225,8 +243,32 @@ button { font-family: inherit; }
 }
 .sticky-cta.visible { transform: translateY(0); }
 
+.sticky-cta-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%;
+  min-height: 48px;                       /* WCAG 2.5.5 AAA touch target */
+  padding: 14px 24px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  border: none; border-radius: 8px;
+  color: white;
+  font-family: 'Antonio', 'Bebas Neue', sans-serif;
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 2.5px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(236,71,87,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.sticky-cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* Quando sticky CTA visibile, riserva spazio in fondo a main per non coprire ultimo contenuto */
 @media (max-width: 768px) {
   .sticky-cta { display: block; }
+  #main-content.has-sticky-cta { padding-bottom: 92px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta { transition: none; }
+  .sticky-cta-btn:active { transform: none; }
 }
 
 /* ───── Skip link · WCAG 2.4.1 ───── */

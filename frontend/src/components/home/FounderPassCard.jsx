@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import useFounderSlots from '../../hooks/useFounderSlots';
 import { PAYMENT_LINKS } from '../../constants/payments';
 
@@ -610,7 +610,25 @@ const COMPACT_OVERRIDES = {
   cta: { padding: '14px 28px', fontSize: 15, letterSpacing: 2.5 },
 };
 
-export default function FounderPassCard({ compact = false } = {}) {
+/**
+ * Hook responsivo: attiva compact mode su mobile <=600px automaticamente.
+ * Riusa COMPACT_OVERRIDES esistenti (no duplicazione regole CSS).
+ */
+function useAutoCompact(forced) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (forced) return undefined; // se già forzato, niente listener
+    const mq = window.matchMedia('(max-width: 600px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, [forced]);
+  return forced || isMobile;
+}
+
+export default function FounderPassCard({ compact: compactProp = false } = {}) {
+  const compact = useAutoCompact(compactProp);
   const { slotsRemaining, slotsTotal, urgency, loading, error, checkSlotsBeforeRedirect } = useFounderSlots();
   const [soldOut, setSoldOut] = useState(false);
   const soldOutRef = useRef(null);
