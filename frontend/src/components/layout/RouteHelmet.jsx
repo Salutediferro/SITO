@@ -16,6 +16,7 @@ const TITLES = {
   '/membership': 'Founder Pass · Membership — Salute di Ferro',
   '/test': 'Test di Ferro — Salute di Ferro',
   '/privacy': 'Privacy Policy — Salute di Ferro',
+  '/consenso-informato': 'Consenso Informato — Salute di Ferro',
   '/payment-success': 'Pagamento confermato — Salute di Ferro',
   '/coming-soon': 'Coming Soon — Salute di Ferro',
 };

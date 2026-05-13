@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { track } from '../../hooks/useGTM';
 import { sendLead } from '../../services/api';
 import { getSegment } from '../../constants/quiz';
@@ -7,15 +7,26 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+]?[\d\s\-().]{7,}$/;
 
 export default function ContactsStep({ quiz }) {
-  const { state, setContact, togglePrivacy, goNext, goBack, setSent, score, scoreLevel, tags, suggestedPanels } = quiz;
+  const { state, setContact, togglePrivacy, toggleMarketing, goNext, goBack, setSent, score, scoreLevel, tags, suggestedPanels } = quiz;
   const [loading, setLoading] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+  const consentHealthRef = useRef(null);
   const c = state.a.contacts || {};
   const emailValid = !c.email || EMAIL_RE.test(c.email);
   const phoneValid = !c.phone || PHONE_RE.test(c.phone);
   const allOk = c.name && c.phone && c.email && state.privacy && EMAIL_RE.test(c.email) && PHONE_RE.test(c.phone);
 
   const handleNext = async () => {
+    // Guida WCAG: se manca solo il consenso obbligatorio, focus + errore sr-friendly invece di no-op silenzioso
+    if (c.name && c.phone && c.email && EMAIL_RE.test(c.email) && PHONE_RE.test(c.phone) && !state.privacy) {
+      setConsentError(true);
+      requestAnimationFrame(() => {
+        if (consentHealthRef.current) consentHealthRef.current.focus();
+      });
+      return;
+    }
     if (!allOk) return;
+    setConsentError(false);
 
     if (!state.sent) {
       setLoading(true);
@@ -32,6 +43,10 @@ export default function ContactsStep({ quiz }) {
         assunzione: state.a.assunzione || [], analisi: state.a.analisi || '',
         tags, score, score_level: scoreLevel.level, score_name: scoreLevel.name,
         suggested_panels: suggestedPanels,
+        // GDPR consensi (art. 9 obbligatorio per dati salute, art. 6.1.a marketing opzionale)
+        consent_health: true, // sempre true qui (bloccante per submit)
+        consent_marketing: !!state.marketingConsent,
+        consent_timestamp: new Date().toISOString(),
       };
 
       track('quiz_submit', { has_referral: !!state.a.referral, referral: state.a.referral || '' });
@@ -106,18 +121,60 @@ export default function ContactsStep({ quiz }) {
 
       <div className="q-sep" />
 
-      <div
-        className={`q-privacy${state.privacy ? ' on' : ''}`}
-        onClick={togglePrivacy}
-      >
-        <div className="q-pbox" />
-        <p className="q-ptxt">
-          Dichiaro di aver letto la{' '}
-          <a href="/privacy" target="_blank" rel="noopener" onClick={e => e.stopPropagation()}>
-            Privacy Policy
-          </a>{' '}
-          (art. 13 GDPR) e acconsento al trattamento dei miei dati personali.
-        </p>
+      {/* Consensi GDPR · pattern native checkbox (WCAG 4.1.2 Name/Role/Value + 2.1.1 keyboard)
+          - #1 obbligatorio: consenso esplicito art. 9 GDPR (dati salute)
+          - #2 facoltativo: consenso art. 6.1.a (comunicazioni commerciali) */}
+      <div className="q-consent-group">
+        <div className={`q-consent-row${state.privacy ? ' on' : ''}${consentError ? ' error' : ''}`}>
+          <input
+            ref={consentHealthRef}
+            id="consent-health"
+            type="checkbox"
+            className="q-consent-input"
+            checked={state.privacy}
+            onChange={() => { togglePrivacy(); if (consentError) setConsentError(false); }}
+            aria-required="true"
+            aria-invalid={consentError ? 'true' : 'false'}
+            aria-describedby={consentError ? 'consent-health-error' : undefined}
+          />
+          <label htmlFor="consent-health" className="q-consent-label">
+            <span className="q-consent-box" aria-hidden="true" />
+            <span>
+              Ho letto l&apos;
+              <a href="/privacy" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+                Informativa Privacy
+              </a>
+              {' '}e il{' '}
+              <a href="/consenso-informato" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+                Consenso Informato
+              </a>
+              {' '}e presto il mio consenso esplicito (art. 9 GDPR) al trattamento dei dati relativi alla salute per le finalit&agrave; di coordinamento e supporto non clinico.
+            </span>
+          </label>
+        </div>
+        {consentError && (
+          <p id="consent-health-error" className="q-consent-error" role="alert">
+            Per procedere &egrave; necessario prestare il consenso al trattamento dei dati relativi alla salute.
+          </p>
+        )}
+
+        <div className={`q-consent-row${state.marketingConsent ? ' on' : ''}`}>
+          <input
+            id="consent-marketing"
+            type="checkbox"
+            className="q-consent-input"
+            checked={!!state.marketingConsent}
+            onChange={() => toggleMarketing()}
+          />
+          <label htmlFor="consent-marketing" className="q-consent-label">
+            <span className="q-consent-box" aria-hidden="true" />
+            <span>
+              Acconsento all&apos;invio di comunicazioni commerciali, newsletter e informazioni
+              promozionali sui servizi SDF (art. 6.1.a GDPR).
+              <span className="q-consent-optional">facoltativo</span>
+            </span>
+          </label>
+        </div>
       </div>
 
       <button

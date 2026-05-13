@@ -44,6 +44,18 @@ export default function Footer() {
           <Link to="/chi-siamo" style={s.link}>Chi Siamo</Link>
           <Link to="/membership" style={s.link}>Membership</Link>
           <Link to="/privacy" style={s.link}>Privacy Policy</Link>
+          <Link to="/consenso-informato" style={s.link}>Consenso Informato</Link>
+          <a
+            href="https://www.garanteprivacy.it"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={s.link}
+          >
+            Reclamo Garante
+            <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+              (apre in nuova scheda)
+            </span>
+          </a>
           <Link to="/test" style={s.link}>Test di Ferro</Link>
         </div>
 

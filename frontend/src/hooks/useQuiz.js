@@ -14,7 +14,7 @@ function loadState() {
       if (p && typeof p.step === 'number') return p;
     }
   } catch (e) {}
-  return { step: 0, a: {}, privacy: false, sent: false, startTime: null, stepStartTime: null };
+  return { step: 0, a: {}, privacy: false, marketingConsent: false, sent: false, startTime: null, stepStartTime: null };
 }
 
 function saveState(state) {
@@ -38,6 +38,9 @@ function reducer(state, action) {
       break;
     case 'TOGGLE_PRIVACY':
       next = { ...state, privacy: !state.privacy };
+      break;
+    case 'TOGGLE_MARKETING':
+      next = { ...state, marketingConsent: !state.marketingConsent };
       break;
     case 'SET_SENT':
       next = { ...state, sent: true };
@@ -155,6 +158,10 @@ export default function useQuiz() {
     dispatch({ type: 'TOGGLE_PRIVACY' });
   }, []);
 
+  const toggleMarketing = useCallback(() => {
+    dispatch({ type: 'TOGGLE_MARKETING' });
+  }, []);
+
   const setReferral = useCallback((value) => {
     dispatch({ type: 'SET_REFERRAL', value: value.trim() });
   }, []);
@@ -215,7 +222,7 @@ export default function useQuiz() {
     panelScores, suggestedPanels,
     progressPct, stepNum,
     go, goNext, goBack, startQuiz, pick,
-    setContact, togglePrivacy, setReferral, setSent,
+    setContact, togglePrivacy, toggleMarketing, setReferral, setSent,
     getShuffledOpts, dispatch,
   };
 }

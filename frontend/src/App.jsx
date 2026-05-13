@@ -11,6 +11,7 @@ import PannelliPage from './pages/PannelliPage';
 import ChiSiamoPage from './pages/ChiSiamoPage';
 import MembershipPage from './pages/MembershipPage';
 import PrivacyPage from './pages/PrivacyPage';
+import ConsensoInformatoPage from './pages/ConsensoInformatoPage';
 import TestPage from './pages/TestPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import ComingSoonPage from './pages/ComingSoonPage';
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/chi-siamo" element={<ChiSiamoPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/consenso-informato" element={<ConsensoInformatoPage />} />
           <Route path="/test" element={<TestPage />} />
           <Route path="/payment-success" element={<PaymentSuccessPage />} />
           <Route path="/coming-soon" element={<ComingSoonPage />} />
