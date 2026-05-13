@@ -53,11 +53,11 @@ const s = {
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    // Foto FIBO: soggetto SDF da dietro (centro-sinistra) che guarda statua bronzo bodybuilder (destra).
-    // Tappeto rosso, tubature industriali, folla sullo sfondo. Quasi-quadrata 1920×~1900.
-    backgroundImage: 'url("/hero-fibo.jpg")',
-    // backgroundPosition: 30% center → sposta inquadratura a sinistra, soggetto SDF resta in
-    // vista a sinistra del heading centrato, statua bronzo verso destra ma non sotto la CTA.
+    // Foto FIBO v2 (cropped): rimossi 516px top con soffitto padiglione → 1920×1397 cinematic 1.375:1.
+    // Soggetto SDF da dietro (centro-sinistra) + statua bronzo bodybuilder (destra) + tappeto rosso.
+    backgroundImage: 'url("/hero-fibo-v2.jpg")',
+    // backgroundPosition: 30% center → soggetto SDF a sinistra del heading centrato,
+    // statua bronzo verso destra ma non sotto la CTA. Crop top già fatto in src.
     backgroundSize: 'cover', backgroundPosition: '30% center',
     opacity: 0.85,
     // Iron Blood color grading: brightness 0.85 (scurisce hotspot luci padiglione),
