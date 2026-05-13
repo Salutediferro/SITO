@@ -39,7 +39,9 @@ const s = {
     position: 'absolute', inset: 0,
     // Overlay più trasparente al centro (era 0.55 → 0.42) per far vedere meglio maglietta SDF.
     // Top + bottom restano densi per garantire contrasto leggibilità heading + sub text.
-    background: 'linear-gradient(180deg, rgba(10,10,12,0.88) 0%, rgba(10,10,12,0.42) 45%, rgba(10,10,12,0.55) 70%, rgba(10,10,12,0.88) 100%)',
+    // Overlay più scuro al centro (0.42 → 0.60) per garantire contrast WCAG AA 4.5:1
+    // sul heading rotante su nuovo bg FIBO caotico (statua bronzo + folla + tappeto rosso).
+    background: 'linear-gradient(180deg, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0.60) 45%, rgba(10,10,12,0.68) 70%, rgba(10,10,12,0.92) 100%)',
     zIndex: 1,
   },
   meshBg: {
@@ -51,14 +53,17 @@ const s = {
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    // Foto: maglietta SDF nera vista da dietro, logo centrato sulla schiena.
-    // Posizione 'center 45%' centra il logo SDF nel framing visibile (foto verticale 960x1280, soggetto al 50-60% verticale).
-    backgroundImage: 'url("/hero-sdf-shirt.jpg")',
-    // Zoom controllato (height 140% sezione) per dare overflow verticale sufficiente a spostare il logo SDF
-    // sopra la progress bar Founder. Cover puro lasciava solo ~180px di gioco su sezione 1913px (insufficiente).
-    backgroundSize: 'auto 140%', backgroundPosition: 'center 72%',
-    opacity: 0.78,
-    filter: 'brightness(1.15) contrast(1.2) saturate(1.0)',
+    // Foto FIBO: soggetto SDF da dietro (centro-sinistra) che guarda statua bronzo bodybuilder (destra).
+    // Tappeto rosso, tubature industriali, folla sullo sfondo. Quasi-quadrata 1920×~1900.
+    backgroundImage: 'url("/hero-fibo.jpg")',
+    // backgroundPosition: 30% center → sposta inquadratura a sinistra, soggetto SDF resta in
+    // vista a sinistra del heading centrato, statua bronzo verso destra ma non sotto la CTA.
+    backgroundSize: 'cover', backgroundPosition: '30% center',
+    opacity: 0.85,
+    // Iron Blood color grading: brightness 0.85 (scurisce hotspot luci padiglione),
+    // contrast 1.3 (definizione muscoli/statua), saturate 1.25 (intensifica rosso tappeto + maglietta),
+    // hue-rotate -3deg (push reds verso crimson coerente palette).
+    filter: 'brightness(0.85) contrast(1.3) saturate(1.25) hue-rotate(-3deg)',
   },
   // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
   // Lasciate top/bottom scure per leggibilità heading + sub text.
@@ -80,6 +85,9 @@ const s = {
     letterSpacing: 2, color: 'var(--text)', marginBottom: 24,
     minHeight: 'clamp(80px, 14vw, 150px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
+    // Text-shadow di sicurezza per hotspot luminosi locali sul nuovo bg FIBO (luci padiglione,
+    // tappeto rosso saturo). Garantisce leggibilità anche se overlay locale è insufficiente.
+    textShadow: '0 2px 12px rgba(0,0,0,0.7)',
   },
   phrase: {
     transition: 'opacity 0.5s ease, transform 0.5s ease',
