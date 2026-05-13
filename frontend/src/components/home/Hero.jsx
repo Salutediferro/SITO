@@ -53,9 +53,9 @@ const s = {
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    // Foto FIBO v2 (cropped): rimossi 516px top con soffitto padiglione → 1920×1397 cinematic 1.375:1.
+    // Foto FIBO v3 (cropped, persona rimossa tra gambe statua): top 516px tagliato → 1920×1397 cinematic 1.375:1.
     // Soggetto SDF da dietro (centro-sinistra) + statua bronzo bodybuilder (destra) + tappeto rosso.
-    backgroundImage: 'url("/hero-fibo-v2.jpg")',
+    backgroundImage: 'url("/hero-fibo-v3.jpg")',
     // backgroundPosition: 30% center → soggetto SDF a sinistra del heading centrato,
     // statua bronzo verso destra ma non sotto la CTA. Crop top già fatto in src.
     backgroundSize: 'cover', backgroundPosition: '30% center',
