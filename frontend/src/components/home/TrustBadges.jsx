@@ -43,6 +43,7 @@ const s = {
   section: {
     padding: 'clamp(48px, 7vw, 96px) 40px',
     textAlign: 'center',
+    boxSizing: 'border-box',
   },
   label: {
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4,
@@ -75,7 +76,7 @@ const s = {
 
 export default function TrustBadges() {
   return (
-    <section style={s.section}>
+    <section style={s.section} className="trust-section">
       <FadeUp>
         <div style={s.label}>BASATO SU EVIDENZE SCIENTIFICHE</div>
         <div style={s.grid} className="trust-grid">
@@ -97,14 +98,18 @@ export default function TrustBadges() {
         }
         @media (max-width: 500px) {
           /* 4 cards in 1 row mobile · simmetria garantita (validate accessibility-lead):
-             - grid stretch · min-height card identica
-             - card flex column con justify-center per vertical center icon+label
-             - desc visually hidden ma SR-accessible (clip-rect)
-             - label "Linee Guida" senza anno (anno spostato in desc) per evitare 3-line wrap */
+             - section padding ridotto a 16px laterale per max larghezza grid
+             - grid 100% width + margin auto · padding 0 (no asymmetria interna)
+             - card stretch + min-height + justify-center per vertical center
+             - desc SR-accessible via clip-rect · label senza anno */
+          .trust-section { padding: 48px 16px !important; }
           .trust-grid {
             grid-template-columns: repeat(4, 1fr) !important;
             gap: 6px !important;
-            padding: 0 4px;
+            padding: 0 !important;
+            margin: 0 auto !important;
+            max-width: 100% !important;
+            width: 100% !important;
             align-items: stretch !important;
           }
           .trust-grid > .card-hover {
