@@ -335,18 +335,20 @@ export default {
     <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px;">Il tuo profilo \u00e8 pronto</div>
   </div>
   <div style="padding:28px;">
-    <p style="font-size:18px;font-weight:bold;margin:0 0 16px;">${firstName}, il tuo profilo salute \u00e8 pronto.</p>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Abbiamo analizzato le tue risposte e identificato le aree su cui concentrarti:</p>
+    <p style="font-size:18px;font-weight:bold;margin:0 0 16px;">${firstName}, il tuo profilo di Ferro \u00e8 pronto.</p>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Abbiamo analizzato le tue risposte e identificato le aree su cui hai bisogno di aiuto:</p>
     ${tags.length ? `<div style="margin:16px 0;">${tagsBadges}</div>` : ''}
     <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il prossimo passo \u00e8 una <strong style="color:#F5F5F5;">consulenza di 30 minuti</strong> dove analizzeremo insieme il tuo profilo e ti daremo un piano personalizzato di analisi da fare.</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:20px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COSA INCLUDE</div>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi mirate</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Corsia preferenziale su esami, visite, trattamenti</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Coach di Ferro al tuo servizio</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Prezzo bloccato A VITA al rinnovo</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA LA TUA CALL</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 da 9,99\u20ac/mese (Founder)</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">Clicca il bottone, completa il pagamento sicuro con Stripe e prenota il tuo slot su Calendly.</p>
   </div>
@@ -367,7 +369,7 @@ export default {
             body: JSON.stringify({
               from: 'Salute di Ferro <noreply@salutediferro.com>',
               to: [data.email],
-              subject: `${firstName}, il tuo profilo salute \u00e8 pronto \u2014 prenota la tua call`,
+              subject: `${firstName}, il tuo profilo di Ferro \u00e8 pronto \u2014 prenota la tua call`,
               html: followUpHtml,
             }),
           });
@@ -864,7 +866,7 @@ export default {
         const calendlyUrl = 'https://calendly.com/salutediferro-info/30min';
 
         const subject = isSubscription
-          ? `${safeFirstName}, sei dentro. Ecco cosa succede prima della consulenza.`
+          ? `Membership attiva — Salute di Ferro`
           : `${safeFirstName}, il tuo pagamento è confermato — prenota la consulenza`;
 
         const payEmailHtml = buildMail2Html(isSubscription, {
@@ -1134,17 +1136,19 @@ export default {
   </div>
   <div style="padding:28px;">
     <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${firstName}, hai dimenticato qualcosa?</p>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo salute \u00e8 pronto, ma non hai ancora prenotato la tua consulenza con il team di Salute di Ferro.</p>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo di Ferro \u00e8 pronto, ma non hai ancora prenotato la tua consulenza con il team di Salute di Ferro.</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:20px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COSA TI ASPETTA</div>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi mirate</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Corsia preferenziale su esami, visite, trattamenti</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Coach di Ferro al tuo servizio</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Prezzo bloccato A VITA al rinnovo</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 da 9,99\u20ac/mese (Founder)</a>
     </div>
-    <p style="font-size:12px;color:#888;text-align:center;">I posti disponibili si esauriscono velocemente.</p>
+    <p style="font-size:12px;color:#888;text-align:center;">Founder Pass in esaurimento \u2014 \u20ac9,99/mese A VITA</p>
   </div>
   <div style="background:#141414;padding:14px 28px;font-size:11px;color:#555;border-top:1px solid #2A2A2A;">
     Salute di Ferro \u2014 <a href="https://salutediferro.com" style="color:#C82020;text-decoration:none;">salutediferro.com</a>
@@ -1224,27 +1228,27 @@ SDF È:
 
 # I PRODOTTI E I PREZZI
 
-## 1. Membership + Consulenza · 24,99€/mese (mensile)
-- 1 mese di accesso completo alla piattaforma
-- 1 consulenza di 30 minuti con il Coach di Ferro
-- Pannello analisi personalizzato consigliato
-- Tariffe convenzionate sui laboratori partner per quel mese
-- Rinnovo automatico mensile via Stripe (cancelli quando vuoi)
-
-## 2. Founder Pass annuale · 119,88€/anno (≈ 9,99€/mese) · LIMITATO 200 POSTI
+## 1. Founder Pass annuale · 119,88€/anno (≈ 9,99€/mese) · LIMITATO 200 POSTI
 - Accesso completo alla piattaforma per 12 mesi
-- Consulenza con il Coach di Ferro inclusa
-- Tariffe convenzionate sui laboratori partner per tutto l'anno
+- Consulenza con il tuo Coach di Ferro inclusa
+- Tariffe convenzionate nei laboratori partner per tutto l'anno
 - Coordinamento continuo con il team SDF
 - Prezzo BLOCCATO A VITA al rinnovo (€9,99/mese per sempre)
-- Pagamento dilazionato 3 rate con Klarna (€39,96/mese)
-- Solo 200 posti disponibili. Quando esauriti, prezzo torna a €197/anno
+- Pagamento dilazionato 3 rate con Klarna
+- Solo 200 posti disponibili. Una volta esauriti, il prezzo tornerà a €197/anno
+
+## 2. Membership + Consulenza · 24,99€/mese (mensile)
+- 1 mese di accesso completo alla piattaforma
+- 1 consulenza di 30 minuti con il tuo Coach di Ferro
+- Pannello analisi personalizzato consigliato
+- Tariffe convenzionate nei laboratori partner per un mese
+- Rinnovo mensile automatico via Stripe (cancelli quando vuoi)
 
 ## 3. Membership annuale regolare · 197€/anno (≈ 16,42€/mese)
-- Identico al Founder Pass come servizio
-- Prezzo applicato quando i 200 posti Founder sono esauriti
-- Rinnovo automatico annuale via Stripe
-- Risparmio rispetto al mensile (16,42€ vs 24,99€)
+- Servizio analogo al Founder Pass
+- Prezzo applicato quando i 200 posti Founder verranno esauriti
+- Rinnovo annuale automatico via Stripe
+- Risparmio del 35% rispetto alla Membership mensile (16,42€ vs 24,99€)
 
 # IL PROCESSO DELL'UTENTE
 1. Compila il questionario online (10 domande, 2 minuti) → "Test di Ferro" o "Profilo Metabolico"
@@ -1308,7 +1312,7 @@ Se ti chiedono "sei un umano?", rispondi onestamente: "Sono l'Agente di Ferro, u
 # COSA RISPONDERE AGLI INDECISI
 "Mi serve davvero?" → "Se hai compilato il test e sei qui, qualcosa ti ha portato. La domanda vera è: vuoi continuare a indovinare o vuoi un piano basato su dati oggettivi?"
 
-"Costa troppo" → "9,99€/mese con il Founder Pass è meno di un caffè a settimana. Quello che ti dai in cambio? 30 minuti con un Coach che ti taglia su misura il pannello + 12 mesi di accesso + tariffe convenzionate sui laboratori + prezzo bloccato A VITA al rinnovo. Se il mensile è meglio per te, 24,99€/mese: cancelli quando vuoi. Decidi tu cosa vale di più."
+"Costa troppo" → "Costa troppo? 9,99€/mese con Founder Pass è quello che spendi in 2 caffè a settimana. Qui ti danno un Coach, pannelli mirati, tariffe scontate nei laboratori convenzionati per 12 mesi e prezzo bloccato A VITA. In più, accesso a una rete di Medici di Ferro che capiscono chi si allena. Ora chiediti: è ancora troppo? I posti sono 200, finiscono presto."
 
 "Posso fare le analisi da solo?" → "Certo. Ma allora paghi prezzo pieno, scegli a caso quali marker prendere e nessuno ti aiuta a leggerli. Noi ti diamo: pannello mirato + tariffa convenzionata + un medico che parla la tua lingua. Decidi tu cosa vale di più."
 
@@ -1340,7 +1344,7 @@ function buildMail2Html(isSubscription, data) {
   const { firstName, amountPaid, paidAt, calendlyUrl, customerEmail } = data;
   const productLabel = isSubscription ? 'MEMBERSHIP ATTIVA' : 'PAGAMENTO CONFERMATO';
   const heroTitle = isSubscription
-    ? `${firstName}, sei dentro.`
+    ? `${firstName}, sei di Ferro.`
     : `${firstName}, il tuo pagamento è confermato.`;
   const heroSub = isSubscription
     ? 'Da qui in poi non sei più solo.'
