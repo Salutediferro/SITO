@@ -48,16 +48,16 @@ export default function PaymentStep({ quiz }) {
 
       <div className="q-ty-h">
         {name ? <>{name},<br /></> : null}
-        IL TUO PROFILO<br /><em>È PRONTO.</em>
+        IL TUO PROFILO DI FERRO<br /><em>È PRONTO.</em>
       </div>
 
       <p className="q-ty-p">
-        Abbiamo analizzato le tue risposte e identificato le aree da controllare. Ora il passo più importante: ricevere il tuo piano di analisi personalizzato.
+        Abbiamo analizzato le tue risposte e identificato le aree su cui hai bisogno di aiuto:
       </p>
 
       <div style={{ margin: '28px 0', padding: 24, background: 'var(--bg-card)', borderRadius: 8, border: '1.5px solid var(--border)', textAlign: 'left' }}>
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4, color: 'var(--accent)', marginBottom: 12 }}>COSA INCLUDE LA CALL</div>
+          <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 14, letterSpacing: 4, color: 'var(--accent)', marginBottom: 12 }}>COSA INCLUDE</div>
           <div style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 'clamp(22px, 4vw, 32px)', color: 'var(--text)', lineHeight: 1.2 }}>
             IL TUO PIANO DI ANALISI<br />PERSONALIZZATO
           </div>
@@ -65,9 +65,11 @@ export default function PaymentStep({ quiz }) {
 
         <div style={{ marginBottom: 20, padding: '0 8px' }}>
           {[
-            'Analisi completa del tuo profilo e delle tue risposte',
-            'Piano personalizzato di analisi da fare',
-            'Guida passo-passo su come procedere, senza sbatti',
+            'Analisi completa del tuo profilo',
+            'Piano personalizzato di analisi mirate',
+            'Corsia preferenziale su esami, visite, trattamenti',
+            'Coach di Ferro al tuo servizio',
+            'Prezzo bloccato A VITA al rinnovo',
           ].map((text, i) => (
             <div key={i} style={{ display: 'flex', gap: 13, alignItems: 'flex-start', marginBottom: 11 }}>
               <span style={{ fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 17, color: 'var(--accent)', minWidth: 22, lineHeight: 1.4 }}>
@@ -153,10 +155,14 @@ export default function PaymentStep({ quiz }) {
             marginTop: 16,
             textDecoration: 'none',
           }}
-          aria-label="Prenota la tua call, 24 euro e 99 centesimi al mese"
+          aria-label="Prenota la call e diventa Founder, 24 euro e 99 centesimi al mese"
         >
-          PRENOTA LA TUA CALL &middot; €24,99/MESE
+          PRENOTA LA CALL - DIVENTA FOUNDER
         </a>
+
+        <p style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', marginTop: 12, lineHeight: 1.5 }}>
+          Clicca il bottone, completa il pagamento sicuro con Stripe e prenota il tuo slot su Calendly.
+        </p>
 
       </div>
 
