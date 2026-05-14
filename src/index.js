@@ -335,20 +335,18 @@ export default {
     <div style="color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px;">Il tuo profilo \u00e8 pronto</div>
   </div>
   <div style="padding:28px;">
-    <p style="font-size:18px;font-weight:bold;margin:0 0 16px;">${firstName}, il tuo profilo di Ferro \u00e8 pronto.</p>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Abbiamo analizzato le tue risposte e identificato le aree su cui hai bisogno di aiuto:</p>
+    <p style="font-size:18px;font-weight:bold;margin:0 0 16px;">${firstName}, il tuo profilo salute \u00e8 pronto.</p>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Abbiamo analizzato le tue risposte e identificato le aree su cui concentrarti:</p>
     ${tags.length ? `<div style="margin:16px 0;">${tagsBadges}</div>` : ''}
     <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il prossimo passo \u00e8 una <strong style="color:#F5F5F5;">consulenza di 30 minuti</strong> dove analizzeremo insieme il tuo profilo e ti daremo un piano personalizzato di analisi da fare.</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:20px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COSA INCLUDE</div>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi mirate</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Corsia preferenziale su esami, visite, trattamenti</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Coach di Ferro al tuo servizio</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Prezzo bloccato A VITA al rinnovo</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 da 9,99\u20ac/mese (Founder)</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL — da 9,99€/mese (Founder)</a>
     </div>
     <p style="font-size:12px;color:#888;text-align:center;">Clicca il bottone, completa il pagamento sicuro con Stripe e prenota il tuo slot su Calendly.</p>
   </div>
@@ -369,7 +367,7 @@ export default {
             body: JSON.stringify({
               from: 'Salute di Ferro <noreply@salutediferro.com>',
               to: [data.email],
-              subject: `${firstName}, il tuo profilo di Ferro \u00e8 pronto \u2014 prenota la tua call`,
+              subject: `${firstName}, il tuo profilo salute \u00e8 pronto \u2014 prenota la tua call`,
               html: followUpHtml,
             }),
           });
@@ -866,7 +864,7 @@ export default {
         const calendlyUrl = 'https://calendly.com/salutediferro-info/30min';
 
         const subject = isSubscription
-          ? `Membership attiva — Salute di Ferro`
+          ? `${safeFirstName}, sei dentro. Ecco cosa succede prima della consulenza.`
           : `${safeFirstName}, il tuo pagamento è confermato — prenota la consulenza`;
 
         const payEmailHtml = buildMail2Html(isSubscription, {
@@ -1136,19 +1134,17 @@ export default {
   </div>
   <div style="padding:28px;">
     <p style="font-size:18px;font-weight:bold;margin:0 0 16px 0;">${firstName}, hai dimenticato qualcosa?</p>
-    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo di Ferro \u00e8 pronto, ma non hai ancora prenotato la tua consulenza con il team di Salute di Ferro.</p>
+    <p style="font-size:14px;color:#CCCCCC;line-height:1.6;">Il tuo profilo salute \u00e8 pronto, ma non hai ancora prenotato la tua consulenza con il team di Salute di Ferro.</p>
     <div style="background:#242424;border-radius:6px;padding:16px;margin:20px 0;">
       <div style="font-size:11px;letter-spacing:2px;color:#C82020;font-weight:bold;margin-bottom:8px;">COSA TI ASPETTA</div>
       <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Analisi completa del tuo profilo</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi mirate</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Corsia preferenziale su esami, visite, trattamenti</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Coach di Ferro al tuo servizio</p>
-      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Prezzo bloccato A VITA al rinnovo</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Piano personalizzato di analisi</p>
+      <p style="font-size:13px;color:#CCCCCC;margin:4px 0;">\u2713 Guida passo-passo su come procedere</p>
     </div>
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL \u2014 da 9,99\u20ac/mese (Founder)</a>
+      <a href="https://form.salutediferro.com" style="display:inline-block;padding:14px 32px;background:#C82020;color:white;font-weight:bold;font-size:15px;border-radius:6px;text-decoration:none;letter-spacing:1px;">PRENOTA ORA LA TUA CALL — da 9,99€/mese (Founder)</a>
     </div>
-    <p style="font-size:12px;color:#888;text-align:center;">Founder Pass in esaurimento \u2014 \u20ac9,99/mese A VITA</p>
+    <p style="font-size:12px;color:#888;text-align:center;">Founder Pass in esaurimento — €9,99/mese A VITA</p>
   </div>
   <div style="background:#141414;padding:14px 28px;font-size:11px;color:#555;border-top:1px solid #2A2A2A;">
     Salute di Ferro \u2014 <a href="https://salutediferro.com" style="color:#C82020;text-decoration:none;">salutediferro.com</a>
@@ -1344,7 +1340,7 @@ function buildMail2Html(isSubscription, data) {
   const { firstName, amountPaid, paidAt, calendlyUrl, customerEmail } = data;
   const productLabel = isSubscription ? 'MEMBERSHIP ATTIVA' : 'PAGAMENTO CONFERMATO';
   const heroTitle = isSubscription
-    ? `${firstName}, sei di Ferro.`
+    ? `${firstName}, sei dentro.`
     : `${firstName}, il tuo pagamento è confermato.`;
   const heroSub = isSubscription
     ? 'Da qui in poi non sei più solo.'
