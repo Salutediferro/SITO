@@ -5,7 +5,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Come funziona il prelievo?',
-    a: 'Dopo aver completato il Test di Ferro, riceverai le indicazioni per effettuare il prelievo in un laboratorio convenzionato vicino a te. Nessuno sbatti: ti guidiamo noi passo-passo.',
+    a: 'Dopo aver effettuato la prima consulenza, riceverai le indicazioni per effettuare il prelievo ad un prezzo vantaggioso nel laboratorio convenzionato più vicino a te. Nessuno sbatti: ti guidiamo noi passo-passo.',
   },
   {
     q: 'Chi interpreta i miei risultati?',
@@ -25,7 +25,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Quanto costa?',
-    a: 'La consulenza costa 27€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
+    a: 'Il Founder Pass costa 9,99€ al mese e include: consulenza, accesso rapido e conveniente al piano di analisi su misura, accesso alla rete di specialisti, Coach di Ferro dedicato che ti guida passo-passo nel percorso, Dashboard in cui caricare e consultare i tuoi documenti sanitari.',
   },
   {
     q: 'Ogni quanto dovrei rifare gli esami?',
