@@ -52,23 +52,23 @@ const s = {
     backgroundPosition: '0% 50%',
     zIndex: 1,
   },
-  // Atleta SDF scontornato (PNG transparent) full-height lato destro · scala drasticamente
-  // per dominare la hero come "mascot" iconico (decisione user 17 mag 2026 v2: ingrandire).
+  // Atleta SDF scontornato (PNG transparent) come "mascot" lato destro su sfondo gradient brand.
+  // Rimpiazza la foto FIBO matteo_arnold (decisione user 17 mag 2026: hero più pulita, focus
+  // su prodotto SDF con figura atletica iconica invece di scena fotografica complessa).
   bgAtleta: {
     position: 'absolute',
-    right: 0,
+    right: 'clamp(-80px, -4vw, 0px)',
     bottom: 0,
     top: 0,
+    width: 'clamp(320px, 42vw, 720px)',
     height: '100%',
-    width: 'auto',
-    maxWidth: '70vw',
     objectFit: 'contain',
     objectPosition: 'right bottom',
-    opacity: 1,
+    opacity: 0.92,
     zIndex: 1,
     pointerEvents: 'none',
-    // drop-shadow + brand glow rosso per stacco premium su sfondo gradient.
-    filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.65)) drop-shadow(-12px 0 56px rgba(178,34,34,0.28))',
+    // drop-shadow accentua scontorno su sfondo dark + sottile glow brand rosso.
+    filter: 'drop-shadow(0 18px 36px rgba(0,0,0,0.55)) drop-shadow(-6px 0 32px rgba(178,34,34,0.18))',
   },
   // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
   // Lasciate top/bottom scure per leggibilità heading + sub text.
@@ -259,16 +259,18 @@ export default function Hero() {
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
         }
-        /* Mobile <600px: atleta nascosta (sovrasterebbe contenuto centrato e card pricing). */
+        /* Mobile <600px: atleta nascosto (occuperebbe troppo spazio sopra contenuto centrato).
+           Hero su mobile resta pulita: solo mesh gradient brand + testo + CTA. */
         @media (max-width: 600px) {
           .hero-atleta { display: none !important; }
         }
-        /* Tablet 601-1024px: atleta full-height ma opacity ridotta per non interferire con
-           card pricing che occupano gran parte della viewport. */
+        /* Tablet 601-1024px: atleta più piccolo + spostato leggermente fuori bordo dx
+           per non sovrapporsi a card pricing/CTA che sul tablet sono più larghe. */
         @media (min-width: 601px) and (max-width: 1024px) {
           .hero-atleta {
-            opacity: 0.55 !important;
-            max-width: 55vw !important;
+            width: 38vw !important;
+            right: -32px !important;
+            opacity: 0.78 !important;
           }
         }
 
