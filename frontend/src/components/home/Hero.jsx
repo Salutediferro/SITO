@@ -52,23 +52,20 @@ const s = {
     backgroundPosition: '0% 50%',
     zIndex: 1,
   },
-  // Atleta SDF scontornato (PNG transparent) come "mascot" lato destro su sfondo gradient brand.
-  // Rimpiazza la foto FIBO matteo_arnold (decisione user 17 mag 2026: hero più pulita, focus
-  // su prodotto SDF con figura atletica iconica invece di scena fotografica complessa).
-  bgAtleta: {
-    position: 'absolute',
-    right: 'clamp(-80px, -4vw, 0px)',
-    bottom: 0,
-    top: 0,
-    width: 'clamp(320px, 42vw, 720px)',
-    height: '100%',
-    objectFit: 'contain',
-    objectPosition: 'right bottom',
-    opacity: 0.92,
-    zIndex: 1,
-    pointerEvents: 'none',
-    // drop-shadow accentua scontorno su sfondo dark + sottile glow brand rosso.
-    filter: 'drop-shadow(0 18px 36px rgba(0,0,0,0.55)) drop-shadow(-6px 0 32px rgba(178,34,34,0.18))',
+  bgImage: {
+    position: 'absolute', inset: 0,
+    // Foto FIBO "matteo_arnold" (clean version): top 516px tagliato → 1920×1397 cinematic 1.375:1.
+    // Soggetto SDF da dietro (centro-sinistra) + statua bronzo Arnold-style (destra) + tappeto rosso.
+    // Cache-bust via query param per forzare reload utenti con vecchia versione cachata.
+    backgroundImage: 'url("/matteo_arnold.jpg?v=1")',
+    // backgroundPosition: 30% center → soggetto SDF a sinistra del heading centrato,
+    // statua bronzo verso destra ma non sotto la CTA. Crop top già fatto in src.
+    backgroundSize: 'cover', backgroundPosition: '30% center',
+    opacity: 0.85,
+    // Iron Blood color grading: brightness 0.85 (scurisce hotspot luci padiglione),
+    // contrast 1.3 (definizione muscoli/statua), saturate 1.25 (intensifica rosso tappeto + maglietta),
+    // hue-rotate -3deg (push reds verso crimson coerente palette).
+    filter: 'brightness(0.85) contrast(1.3) saturate(1.25) hue-rotate(-3deg)',
   },
   // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
   // Lasciate top/bottom scure per leggibilità heading + sub text.
@@ -137,25 +134,9 @@ export default function Hero() {
 
   return (
     <section style={s.section}>
-      {/* Mesh gradient brand (rosso scuro animato) come sfondo principale. */}
-      <div style={s.meshBg} className="hero-mesh" />
-      {/* Atleta SDF scontornato lato destro. Decorativo → alt="" + aria-hidden.
-          srcSet per servire 720px (mobile/tablet) o 1080px (desktop) in base a DPR/viewport.
-          loading="eager" + fetchPriority="high" perché è above-the-fold (LCP candidate). */}
-      <img
-        src="/hero-atleta-sdf-1080.png"
-        srcSet="/hero-atleta-sdf-720.png 720w, /hero-atleta-sdf-1080.png 1080w, /hero-atleta-sdf.png 1280w"
-        sizes="(max-width: 600px) 0px, (max-width: 1024px) 50vw, 42vw"
-        alt=""
-        aria-hidden="true"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
-        style={s.bgAtleta}
-        className="hero-atleta"
-      />
-      {/* Overlay gradient verticale per leggibilità heading sopra mesh + atleta. */}
+      <div style={s.bgImage} className="hero-bg-image" />
       <div style={s.bg} />
+      <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
         <div style={s.tag} className="hero-tag">LA PALESTRA DELLA SALUTE</div>
         {/* Auto-shrink dinamico: classe in base a length della frase corrente per CSS adattivo. */}
@@ -258,19 +239,14 @@ export default function Hero() {
         }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
-        }
-        /* Mobile <600px: atleta nascosto (occuperebbe troppo spazio sopra contenuto centrato).
-           Hero su mobile resta pulita: solo mesh gradient brand + testo + CTA. */
-        @media (max-width: 600px) {
-          .hero-atleta { display: none !important; }
-        }
-        /* Tablet 601-1024px: atleta più piccolo + spostato leggermente fuori bordo dx
-           per non sovrapporsi a card pricing/CTA che sul tablet sono più larghe. */
-        @media (min-width: 601px) and (max-width: 1024px) {
-          .hero-atleta {
-            width: 38vw !important;
-            right: -32px !important;
-            opacity: 0.78 !important;
+          /* Mobile: crop ampio 1.1:1 quasi-quadrato (1200x1091) + cover.
+             Mostra soggetto SDF + statua + tappeto rosso completi senza letterbox.
+             Position 'center 35%' ancora un po' più in alto per evidenziare statua. */
+          .hero-bg-image {
+            background-image: url("/matteo_arnold-mobile.jpg?v=4") !important;
+            background-size: cover !important;
+            background-position: center 35% !important;
+            opacity: 0.95 !important;
           }
         }
 
