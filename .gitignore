@@ -12,3 +12,7 @@ dist/
 sdf-deploy-*.zip
 frontend/dist/
 
+
+# Backup foto sostituite (gitignored 2026-05-18)
+frontend/public/_replaced-*/
+frontend/public/**/_replaced-*/

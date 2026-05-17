@@ -54,18 +54,17 @@ const s = {
   },
   bgImage: {
     position: 'absolute', inset: 0,
-    // Foto FIBO "matteo_arnold" (clean version): top 516px tagliato → 1920×1397 cinematic 1.375:1.
-    // Soggetto SDF da dietro (centro-sinistra) + statua bronzo Arnold-style (destra) + tappeto rosso.
+    // Hero "hero-trilli": compositing dark mood con soggetto SDF (logo maglietta)
+    // centrato + 4 silhouette bodybuilder ai 4 angoli. 1402×1122, già desaturato B&W.
     // Cache-bust via query param per forzare reload utenti con vecchia versione cachata.
-    backgroundImage: 'url("/matteo_arnold.jpg?v=1")',
-    // backgroundPosition: 30% center → soggetto SDF a sinistra del heading centrato,
-    // statua bronzo verso destra ma non sotto la CTA. Crop top già fatto in src.
-    backgroundSize: 'cover', backgroundPosition: '30% center',
+    backgroundImage: 'url("/hero-trilli.jpg?v=1")',
+    // backgroundPosition center: soggetto e logo SDF già centrati nel src.
+    backgroundSize: 'cover', backgroundPosition: 'center center',
     opacity: 0.85,
-    // Iron Blood color grading: brightness 0.85 (scurisce hotspot luci padiglione),
-    // contrast 1.3 (definizione muscoli/statua), saturate 1.25 (intensifica rosso tappeto + maglietta),
-    // hue-rotate -3deg (push reds verso crimson coerente palette).
-    filter: 'brightness(0.85) contrast(1.3) saturate(1.25) hue-rotate(-3deg)',
+    // Color grading minimale: foto è già B&W desaturata in src → niente saturate/hue
+    // (rovinerebbero il mood). Solo brightness leggero per scurire ulteriormente
+    // gli highlights + contrast per definire le silhouette laterali.
+    filter: 'brightness(0.9) contrast(1.15)',
   },
   // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
   // Lasciate top/bottom scure per leggibilità heading + sub text.
@@ -239,13 +238,13 @@ export default function Hero() {
         }
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
-          /* Mobile: crop ampio 1.1:1 quasi-quadrato (1200x1091) + cover.
-             Mostra soggetto SDF + statua + tappeto rosso completi senza letterbox.
-             Position 'center 35%' ancora un po' più in alto per evidenziare statua. */
+          /* Mobile: crop 9:16 portrait centrato (631×1122) del compositing hero-trilli.
+             Soggetto SDF + 2 silhouette laterali visibili, ritagliate le 2 esterne.
+             Position center: già pre-cropped in src per centrare il soggetto. */
           .hero-bg-image {
-            background-image: url("/matteo_arnold-mobile.jpg?v=4") !important;
+            background-image: url("/hero-trilli-mobile.jpg?v=1") !important;
             background-size: cover !important;
-            background-position: center 35% !important;
+            background-position: center center !important;
             opacity: 0.95 !important;
           }
         }
