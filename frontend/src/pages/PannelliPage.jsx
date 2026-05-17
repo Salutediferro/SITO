@@ -211,21 +211,25 @@ export default function PannelliPage() {
       </section>
 
       <div style={s.content}>
-        {/* FERRO CORE */}
+        {/* FERRO CORE · tutti i copy letti da constants/panels.js (FERRO_CORE.pannelliPage) */}
         <FadeUp>
-          <div style={s.sectionTag}>CORE FOUNDATION</div>
+          <div style={s.sectionTag}>{FERRO_CORE.pannelliPage.tag}</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-            <h2 style={{ ...s.sectionTitle, marginBottom: 0 }}>FERRO CORE</h2>
+            <h2 style={{ ...s.sectionTitle, marginBottom: 0 }}>{FERRO_CORE.name}</h2>
             <span style={s.inclusoBadge}>INCLUSO</span>
             <span style={s.priceTag}>{FERRO_CORE.price}&euro;</span>
           </div>
           <div style={{ marginBottom: 16 }}>
-            <span style={s.pill}>Testosterone</span>
-            <span style={s.pill}>Vitamina D</span>
+            {FERRO_CORE.pannelliPage.pills.map((label) => (
+              <span key={label} style={s.pill}>{label}</span>
+            ))}
           </div>
-          <p style={s.sectionDesc}>
-            Il tuo punto di partenza. 16 biomarcatori per coprire metabolismo, fegato, reni, tiroide e ferro. Include <strong style={{color:'var(--text)'}}>Testosterone</strong> e <strong style={{color:'var(--text)'}}>Vitamina D</strong>, perché se ti alleni seriamente, questi numeri li devi conoscere.
-          </p>
+          {/* desc supporta tag HTML <strong> definiti in panels.js (safe: contenuto del repo, no user input). */}
+          <p
+            style={s.sectionDesc}
+            className="panel-core-desc"
+            dangerouslySetInnerHTML={{ __html: FERRO_CORE.pannelliPage.desc }}
+          />
         </FadeUp>
 
         <FadeUp delay={0.1}>
@@ -306,6 +310,8 @@ export default function PannelliPage() {
             justify-content: flex-start !important;
           }
         }
+        /* Style per i <strong> dentro la desc di FERRO_CORE (panels.js html-aware). */
+        .panel-core-desc strong { color: var(--text); }
       `}</style>
     </main>
   );

@@ -138,7 +138,7 @@ export default function Hero() {
       <div style={s.bg} />
       <div style={s.meshBg} className="hero-mesh" />
       <div style={s.content}>
-        <div style={s.tag} className="hero-tag">LA PALESTRA DELLA SALUTE</div>
+        <div style={s.tag} className="hero-tag">SPINGI. ALLA SALUTE PENSIAMO NOI</div>
         {/* Auto-shrink dinamico: classe in base a length della frase corrente per CSS adattivo. */}
         <h1
           style={s.h1}
@@ -153,7 +153,7 @@ export default function Hero() {
           </span>
         </h1>
         <p style={s.sub} className="hero-sub">
-          Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena davvero. Testosterone, fegato, reni, tiroide: tutto in un unico percorso. Zero pregiudizi, zero problemi.
+          La prima piattaforma italiana per chi spinge il Ferro sul serio. Medici che capiscono il Ferro. Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena pesante. Coach di Ferro dedicato che ti guida passo-passo nel percorso. Dashboard sanitaria con tutte le tue analisi. Zero pregiudizi, zero problemi.
         </p>
 
         {/* Mobile (≤600px): rimpiazza FounderPassCard + grid sotto con layout compatto 2-col. */}

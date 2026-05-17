@@ -6,108 +6,14 @@ import { FERRO_CORE, MODULES } from '../../constants/panels';
 // Quiz interno SPA · /test (era https://form.salutediferro.com — Pages legacy non aggiornato).
 const TEST_PATH = '/test';
 
-/* ── slide data: core + all modules ── */
-const SLIDES = [
-  {
-    name: FERRO_CORE.name,
-    price: FERRO_CORE.price,
-    tag: 'Core Foundation',
-    headline: 'IL TUO PUNTO\nDI PARTENZA',
-    headlineAccent: 'OBBLIGATORIO',
-    desc: 'Screening metabolico, epatico, renale, tiroideo e marziale. Include Testosterone e Vitamina D. Il pannello base che ogni atleta dovrebbe fare.',
-    badge: `${FERRO_CORE.biomarkers.length} biomarcatori. Basato su EAU, ESC/EAS, KDIGO`,
-    img: '/panels/panel-core.jpg?v=3',
-    imgAlt: 'Bodybuilder muscoloso in palestra con torso scolpito',
-  },
-  {
-    name: 'FERRO ANDROGENO',
-    price: 125,
-    tag: 'Modulo Add-on',
-    headline: 'IL TUO ASSE\nORMONALE',
-    headlineAccent: 'SOTTO CONTROLLO',
-    desc: 'Asse androgenico completo, coagulazione, omocisteina. Per uomini sintomatici, in TRT o con storia di AAS.',
-    badge: '12 biomarcatori. SHBG, Testosterone libero, LH, FSH, Estradiolo, PSA',
-    img: '/panels/panel-androgeno-v2.jpg?v=4',
-    imgAlt: 'Bodybuilder muscolare in allenamento',
-  },
-  {
-    name: 'FERRO CUORE',
-    price: 23,
-    tag: 'Modulo Add-on',
-    headline: 'IL TUO CUORE\nMERITA',
-    headlineAccent: 'ATTENZIONE',
-    desc: 'Rischio cardiovascolare avanzato. ApoB, Lp(a), VES, Acido urico. Per chi ha familiarità CVD, usa AAS o ha ipertensione.',
-    badge: '4 biomarcatori. Basato su ESC/EAS 2025',
-    img: '/panels/panel-cuore.jpg?v=3',
-    imgAlt: 'Bodybuilder petto massiccio',
-  },
-  {
-    name: 'FERRO RENI',
-    price: 28,
-    tag: 'Modulo Add-on',
-    headline: 'PROTEINE ALTE\nRENI',
-    headlineAccent: 'SOTTO PRESSIONE',
-    desc: 'Funzione renale avanzata, elettroliti. Per bodybuilder, dieta iperproteica o uso di diuretici.',
-    badge: '8 biomarcatori. Cistatina C, elettroliti completi',
-    img: '/panels/panel-reni.jpg',
-    imgAlt: 'Bodybuilder enorme allenamento',
-  },
-  {
-    name: 'FERRO FEGATO',
-    price: 12,
-    tag: 'Modulo Add-on',
-    headline: 'IL TUO FEGATO\nTI STA',
-    headlineAccent: 'PARLANDO',
-    desc: 'Profilo epatico completo. Per chi usa AAS orali, alcool frequente o farmaci epatotossici.',
-    badge: '5 biomarcatori. AST, Bilirubina, ALP, Albumina',
-    img: '/panels/panel-fegato.jpg',
-    imgAlt: 'Bodybuilder muscoli definiti',
-  },
-  {
-    name: 'FERRO METABOLICO',
-    price: 33,
-    tag: 'Modulo Add-on',
-    headline: 'IL CUT\nNON FUNZIONA?',
-    headlineAccent: 'SCOPRI PERCHÉ',
-    desc: 'Insulino-resistenza, cortisolo. Per overfat, cut difficile, uso di GH o stress cronico.',
-    badge: '4 biomarcatori. HbA1c, Insulina, HOMA-IR, Cortisolo',
-    img: '/panels/panel-metabolico.jpg',
-    imgAlt: 'Bodybuilder fisico massiccio',
-  },
-  {
-    name: 'FERRO TIROIDE',
-    price: 40,
-    tag: 'Modulo Add-on',
-    headline: 'METABOLISMO\nIN',
-    headlineAccent: 'STALLO?',
-    desc: 'Profilo tiroideo completo, autoimmunità. Per TSH alterato o sospetto autoimmune.',
-    badge: '4 biomarcatori. fT4, fT3, Anti-TPO, Anti-Tg',
-    img: '/panels/panel-tiroide.jpg',
-    imgAlt: 'Bodybuilder allenamento pesante',
-  },
-  {
-    name: 'FERRO RECOVERY',
-    price: 43,
-    tag: 'Modulo Add-on',
-    headline: 'SEMPRE\nSTANCO?',
-    headlineAccent: 'NON È NORMALE',
-    desc: 'Assetto marziale completo, B12/Folati. Per fatigue cronica, diete restrittive, endurance.',
-    badge: '7 biomarcatori. Sideremia, Transferrina, B12, Folati',
-    img: '/panels/panel-recovery.jpg',
-    imgAlt: 'Bodybuilder muscolare recupero',
-  },
-  {
-    name: 'FERRO DONNA',
-    price: 65,
-    tag: 'Modulo Add-on',
-    headline: 'NON È "L\'ETÀ"',
-    headlineAccent: 'SONO I TUOI ORMONI',
-    desc: 'Asse ormonale femminile completo. Per peri-menopausa, amenorrea, PCOS, RED-S.',
-    badge: '6 biomarcatori. FSH, Estradiolo, Progesterone, Prolattina, DHEA-S',
-    img: '/panels/panel-donna.jpg?v=3',
-    imgAlt: 'Atleta donna forte',
-  },
-];
+/* Slide data: tutto letto dinamicamente da constants/panels.js (single source of
+ * truth). Per modificare un copy descrittivo dello slider, cercare la chiave
+ * `showcase` del relativo pannello in constants/panels.js. */
+const SLIDES = [FERRO_CORE, ...MODULES].map((panel) => ({
+  name: panel.name,
+  price: panel.price,
+  ...panel.showcase,
+}));
 
 const INTERVAL = 10000;
 

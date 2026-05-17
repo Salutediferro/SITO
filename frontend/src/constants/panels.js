@@ -1,9 +1,23 @@
+/**
+ * SOURCE OF TRUTH dei pannelli analisi SDF.
+ *
+ * Modificando questo file si aggiornano AUTOMATICAMENTE:
+ *  - Slider homepage `PanelShowcase` (sezione rotante con foto + headline)
+ *  - Pagina dettagli `PannelliPage` (lista pannelli con biomarcatori e descrizioni)
+ *
+ * Nessun altro file contiene copy descrittivi dei pannelli · single source of truth.
+ *
+ * Struttura per ogni pannello:
+ *  - id, name, price, biomarkers, tags, icon, tests, gender → dati strutturati
+ *  - desc → sub corto (1 riga, usato in pagina /pannelli sotto il titolo modulo)
+ *  - showcase → blocco usato dallo slider homepage (headline, badge, foto, ecc.)
+ *  - pannelliPage → blocco usato dalla pagina /pannelli (pills, sub descrittivo lungo)
+ */
+
 export const FERRO_CORE = {
+  id: 'core',
   name: 'FERRO CORE',
   price: 80,
-  subtitle: '16 biomarcatori. Il pannello che ogni atleta dovrebbe fare',
-  description: 'Screening metabolico, epatico, renale, tiroideo, marziale + Testosterone + Vitamina D + PCR. Tutto in un unico pannello obbligatorio.',
-  highlights: ['Testosterone', 'Vitamina D'],
   biomarkers: [
     'Emocromo completo (con formula e piastrine)',
     'Glicemia a digiuno',
@@ -21,7 +35,21 @@ export const FERRO_CORE = {
     'Testosterone totale',
     'PCR (C-Reactive Protein)',
     'Esame urine completo',
-  ]
+  ],
+  pannelliPage: {
+    tag: 'CORE FOUNDATION',
+    pills: ['Testosterone', 'Vitamina D'],
+    desc: 'Il tuo punto di partenza. 16 biomarcatori per coprire metabolismo, fegato, reni, tiroide e ferro. Include <strong>Testosterone</strong> e <strong>Vitamina D</strong>, perché se ti alleni seriamente, questi numeri li devi conoscere.',
+  },
+  showcase: {
+    tag: 'Core Foundation',
+    headline: 'IL TUO PUNTO\nDI PARTENZA',
+    headlineAccent: 'OBBLIGATORIO',
+    desc: 'Screening metabolico, epatico, renale, tiroideo e marziale. Include Testosterone e Vitamina D. Il pannello base che ogni atleta dovrebbe fare.',
+    badge: '16 biomarcatori. Basato su EAU, ESC/EAS, KDIGO',
+    img: '/panels/panel-core.jpg?v=3',
+    imgAlt: 'Bodybuilder muscoloso in palestra con torso scolpito',
+  },
 };
 
 export const MODULES = [
@@ -35,6 +63,15 @@ export const MODULES = [
     tests: 12,
     gender: 'UOMO',
     biomarkers: ['SHBG', 'Testosterone libero (calcolato)', 'LH', 'FSH', 'Estradiolo', 'Prolattina', 'PSA', 'Fibrinogeno', 'D-dimero', 'PT/INR', 'APTT', 'Omocisteina'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'IL TUO ASSE\nORMONALE',
+      headlineAccent: 'SOTTO CONTROLLO',
+      desc: 'Asse androgenico completo, coagulazione, omocisteina. Per uomini sintomatici, in TRT o con storia di AAS.',
+      badge: '12 biomarcatori. SHBG, Testosterone libero, LH, FSH, Estradiolo, PSA',
+      img: '/panels/panel-androgeno-v2.jpg?v=4',
+      imgAlt: 'Bodybuilder muscolare in allenamento',
+    },
   },
   {
     id: 'cuore',
@@ -45,6 +82,15 @@ export const MODULES = [
     desc: 'Rischio CV avanzato: ApoB, Lp(a), VES, Acido urico',
     tests: 4,
     biomarkers: ['ApoB', 'Lp(a)', 'VES', 'Acido urico'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'IL TUO CUORE\nMERITA',
+      headlineAccent: 'ATTENZIONE',
+      desc: 'Rischio cardiovascolare avanzato. ApoB, Lp(a), VES, Acido urico. Per chi ha familiarità CVD, usa AAS o ha ipertensione.',
+      badge: '4 biomarcatori. Basato su ESC/EAS 2025',
+      img: '/panels/panel-cuore.jpg?v=3',
+      imgAlt: 'Bodybuilder petto massiccio',
+    },
   },
   {
     id: 'reni',
@@ -55,6 +101,15 @@ export const MODULES = [
     desc: 'Funzione renale avanzata + elettroliti',
     tests: 8,
     biomarkers: ['Cistatina C', 'Azotemia (BUN/Urea)', 'Sodio', 'Potassio', 'Calcio', 'Fosforo', 'Magnesio', 'Cloro'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'PROTEINE ALTE\nRENI',
+      headlineAccent: 'SOTTO PRESSIONE',
+      desc: 'Funzione renale avanzata, elettroliti. Per bodybuilder, dieta iperproteica o uso di diuretici.',
+      badge: '8 biomarcatori. Cistatina C, elettroliti completi',
+      img: '/panels/panel-reni.jpg?v=2',
+      imgAlt: 'Powerlifter massivo con fascia da campione e kettlebell in garage gym',
+    },
   },
   {
     id: 'fegato',
@@ -65,6 +120,15 @@ export const MODULES = [
     desc: 'Profilo epatico completo',
     tests: 5,
     biomarkers: ['AST', 'Bilirubina totale/diretta', 'Fosfatasi alcalina (ALP)', 'Albumina', 'Proteine totali'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'IL TUO FEGATO\nTI STA',
+      headlineAccent: 'PARLANDO',
+      desc: 'Profilo epatico completo. Per chi usa AAS orali, alcool frequente o farmaci epatotossici.',
+      badge: '5 biomarcatori. AST, Bilirubina, ALP, Albumina',
+      img: '/panels/panel-fegato.jpg?v=2',
+      imgAlt: 'Bodybuilder mediterraneo a torso nudo in palestra dark, posa intensa',
+    },
   },
   {
     id: 'metabolico',
@@ -75,6 +139,15 @@ export const MODULES = [
     desc: 'Insulino-resistenza + cortisolo',
     tests: 4,
     biomarkers: ['HbA1c', 'Insulina a digiuno', 'HOMA-IR (calcolato)', 'Cortisolo mattutino'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'IL CUT\nNON FUNZIONA?',
+      headlineAccent: 'SCOPRI PERCHÉ',
+      desc: 'Insulino-resistenza, cortisolo. Per overfat, cut difficile, uso di GH o stress cronico.',
+      badge: '4 biomarcatori. HbA1c, Insulina, HOMA-IR, Cortisolo',
+      img: '/panels/panel-metabolico.jpg?v=6',
+      imgAlt: 'Powerlifter heavyweight calvo con barba e tatuaggi in squat profondo con bilanciere massivo in palestra dark',
+    },
   },
   {
     id: 'tiroide',
@@ -85,6 +158,15 @@ export const MODULES = [
     desc: 'Profilo tiroideo completo + autoimmunità',
     tests: 4,
     biomarkers: ['fT4', 'fT3', 'Anti-TPO', 'Anti-Tg'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'METABOLISMO\nIN',
+      headlineAccent: 'STALLO?',
+      desc: 'Profilo tiroideo completo, autoimmunità. Per TSH alterato o sospetto autoimmune.',
+      badge: '4 biomarcatori. fT4, fT3, Anti-TPO, Anti-Tg',
+      img: '/panels/panel-tiroide.jpg?v=2',
+      imgAlt: 'Atleta seduto sugli spalti con testa fra le ginocchia, contemplativo',
+    },
   },
   {
     id: 'recovery',
@@ -95,6 +177,15 @@ export const MODULES = [
     desc: 'Assetto marziale completo + B12/Folati',
     tests: 7,
     biomarkers: ['Sideremia', 'Transferrina', 'Saturazione transferrina', 'TIBC', 'Vitamina B12', 'Folati', 'Reticolociti'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'SEMPRE\nSTANCO?',
+      headlineAccent: 'NON È NORMALE',
+      desc: 'Assetto marziale completo, B12/Folati. Per fatigue cronica, diete restrittive, endurance.',
+      badge: '7 biomarcatori. Sideremia, Transferrina, B12, Folati',
+      img: '/panels/panel-recovery.jpg?v=2',
+      imgAlt: 'Atleta sudato seduto in spogliatoio buio con testa fra le mani, esausto',
+    },
   },
   {
     id: 'donna',
@@ -106,5 +197,14 @@ export const MODULES = [
     tests: 6,
     gender: 'DONNA',
     biomarkers: ['FSH', 'Estradiolo', 'Progesterone', 'Prolattina', 'DHEA-S', 'LH'],
+    showcase: {
+      tag: 'Modulo Add-on',
+      headline: 'NON È "L\'ETÀ"',
+      headlineAccent: 'SONO I TUOI ORMONI',
+      desc: 'Asse ormonale femminile completo. Per peri-menopausa, amenorrea, PCOS, RED-S.',
+      badge: '6 biomarcatori. FSH, Estradiolo, Progesterone, Prolattina, DHEA-S',
+      img: '/panels/panel-donna.jpg?v=3',
+      imgAlt: 'Atleta donna forte',
+    },
   },
 ];
