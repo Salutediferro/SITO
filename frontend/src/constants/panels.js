@@ -183,7 +183,7 @@ export const MODULES = [
       headlineAccent: 'NON È NORMALE',
       desc: 'Assetto marziale completo, B12/Folati. Per fatigue cronica, diete restrittive, endurance.',
       badge: '7 biomarcatori. Sideremia, Transferrina, B12, Folati',
-      img: '/panels/panel-recovery.jpg?v=3',
+      img: '/panels/panel-recovery.jpg?v=4',
       imgAlt: 'Atleta sudato seduto in spogliatoio buio con testa fra le mani, esausto',
     },
   },
