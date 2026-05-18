@@ -69,8 +69,8 @@ export const MODULES = [
       headlineAccent: 'SOTTO CONTROLLO',
       desc: 'Asse androgenico completo, coagulazione, omocisteina. Per uomini sintomatici, in TRT o con storia di AAS.',
       badge: '12 biomarcatori. SHBG, Testosterone libero, LH, FSH, Estradiolo, PSA',
-      img: '/panels/panel-androgeno-v2.jpg?v=4',
-      imgAlt: 'Bodybuilder muscolare in allenamento',
+      img: '/panels/panel-androgeno-v2.jpg?v=5',
+      imgAlt: 'Giovane atleta durante prelievo ematico in laboratorio',
     },
   },
   {
