@@ -34,7 +34,9 @@ const s = {
   section: {
     position: 'relative', minHeight: 'calc(100vh - 72px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    padding: 'clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px)', overflow: 'hidden',
+    // Ridotto padding top/bottom (era 48-120) per portare FounderPassCard nel
+    // viewport above-the-fold dopo refactor sub in bullet list (feedback 2026-05-18).
+    padding: 'clamp(28px, 6vw, 80px) clamp(20px, 5vw, 40px)', overflow: 'hidden',
   },
   bg: {
     position: 'absolute', inset: 0,
@@ -84,14 +86,14 @@ const s = {
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif", fontSize: 15, letterSpacing: 4,
     color: 'var(--gold)', background: 'rgba(200,200,204,0.1)',
     border: '1px solid rgba(200,200,204,0.25)', borderRadius: 4,
-    marginBottom: 24,
+    marginBottom: 14,
   },
   h1: {
     fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
     /* fontSize gestito da .hero-h1-len-{s|m|l|xl} per auto-shrink in base a length frase */
     lineHeight: 1.08,
-    letterSpacing: 2, color: 'var(--text)', marginBottom: 24,
-    minHeight: 'clamp(80px, 14vw, 150px)',
+    letterSpacing: 2, color: 'var(--text)', marginBottom: 14,
+    minHeight: 'clamp(60px, 10vw, 110px)',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     // Text-shadow di sicurezza per hotspot luminosi locali sul nuovo bg FIBO (luci padiglione,
     // tappeto rosso saturo). Garantisce leggibilità anche se overlay locale è insufficiente.
@@ -101,9 +103,32 @@ const s = {
     transition: 'opacity 0.5s ease, transform 0.5s ease',
   },
   sub: {
-    fontSize: 17, color: 'var(--text-sec)', lineHeight: 1.7,
-    maxWidth: 640, marginBottom: 40, fontWeight: 300,
-    margin: '0 auto 40px',
+    fontSize: 17, color: 'var(--text-sec)', lineHeight: 1.55,
+    maxWidth: 640, fontWeight: 300,
+    margin: '0 auto 10px',
+  },
+  subList: {
+    // Lista features (4 bullet) · stessa font/colour del sub, ma compatta.
+    // listStyle: 'none' + custom marker SVG per allineamento perfetto +
+    // brand-coerenza (rosso accent).
+    listStyle: 'none', padding: 0,
+    maxWidth: 580, margin: '0 auto 12px',
+    display: 'flex', flexDirection: 'column', gap: 6,
+    textAlign: 'left',
+  },
+  subListItem: {
+    display: 'flex', alignItems: 'flex-start', gap: 10,
+    fontSize: 16, color: 'var(--text-sec)', lineHeight: 1.5,
+    fontWeight: 300,
+  },
+  subListIcon: {
+    flexShrink: 0, marginTop: 4, color: 'var(--accent)',
+  },
+  subClose: {
+    fontSize: 16, color: 'var(--text)', lineHeight: 1.5,
+    maxWidth: 640, marginBottom: 24, fontWeight: 500,
+    margin: '0 auto 24px',
+    letterSpacing: 0.3,
   },
   buttons: {
     display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center',
@@ -159,7 +184,31 @@ export default function Hero() {
           </span>
         </h1>
         <p style={s.sub} className="hero-sub">
-          La prima piattaforma italiana per chi spinge il Ferro sul serio. Medici che capiscono il Ferro. Esami del sangue costruiti su linee guida internazionali, pensati per chi si allena pesante. Coach di Ferro dedicato che ti guida passo-passo nel percorso. Dashboard sanitaria con tutte le tue analisi. Zero pregiudizi, zero problemi.
+          La prima piattaforma italiana per chi spinge il Ferro sul serio.
+        </p>
+        <ul style={s.subList} className="hero-sub-list" aria-label="Cosa offriamo">
+          {[
+            'Medici che capiscono il Ferro',
+            'Esami del sangue su linee guida internazionali, pensati per chi si allena pesante',
+            'Coach di Ferro dedicato che ti guida passo-passo nel percorso',
+            'Dashboard sanitaria con tutte le tue analisi',
+          ].map((item, i) => (
+            <li key={i} style={s.subListItem}>
+              <svg
+                style={s.subListIcon}
+                width="16" height="16" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" strokeWidth="3"
+                strokeLinecap="round" strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p style={s.subClose} className="hero-sub-close">
+          Zero pregiudizi, zero problemi.
         </p>
 
         {/* Mobile (≤600px): rimpiazza FounderPassCard + grid sotto con layout compatto 2-col. */}
