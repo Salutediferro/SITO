@@ -38,11 +38,12 @@ const s = {
   },
   bg: {
     position: 'absolute', inset: 0,
-    // Overlay più trasparente al centro (era 0.55 → 0.42) per far vedere meglio maglietta SDF.
-    // Top + bottom restano densi per garantire contrasto leggibilità heading + sub text.
-    // Overlay più scuro al centro (0.42 → 0.60) per garantire contrast WCAG AA 4.5:1
-    // sul heading rotante su nuovo bg FIBO caotico (statua bronzo + folla + tappeto rosso).
-    background: 'linear-gradient(180deg, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0.60) 45%, rgba(10,10,12,0.68) 70%, rgba(10,10,12,0.92) 100%)',
+    // Feedback cliente 2026-05-18 "Mammoli in home non si vede, tutto nero":
+    // alleggerisco overlay al centro (era 0.60→0.30 a 40-55%) per far emergere
+    // soggetto SDF al centro. Top + bottom restano densi (0.92) per leggibilità
+    // tag/heading sopra e CTA sotto. Spostato il "buco chiaro" leggermente
+    // più in basso (40-55%) dove sta il soggetto, non dove sta l'heading.
+    background: 'linear-gradient(180deg, rgba(10,10,12,0.92) 0%, rgba(10,10,12,0.55) 40%, rgba(10,10,12,0.30) 55%, rgba(10,10,12,0.55) 75%, rgba(10,10,12,0.92) 100%)',
     zIndex: 1,
   },
   meshBg: {
@@ -57,14 +58,16 @@ const s = {
     // Hero "hero-trilli": compositing dark mood con soggetto SDF (logo maglietta)
     // centrato + 4 silhouette bodybuilder ai 4 angoli. 1402×1122, già desaturato B&W.
     // Cache-bust via query param per forzare reload utenti con vecchia versione cachata.
-    backgroundImage: 'url("/hero-trilli.jpg?v=1")',
+    backgroundImage: 'url("/hero-trilli.jpg?v=2")',
     // backgroundPosition center: soggetto e logo SDF già centrati nel src.
     backgroundSize: 'cover', backgroundPosition: 'center center',
-    opacity: 0.85,
-    // Color grading minimale: foto è già B&W desaturata in src → niente saturate/hue
-    // (rovinerebbero il mood). Solo brightness leggero per scurire ulteriormente
-    // gli highlights + contrast per definire le silhouette laterali.
-    filter: 'brightness(0.9) contrast(1.15)',
+    // Feedback cliente 2026-05-18: opacity 0.85→1.0 per non sbiadire ulteriormente
+    // il soggetto centrale ("Mammoli") oltre l'overlay sopra.
+    opacity: 1,
+    // Color grading: brightness 0.9→1.05 per recuperare lume sul soggetto centrale
+    // (era affogato dal mood dark). Contrast 1.15 mantenuto per definire le 4
+    // silhouette ai lati.
+    filter: 'brightness(1.05) contrast(1.15)',
   },
   // Overlay scuro: alleggerito al centro per far emergere maglietta + logo.
   // Lasciate top/bottom scure per leggibilità heading + sub text.
