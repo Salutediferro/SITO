@@ -332,7 +332,7 @@ export default function MembershipPage() {
           </div>
         </FadeUp>
 
-        {/* DOWNSELL — consulenza singola per chi non si committa annuale */}
+        {/* DOWNSELL — membership mensile (cancellabile) per chi non vuole impegno annuale */}
         <FadeUp>
           <section
             aria-labelledby="downsell-heading"
@@ -351,10 +351,11 @@ export default function MembershipPage() {
               Non sei ancora pronto?
             </h2>
             <p style={{ fontSize: 16, color: '#B8B8BC', lineHeight: 1.5, margin: '0 0 20px' }}>
-              Inizia da una <strong style={{ color: '#F2F2F4' }}>consulenza singola da 30 minuti</strong>. €27 una tantum, nessun impegno.
+              Inizia con la <strong style={{ color: '#F2F2F4' }}>membership mensile</strong>. €24,99/mese, consulenza inclusa, cancellabile in qualsiasi momento.
             </p>
             <a
               href={PAYMENT_LINKS.consulenza}
+              aria-label="Inizia membership mensile, 24 euro e 99 centesimi al mese, cancellabile"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -369,7 +370,7 @@ export default function MembershipPage() {
                 letterSpacing: '0.04em',
               }}
             >
-              PRENOTA CONSULENZA · €27
+              INIZIA · €24,99/mese
             </a>
           </section>
         </FadeUp>
