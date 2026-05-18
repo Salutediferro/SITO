@@ -107,8 +107,8 @@ export const MODULES = [
       headlineAccent: 'SOTTO PRESSIONE',
       desc: 'Funzione renale avanzata, elettroliti. Per bodybuilder, dieta iperproteica o uso di diuretici.',
       badge: '8 biomarcatori. Cistatina C, elettroliti completi',
-      img: '/panels/panel-reni.jpg?v=3',
-      imgAlt: 'Powerlifter massivo con fascia da campione e kettlebell in garage gym',
+      img: '/panels/panel-reni.jpg?v=4',
+      imgAlt: 'Powerlifter heavyweight calvo con barba e tatuaggi in squat profondo con bilanciere massivo in palestra dark',
     },
   },
   {
@@ -145,8 +145,8 @@ export const MODULES = [
       headlineAccent: 'SCOPRI PERCHÉ',
       desc: 'Insulino-resistenza, cortisolo. Per overfat, cut difficile, uso di GH o stress cronico.',
       badge: '4 biomarcatori. HbA1c, Insulina, HOMA-IR, Cortisolo',
-      img: '/panels/panel-metabolico.jpg?v=6',
-      imgAlt: 'Powerlifter heavyweight calvo con barba e tatuaggi in squat profondo con bilanciere massivo in palestra dark',
+      img: '/panels/panel-metabolico.jpg?v=7',
+      imgAlt: 'Powerlifter massivo con fascia da campione e kettlebell in garage gym',
     },
   },
   {
