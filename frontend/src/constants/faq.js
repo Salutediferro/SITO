@@ -25,7 +25,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Quanto costa?',
-    a: 'La consulenza costa 27€ e include il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere.',
+    a: 'La membership mensile è 24,99€/mese e include la consulenza, il tuo profilo personalizzato, il piano di analisi su misura e la guida passo-passo su come procedere. Cancellabile in qualsiasi momento. In alternativa, il Founder Pass è 119,88€/anno (≈9,99€/mese) con prezzo bloccato a vita — 200 posti totali.',
   },
   {
     q: 'Ogni quanto dovrei rifare gli esami?',
