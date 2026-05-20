@@ -69,7 +69,7 @@ const s = {
     // finisce sotto H1+sub copy (anch'essi centrati). Zoom 130% + position left
     // espone il lato sinistro dell'immagine al container, spostando il soggetto
     // centrale verso la metà destra del viewport (fuori dall'area testo centrale).
-    backgroundSize: 'cover', backgroundPosition: 'left center',
+    backgroundSize: 'cover', backgroundPosition: '15% center',
     backgroundRepeat: 'no-repeat',
     // Feedback cliente 2026-05-18: opacity 0.85→1.0 per non sbiadire ulteriormente
     // il soggetto centrale ("Mammoli") oltre l'overlay sopra.
@@ -305,7 +305,7 @@ export default function Hero() {
           .hero-bg-image {
             background-image: url("/hero-trilli-mobile.jpg?v=2") !important;
             background-size: cover !important;
-            background-position: left center !important;
+            background-position: 10% center !important;
             background-repeat: no-repeat !important;
             opacity: 0.95 !important;
           }
