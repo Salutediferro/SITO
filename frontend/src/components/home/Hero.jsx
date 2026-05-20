@@ -70,6 +70,7 @@ const s = {
     // espone il lato sinistro dell'immagine al container, spostando il soggetto
     // centrale verso la metà destra del viewport (fuori dall'area testo centrale).
     backgroundSize: '130% auto', backgroundPosition: 'left center',
+    backgroundRepeat: 'no-repeat',
     // Feedback cliente 2026-05-18: opacity 0.85→1.0 per non sbiadire ulteriormente
     // il soggetto centrale ("Mammoli") oltre l'overlay sopra.
     opacity: 1,
@@ -305,6 +306,7 @@ export default function Hero() {
             background-image: url("/hero-trilli-mobile.jpg?v=2") !important;
             background-size: 120% auto !important;
             background-position: left center !important;
+            background-repeat: no-repeat !important;
             opacity: 0.95 !important;
           }
         }
