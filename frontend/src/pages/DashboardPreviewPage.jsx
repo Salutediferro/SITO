@@ -129,32 +129,229 @@ const styles = {
     width: '100%',
     height: 'auto',
   },
-  // Fallback placeholder finché Sepp non passa screenshot reale
-  placeholder: {
-    aspectRatio: '16 / 9',
+  // Mockup illustrato che riproduce UI Agente Ferro (basato sui componenti veri
+  // della DASHBOARD: MissionHero, ActionPlanList, BodySystemGrid, AmbientStatsStrip)
+  mockup: {
     width: '100%',
-    background: 'linear-gradient(135deg, #131316 0%, #1F1F23 60%, #2A1418 100%)',
+    background: 'linear-gradient(135deg, #0F0F11 0%, #131316 100%)',
+    padding: 'clamp(16px, 2.5vw, 28px)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'var(--space-4)',
+  },
+  mockHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 'var(--space-3)',
+    borderBottom: '1px solid var(--border)',
+  },
+  mockHeaderLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--space-3)',
+  },
+  mockAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: '50%',
+    background: 'radial-gradient(circle at 30% 30%, #EC4757 0%, #7A0815 70%)',
+    boxShadow: '0 0 12px var(--accent-glow)',
+  },
+  mockHeaderTitle: {
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 13,
+    letterSpacing: 3,
+    color: 'var(--text)',
+    margin: 0,
+  },
+  mockHeaderSub: {
+    fontSize: 11,
+    color: 'var(--text-sec)',
+    margin: 0,
+  },
+  mockStatusPill: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 6,
+    fontSize: 11,
+    color: '#10B981',
+    fontWeight: 500,
+  },
+  mockStatusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    background: '#10B981',
+    boxShadow: '0 0 6px #10B981',
+  },
+  // MissionHero replica
+  mockMission: {
+    background: 'linear-gradient(135deg, rgba(236,71,87,0.08) 0%, var(--bg-card) 100%)',
+    border: '1px solid rgba(236,71,87,0.30)',
+    boxShadow: '0 0 0 1px rgba(236,71,87,0.20) inset',
+    borderRadius: 'var(--radius-md)',
+    padding: 'var(--space-5)',
+  },
+  mockMissionTag: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 6,
+    background: 'rgba(236,71,87,0.12)',
+    color: 'var(--accent)',
+    padding: '4px 10px',
+    borderRadius: 'var(--radius-pill)',
+    fontSize: 10,
+    letterSpacing: 2,
+    fontWeight: 600,
+    marginBottom: 'var(--space-3)',
+  },
+  mockMissionText: {
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'clamp(18px, 2.4vw, 24px)',
+    lineHeight: 1.2,
+    color: 'var(--text)',
+    margin: '0 0 var(--space-4) 0',
+  },
+  mockMissionCTA: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    background: 'var(--accent-fill)',
+    color: '#fff',
+    padding: '8px 16px',
+    borderRadius: 'var(--radius-sm)',
+    fontSize: 12,
+    letterSpacing: 1.5,
+    fontWeight: 600,
+  },
+  // ActionPlan replica
+  mockSectionTitle: {
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 12,
+    letterSpacing: 2,
+    color: 'var(--text-sec)',
+    margin: '0 0 var(--space-2) 0',
+  },
+  mockActionList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  mockAction: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--space-3)',
+    padding: '10px 14px',
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
+    borderRadius: 'var(--radius-sm)',
+  },
+  mockActionAttention: {
+    borderColor: 'rgba(245,158,11,0.40)',
+    background: 'rgba(245,158,11,0.08)',
+  },
+  mockActionCritical: {
+    borderColor: 'rgba(236,71,87,0.50)',
+    background: 'rgba(236,71,87,0.08)',
+  },
+  mockCheck: {
+    width: 18,
+    height: 18,
+    borderRadius: 4,
+    border: '1.5px solid var(--border-hover)',
+    flexShrink: 0,
+  },
+  mockCheckDone: {
+    background: '#10B981',
+    borderColor: '#10B981',
+    color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+  },
+  mockActionText: {
+    flex: 1,
+    fontSize: 13,
+    color: 'var(--text)',
+    margin: 0,
+  },
+  mockActionTextDone: {
+    color: 'var(--text-sec)',
+    textDecoration: 'line-through',
+  },
+  mockBadge: {
+    fontSize: 9,
+    padding: '2px 6px',
+    borderRadius: 4,
+    fontWeight: 600,
+    letterSpacing: 1,
+  },
+  mockBadgeAttention: { background: 'rgba(245,158,11,0.20)', color: '#F59E0B' },
+  mockBadgeCritical: { background: 'rgba(236,71,87,0.20)', color: '#EC4757' },
+  // BodySystemGrid replica
+  mockGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+    gap: 8,
+  },
+  mockSystem: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    gap: 6,
+    padding: '12px 8px',
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
+    borderRadius: 'var(--radius-sm)',
+  },
+  mockSystemIcon: {
+    width: 28,
+    height: 28,
+    color: 'var(--text-sec)',
+    display: 'flex',
+    alignItems: 'center',
     justifyContent: 'center',
-    gap: 'var(--space-3)',
-    padding: 'var(--space-6)',
   },
-  placeholderTitle: {
-    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
-    fontSize: 'var(--text-h3)',
-    letterSpacing: 3,
+  mockSystemLabel: {
+    fontSize: 10,
     color: 'var(--text-sec)',
-    margin: 0,
-  },
-  placeholderSub: {
-    fontSize: 'var(--text-sm)',
-    color: 'var(--text-sec)',
-    opacity: 0.6,
     margin: 0,
     textAlign: 'center',
-    maxWidth: 380,
+    letterSpacing: 0.5,
+  },
+  mockSystemDot: {
+    width: 6,
+    height: 6,
+    borderRadius: '50%',
+    background: '#10B981',
+  },
+  mockSystemDotAttention: { background: '#F59E0B' },
+  // Stats strip
+  mockStats: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: 'var(--space-3)',
+    paddingTop: 'var(--space-3)',
+    borderTop: '1px solid var(--border)',
+  },
+  mockStat: {
+    textAlign: 'center',
+  },
+  mockStatValue: {
+    fontFamily: "'Antonio', 'Bebas Neue', sans-serif",
+    fontSize: 'clamp(18px, 2.5vw, 22px)',
+    color: 'var(--text)',
+    margin: 0,
+    letterSpacing: 1,
+  },
+  mockStatLabel: {
+    fontSize: 9,
+    color: 'var(--text-sec)',
+    margin: 0,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   section: { marginBottom: 'var(--space-9)' },
   sectionTitle: {
@@ -287,17 +484,133 @@ export default function DashboardPreviewPage() {
           </p>
         </header>
 
-        {/* Screenshot/mockup zone — Sepp passera asset finale */}
+        {/* Mockup illustrato Dashboard — riproduce 1:1 i componenti veri Agente Ferro.
+            Marketing teaser: tutto il contenuto interno e' aria-hidden, solo il
+            wrapper esterno ha role="img" + aria-label sintetico per AT. */}
         <div style={styles.screenshotWrap}>
           <div
             role="img"
-            aria-label="Schermata Dashboard membri: pannello Agente di Ferro con suggerimenti del giorno, grafico esami del sangue degli ultimi sei mesi e lista documenti sanitari caricati"
-            style={styles.placeholder}
+            aria-label="Anteprima della Dashboard membri Salute di Ferro: Agente di Ferro, mission del giorno, piano d'azione, sistemi del corpo e Coach dedicato"
+            style={styles.mockup}
           >
-            <p style={styles.placeholderTitle}>ANTEPRIMA DASHBOARD</p>
-            <p style={styles.placeholderSub}>
-              Screenshot in arrivo · Agente di Ferro, esami, coach, documenti
-            </p>
+            <div aria-hidden="true">
+              {/* Header */}
+              <div style={styles.mockHeader}>
+                <div style={styles.mockHeaderLeft}>
+                  <div style={styles.mockAvatar} />
+                  <div>
+                    <p style={styles.mockHeaderTitle}>AGENTE DI FERRO</p>
+                    <p style={styles.mockHeaderSub}>Briefing di oggi · Coach AI proattivo</p>
+                  </div>
+                </div>
+                <span style={styles.mockStatusPill}>
+                  <span style={styles.mockStatusDot} />
+                  attivo
+                </span>
+              </div>
+
+              {/* MissionHero */}
+              <div style={{ ...styles.mockMission, marginTop: 16 }}>
+                <span style={styles.mockMissionTag}>
+                  <span>🎯</span>
+                  MISSION OGGI
+                </span>
+                <p style={styles.mockMissionText}>
+                  Allenamento di forza · sblocca lo squat con 5×5 a 100kg
+                </p>
+                <span style={styles.mockMissionCTA}>
+                  APRI IL PIANO
+                  <span style={{ fontSize: 14 }}>→</span>
+                </span>
+              </div>
+
+              {/* Action Plan */}
+              <div style={{ marginTop: 18 }}>
+                <p style={styles.mockSectionTitle}>PIANO D'AZIONE · TOP 3</p>
+                <div style={styles.mockActionList}>
+                  <div style={{ ...styles.mockAction, ...styles.mockActionCritical }}>
+                    <div style={styles.mockCheck} />
+                    <p style={styles.mockActionText}>Prenota controllo testosterone — scadenza 3gg</p>
+                    <span style={{ ...styles.mockBadge, ...styles.mockBadgeCritical }}>URGENTE</span>
+                  </div>
+                  <div style={{ ...styles.mockAction, ...styles.mockActionAttention }}>
+                    <div style={styles.mockCheck} />
+                    <p style={styles.mockActionText}>Carica referto esami del sangue del 12 maggio</p>
+                    <span style={{ ...styles.mockBadge, ...styles.mockBadgeAttention }}>OGGI</span>
+                  </div>
+                  <div style={styles.mockAction}>
+                    <div style={{ ...styles.mockCheck, ...styles.mockCheckDone }}>✓</div>
+                    <p style={{ ...styles.mockActionText, ...styles.mockActionTextDone }}>
+                      Idratazione 2,5L — fatto
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Body Systems */}
+              <div style={{ marginTop: 18 }}>
+                <p style={styles.mockSectionTitle}>SISTEMI DEL CORPO</p>
+                <div style={styles.mockGrid}>
+                  <div style={styles.mockSystem}>
+                    <svg style={styles.mockSystemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                    <p style={styles.mockSystemLabel}>Recovery</p>
+                    <span style={styles.mockSystemDot} />
+                  </div>
+                  <div style={styles.mockSystem}>
+                    <svg style={styles.mockSystemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                    <p style={styles.mockSystemLabel}>Ormoni</p>
+                    <span style={{ ...styles.mockSystemDot, ...styles.mockSystemDotAttention }} />
+                  </div>
+                  <div style={styles.mockSystem}>
+                    <svg style={styles.mockSystemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    <p style={styles.mockSystemLabel}>Cardio</p>
+                    <span style={styles.mockSystemDot} />
+                  </div>
+                  <div style={styles.mockSystem}>
+                    <svg style={styles.mockSystemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+                    </svg>
+                    <p style={styles.mockSystemLabel}>Metabolico</p>
+                    <span style={styles.mockSystemDot} />
+                  </div>
+                  <div style={styles.mockSystem}>
+                    <svg style={styles.mockSystemIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="7" width="16" height="10" rx="2" />
+                      <line x1="22" y1="11" x2="22" y2="13" />
+                      <line x1="6" y1="11" x2="14" y2="11" />
+                    </svg>
+                    <p style={styles.mockSystemLabel}>Energia & Ferro</p>
+                    <span style={styles.mockSystemDot} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats strip */}
+              <div style={{ ...styles.mockStats, marginTop: 16 }}>
+                <div style={styles.mockStat}>
+                  <p style={styles.mockStatValue}>7,4h</p>
+                  <p style={styles.mockStatLabel}>Sonno</p>
+                </div>
+                <div style={styles.mockStat}>
+                  <p style={styles.mockStatValue}>62</p>
+                  <p style={styles.mockStatLabel}>HRV</p>
+                </div>
+                <div style={styles.mockStat}>
+                  <p style={styles.mockStatValue}>6.480</p>
+                  <p style={styles.mockStatLabel}>Passi</p>
+                </div>
+                <div style={styles.mockStat}>
+                  <p style={styles.mockStatValue}>+12%</p>
+                  <p style={styles.mockStatLabel}>Trend mese</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
