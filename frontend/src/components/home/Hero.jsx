@@ -63,12 +63,13 @@ const s = {
     // centrato + 4 silhouette bodybuilder ai 4 angoli. 1402×1122, già desaturato B&W.
     // Cache-bust via query param per forzare reload utenti con vecchia versione cachata.
     backgroundImage: 'url("/hero-trilli.jpg?v=4")',
-    // Feedback cliente 2026-05-18 (#2): "Mammoli sotto il heading, sposta a destra".
-    // Source v=3 ha 400px padding nero sinistra (1402→1802) → Mammoli passato dal
-    // 50% al 61% della larghezza foto. Con position 'center center' + cover Mammoli
-    // appare ~11% a destra del centro container. Lo spazio scuro sinistra ospita
-    // il heading rotante senza overlap.
-    backgroundSize: 'cover', backgroundPosition: 'center center',
+    // Feedback cliente 2026-05-20: "sposta tutta l'immagine verso destra,
+    // almeno il ragazzo di fronte si vede e non viene coperto dalle scritte".
+    // Source v=4 (1402×1122) ha soggetto centrale → con 'cover' + position center
+    // finisce sotto H1+sub copy (anch'essi centrati). Zoom 130% + position left
+    // espone il lato sinistro dell'immagine al container, spostando il soggetto
+    // centrale verso la metà destra del viewport (fuori dall'area testo centrale).
+    backgroundSize: '130% auto', backgroundPosition: 'left center',
     // Feedback cliente 2026-05-18: opacity 0.85→1.0 per non sbiadire ulteriormente
     // il soggetto centrale ("Mammoli") oltre l'overlay sopra.
     opacity: 1,
@@ -297,12 +298,13 @@ export default function Hero() {
         @media (max-width: 768px) {
           section > div:last-of-type { padding: 60px 20px !important; }
           /* Mobile: crop 9:16 portrait centrato (631×1122) del compositing hero-trilli.
-             Soggetto SDF + 2 silhouette laterali visibili, ritagliate le 2 esterne.
-             Position center: già pre-cropped in src per centrare il soggetto. */
+             Feedback 2026-05-20: zoom 120% + position left per spostare soggetto
+             centrale verso la metà destra del viewport (fuori area testo centrale).
+             Stesso pattern del desktop. */
           .hero-bg-image {
             background-image: url("/hero-trilli-mobile.jpg?v=2") !important;
-            background-size: cover !important;
-            background-position: center center !important;
+            background-size: 120% auto !important;
+            background-position: left center !important;
             opacity: 0.95 !important;
           }
         }
