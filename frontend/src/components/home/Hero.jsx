@@ -25,6 +25,8 @@ const ROTATING_PHRASES = [
   'Solo. Medici. Grossi.',
   'I nostri medici spingono il Ferro. Il tuo no',
   'Hai preso sostanze? Benvenuto',
+  'I tuoi valori non sono normali? Per fortuna.',
+  'Il tuo allenamento non \u00e8 per tutti. La tua Salute nemmeno.',
   'Enorme e in salute fino a 100 anni? Si pu\u00f2',
   '\u2013 Pausa + Donna',
   'La menopausa ti uccide? Resuscita con Noi',

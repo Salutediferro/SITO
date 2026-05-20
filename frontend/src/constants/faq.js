@@ -5,7 +5,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: 'Come funziona il prelievo?',
-    a: 'Dopo aver completato il Test di Ferro, riceverai le indicazioni per effettuare il prelievo in un laboratorio convenzionato vicino a te. Nessuno sbatti: ti guidiamo noi passo-passo.',
+    a: 'Dopo aver effettuato la prima consulenza, riceverai le indicazioni per effettuare il prelievo ad un prezzo vantaggioso nel laboratorio convenzionato più vicino a te. Nessuno sbatti: ti guidiamo noi passo-passo.',
   },
   {
     q: 'Chi interpreta i miei risultati?',
