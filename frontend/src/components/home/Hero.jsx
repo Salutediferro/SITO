@@ -62,7 +62,7 @@ const s = {
     // Hero "hero-trilli": compositing dark mood con soggetto SDF (logo maglietta)
     // centrato + 4 silhouette bodybuilder ai 4 angoli. 1402×1122, già desaturato B&W.
     // Cache-bust via query param per forzare reload utenti con vecchia versione cachata.
-    backgroundImage: 'url("/hero-trilli.jpg?v=3")',
+    backgroundImage: 'url("/hero-trilli.jpg?v=4")',
     // Feedback cliente 2026-05-18 (#2): "Mammoli sotto il heading, sposta a destra".
     // Source v=3 ha 400px padding nero sinistra (1402→1802) → Mammoli passato dal
     // 50% al 61% della larghezza foto. Con position 'center center' + cover Mammoli
@@ -300,7 +300,7 @@ export default function Hero() {
              Soggetto SDF + 2 silhouette laterali visibili, ritagliate le 2 esterne.
              Position center: già pre-cropped in src per centrare il soggetto. */
           .hero-bg-image {
-            background-image: url("/hero-trilli-mobile.jpg?v=1") !important;
+            background-image: url("/hero-trilli-mobile.jpg?v=2") !important;
             background-size: cover !important;
             background-position: center center !important;
             opacity: 0.95 !important;
