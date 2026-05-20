@@ -19,6 +19,7 @@ const TITLES = {
   '/consenso-informato': 'Consenso Informato — Salute di Ferro',
   '/payment-success': 'Pagamento confermato — Salute di Ferro',
   '/coming-soon': 'Coming Soon — Salute di Ferro',
+  '/dashboard-preview': 'Anteprima Dashboard — Salute di Ferro',
 };
 
 const FALLBACK_TITLE = 'Salute di Ferro';

@@ -76,6 +76,7 @@ export default function Navbar() {
     { to: '/pannelli', label: 'Pannelli' },
     { to: '/chi-siamo', label: 'Chi Siamo' },
     { to: '/membership', label: 'Membership' },
+    { to: '/dashboard-preview', label: 'Dashboard' },
   ];
 
   return (

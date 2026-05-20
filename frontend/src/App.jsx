@@ -16,6 +16,7 @@ import ConsensoInformatoPage from './pages/ConsensoInformatoPage';
 import TestPage from './pages/TestPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import ComingSoonPage from './pages/ComingSoonPage';
+import DashboardPreviewPage from './pages/DashboardPreviewPage';
 import useFerroHighlight from './hooks/useFerroHighlight';
 
 // AgenteTestPage NON registrata pubblicamente (rischio costi Anthropic API).
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/test" element={<TestPage />} />
           <Route path="/payment-success" element={<PaymentSuccessPage />} />
           <Route path="/coming-soon" element={<ComingSoonPage />} />
+          <Route path="/dashboard-preview" element={<DashboardPreviewPage />} />
           {/* /agente-test disabilitata pubblicamente · 7 mag 2026 */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
